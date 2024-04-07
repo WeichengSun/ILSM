@@ -1,13 +1,13 @@
 Package: ILSM
 Title: Analyze Inter-Layer Structure of Multilayer Ecological Network
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("WeiCheng", "Sun", , "sunwch2023@lzu.edu.cn", role = c("aut", "cre")),
     person("Chuan", "Yan", , "yanchuan@lzu.edu.cn", role = c("aut")),
     person("Yangyang", "Zhao", , "120220907711@lzu.edu.cn", role = c("aut")))
 Description: 
     In view of the analysis of the structural characteristics of the multilayer network has been complete, however, there is still a lack of a unified operation that can quickly obtain the corresponding characteristics of the multilayer network. 
-    To solve this insufficiency, 'ILSM' was designed for supporting calculating such metrics of multilayer network by functions of this R package.
+    To solve this insufficiency, 'ILSM' was designed for supporting calculating such metrics of multilayer networks by functions of this R package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
