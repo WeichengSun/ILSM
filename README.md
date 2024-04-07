@@ -20,12 +20,13 @@ The visualization of multilayer interaction network:
 
 ## Installation
 
-<!-- Installing the development version from CRAN: -->
-<!-- ```{r echo = TRUE, eval = FALSE} -->
-<!-- install.packages("ILSM") -->
-<!-- ``` -->
+Installing the development version from CRAN:
 
-You can install the development version of ILSM from GitHub:
+``` r
+install.packages("ILSM") 
+```
+
+You can also install the development version of ILSM from GitHub:
 
 ``` r
 devtools::install_github("WeichengSun/ILSM")
