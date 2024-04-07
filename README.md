@@ -11,12 +11,12 @@ multilayer network (species-sharing species-other species) has been
 complete, however, there is still a lack of a unified operation that can
 quickly obtain the corresponding characteristics of the multilayer
 network and explore Mesoscale structure of the network (motif). To solve
-this insufficiency, ILSM was designed for supporting calculating such
-metrics of multilayer network by functions of R package.
+this insufficiency, ‘ILSM’ was designed for supporting calculating such
+metrics of multilayer networks by functions of R package.
 
 The visualization of multilayer interaction network:
 
-<img src="./man/figure/example.png" width="50%" />
+<img src="./man/figure/conbine_1.png" width="90%" />
 
 ## Installation
 
