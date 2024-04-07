@@ -27,7 +27,7 @@
 #' N <- build_net(11,15,16,0.2,asmatrices=FALSE)
 #' N
 #'
-build_net<-function(lay_0,lay_1,lay_2,C_lay,asmatrices=FALSE){
+build_net<-function(lay_0, lay_1, lay_2, C_lay, asmatrices=FALSE){
    if(lay_0<3||lay_1<3||lay_2<3)
       stop("Error: please make lay_0>=3, lay_1>=3 and lay_2>=3!!!")
    lay<-lay_0+lay_1+lay_2
@@ -51,7 +51,7 @@ build_net<-function(lay_0,lay_1,lay_2,C_lay,asmatrices=FALSE){
       PHP<-as.matrix(network[])
       PH<-PHP[(V(network)$level)==0,(V(network)$level)==1]
       HP<-PHP[(V(network)$level)==1,(V(network)$level)==2]
-      return(list(network=network,supraadjacency_matrix=PHP,subnetwork1=PH,subnetwork2=HP))
+      return(list(network=network,supraadjacency_matrix=PHP,subnetwork1=t(PH),subnetwork2=HP))
    }
    return(network)
 }
