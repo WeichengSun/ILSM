@@ -16,11 +16,13 @@ knitr::opts_chunk$set(
 
 The visualization of multilayer interaction network:
 
-```{r echo=F, out.width = "50%"}
-knitr::include_graphics("../man/figure/example.png")
+```{r echo=F, out.width = "90%"}
+knitr::include_graphics("../man/figure/conbine_1.png")
 ```
 
-In multilayer network, 44 types of motifs of nodes ranging from 3 to 6 are shown. The green squares, cyan circles, and blue squares represent the first, second, and third layers of the network, respectively. The graph in the first row represents only one node in the middle layer with increasing complexity, similarly, the graph in the second to fourth rows represents a motif with two nodes in the middle layer, and finally the motif in the fifth row represents a motif with three nodes node in the middle layer, which also tends to be the most complex. The numbers "1" to "65" in the cyan circle represent the roles in which the 65 nodes are located.
+In multilayer network, 44 types of motifs of nodes ranging from 3 to 6 are shown. The green squares, cyan circles, and blue squares represent the first, second, and third layers of the network, respectively. The graph in the first row represents only one node in the middle layer with increasing complexity, similarly, the graph in the second to fourth rows represents a motif with two nodes in the middle layer, and finally the motif in the fifth row represents a motif with three nodes node in the middle layer, which also tends to be the most complex.
+
+The numbers "1" to "65" in the cyan circle represent the roles in which the 65 nodes are located.
 
 ```{r echo=F, out.width = "100%" }
 knitr::include_graphics("../man/figure/motif_motify.png")
