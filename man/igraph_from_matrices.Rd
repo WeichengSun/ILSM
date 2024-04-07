@@ -7,11 +7,11 @@
 igraph_from_matrices(mat1, mat2, isDirected1 = TRUE, isDirected2 = TRUE)
 }
 \arguments{
-\item{mat1}{A numeric matrix(or data.frame) representing interactions between two groups of species.Each row and column of matrix represents the species in the first and second layers of the tripartite network respectively.
-Elements of matrix are non-zero numebers if the interlayer species are connected, and 0 otherwise.}
+\item{mat1}{A numeric matrix(or data.frame) representing interactions between two groups of species.Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
+Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.}
 
-\item{mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.Each row and column of matrix represents the species in the second and third layers of the tripartite network respectively.
-Elements of matrix are non-zero numebers if the interlayer species are connected, and 0 otherwise.}
+\item{mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
+Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.}
 
 \item{isDirected1}{Logical. Whether the interaction between the two groups of species in \code{mat1} is unidirectional.Default to TRUE, such as Predation and Herbivory. Otherwise it is bidirectional, such as Mutualism.}
 
@@ -25,12 +25,26 @@ Two matrices contain three groups of tropical level species. A multilayer networ
 }
 \details{
 \strong{mat1} and \strong{mat2}
-Make sure that the columns of \code{mat1} correspond strictly to the rows of \code{mat2}:
-\itemize{
-\item{The number of columns of \code{mat1} is equal to the number of rows of \code{mat2}.}
 
-\item{If both \code{mat1} and \code{mat2} have row and column names, then the column name of \code{mat1} must also correspond to the row name of \code{mat2}.}
-\item{Or the rows and columns of \code{mat1} and \code{mat2} could be empty.}}
+The type of inputting is data frame or matrix, please make sure the row of \code{mat1} and \code{mat2} correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.
+\itemize{
+\item{Try to make the rows of both matrices have the same attributes. Or we default:}
+
+\item{When the two matrices can have different numbers of rows:}
+\itemize{
+\item{(1). If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.}
+\item{(2). If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.}
+}
+
+\item{When the two matrices can have the same numbers of rows:}
+\itemize{
+\item{No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).}
+}
+
+\item{The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!}
+}
+
+The columns of \code{mat1} and \code{mat2} could be empty. If empty, the function also defaults to the suggested assignment.
 }
 \examples{
 
@@ -38,6 +52,7 @@ set.seed(12)
 MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
 MAT[[1]]
 
-M <- igraph_from_matrices(MAT[[3]],MAT[[4]])
+igraph_from_matrices(MAT[[3]],MAT[[4]])
+M <- igraph_from_matrices(t(MAT[[3]]),MAT[[4]])
 M
 }
