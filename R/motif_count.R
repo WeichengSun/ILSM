@@ -2,28 +2,46 @@
 #'
 #' Calculating the number of 44 motifs from a tripartite interaction network.
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class, or a numeric matrix(or data.frame) representing interactions between two groups of species. The network contains
-#'  interlayer links and without intralayer links. Each row and column of matrix represents the species in the first and second layers of the tripartite network respectively.
-#'  Elements of matrix are non-zero numebers if the interlayer species are connected, and 0 otherwise.
+#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains interlayer links and without intralayer links, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
+#'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
-#' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions between two groups of species.Each row and column of matrix represents the species in the second and third layers of the
-#'  tripartite network respectively. Elements of matrix are non-zero numebers if the interlayer species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.
+#' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions between two groups of species.
+#'  Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
+#'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.
 #'
-#' @param subnet_motif Logical. Whether to calculate the structure indices of the two bipartite networks dismantled by this multilayer network based on the principle of the package bmotif. Default to FALSE: NO.
 #' @import igraph
 #'
 #' @export
+#'
 #' @details
 #'
-#' \strong{network.or.subnet_mat1}
+#' \strong{network.or.subnet_mat1} and \strong{subnet_mat2}
 #'
-#' There are two types of data that can be processed:
+#' There are two types of \code{network.or.subnet_mat1} that can be processed:
 #' \itemize{
-#' \item{Input in a network of type "igraph" alone.}
+#' \item{(1). Input in a network of type "igraph" alone.}
+#' \item{(2). Must be entered as data frame or matrix with \code{subnet_mat2}.}
+#' }
 #'
-#' \item{Must be entered as data frame or matrix with \code{subnet_mat2}}}
+#' If the type of inputting is data frame or matrix, please make sure the row of \code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.
+#' \itemize{
+#' \item{Try to make the rows of both matrices have the same attributes. Or we default:}
 #'
-#' About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}
+#' \item{When the two matrices can have different numbers of rows:}
+#' \itemize{
+#' \item{(1). If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.}
+#' \item{(2). If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.}
+#' }
+#'
+#' \item{When the two matrices can have the same numbers of rows:}
+#' \itemize{
+#' \item{No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).}
+#' }
+#'
+#' \item{The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!}
+#' }
+#' About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}.
 #'
 #'
 #'
@@ -49,8 +67,11 @@
 #' d <- build_net(11,22,21,0.2,asmatrices=TRUE)
 #'
 #' MAT<-d
-#' M <- motif_count(MAT[[3]],MAT[[4]])
-#' M
+#' motif_count(MAT[[3]],MAT[[4]])
+#'
+#' md1<-matrix(sample(c(0,1),120,replace=TRUE),8,15)
+#' md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+#' motif_count(md1,md2)
 #'
 #' R<-rownames(MAT[[4]])[12]
 #' MR<-MAT[[4]][12,]
@@ -60,7 +81,9 @@
 #'
 #' motif_count(MAT[[3]],MAT[[4]])
 #'
-motif_count<-function(network.or.subnet_mat1,subnet_mat2=NULL,subnet_motif=FALSE){
+#'
+
+motif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
    if(inherits(network.or.subnet_mat1,"igraph")==T){
       network<-adject_net(network.or.subnet_mat1)
       PHP<-as.matrix(network[])
@@ -71,21 +94,47 @@ motif_count<-function(network.or.subnet_mat1,subnet_mat2=NULL,subnet_motif=FALSE
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T && inherits(subnet_mat2,c("matrix","data.frame"))==T){
       mat1<-network.or.subnet_mat1
       mat2<-subnet_mat2
-      if(ncol(mat1)!=nrow(mat2))
-         stop("Error: please check whether the column of network.or.subnet_mat1 is corresponding to the row of subnet_mat2!!!")
-      if(is.null(colnames(mat1)) || is.null(rownames(mat2))){
-         colnames(mat1)<-paste0("mid_pse",seq=1:ncol(mat1))
-         rownames(mat2)<-paste0("mid_pse",seq=1:ncol(mat1))
+      if(nrow(mat1)!=nrow(mat2)){
+         if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+            rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+            rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
+            matrow<-unique(c(rownames(mat1),rownames(mat2)))
+         }
+         if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
+            matrow<-unique(c(rownames(mat1),rownames(mat2)))
+         else
+            stop("Make sure matrices either have no row names or have full row names. No NA!!!")
+         mat_1<-matrix(0,length(matrow),ncol(mat1))
+         rownames(mat_1)<-matrow
+         mat_1[rownames(mat1),]<-mat1
+         mat_1[mat_1>0]<-1
+         mat_2<-matrix(0,length(matrow),ncol(mat2))
+         rownames(mat_2)<-matrow
+         mat_2[rownames(mat2),]<-mat2
+         mat_2[mat_2>0]<-1
+         mat1<-mat_1
+         mat2<-mat_2
+         dimnames(mat1)<-NULL
+         dimnames(mat2)<-NULL
       }
-      if(sum(!(colnames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
+      else{
+      if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+         rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+         rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat1))
+      }
+      if(sum(!(rownames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
          stop("Error: please check whether the column name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
-      if(sum(is.na(colnames(mat1)))!=0 || sum(is.na(rownames(mat2)))!=0)
+      if(sum(is.na(rownames(mat1)))!=0 || sum(is.na(rownames(mat2)))!=0)
          stop("Error: There is NA in the column name of network.or.subnet_mat1 or the row name of subnet_mat2!!!")
-      mat2<-mat2[colnames(mat1),]
+      mat2<-mat2[rownames(mat1),]
       dimnames(mat1)<-NULL
       dimnames(mat2)<-NULL
-      PH<-mat1
+      }
+      PH<-t(mat1)
       HP<-mat2
+      logi<-(apply(PH,2,sum)*apply(HP,1,sum))!=0
+      PH<-PH[,logi]
+      HP<-HP[logi,]
    }
    else
       stop("Error: please check the tyep of network.or.subnet_mat1 and other parameters!!!")
