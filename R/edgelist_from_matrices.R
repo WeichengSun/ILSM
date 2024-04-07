@@ -1,20 +1,44 @@
 edgelist_from_matrices<-function(mat1,mat2,isDirected1=T,isDirected2=T){
-   if(ncol(mat1)!=nrow(mat2))
-      stop("Error: please check whether the column of mat1 is corresponding to the row of mat2!!!")
-   if(is.null(colnames(mat1)) || is.null(rownames(mat2))){
-      colnames(mat1)<-paste0("mid_pse",seq=1:ncol(mat1))
-      rownames(mat2)<-paste0("mid_pse",seq=1:ncol(mat1))
+   if(nrow(mat1)!=nrow(mat2)){
+      if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+         rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+         rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
+         matrow<-unique(c(rownames(mat1),rownames(mat2)))
+      }
+      if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
+         matrow<-unique(c(rownames(mat1),rownames(mat2)))
+      else
+         stop("Make sure matrices either have no row names or have full row names. No NA!!!")
+      mat_1<-matrix(0,length(matrow),ncol(mat1))
+      rownames(mat_1)<-matrow
+      mat_1[rownames(mat1),]<-mat1
+      mat_1[mat_1>0]<-1
+      mat_2<-matrix(0,length(matrow),ncol(mat2))
+      rownames(mat_2)<-matrow
+      mat_2[rownames(mat2),]<-mat2
+      mat_2[mat_2>0]<-1
+      mat1<-mat_1
+      mat2<-mat_2
    }
-   if(sum(!(colnames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
-      stop("Error: please check whether the column name of mat1 is corresponding to the row name of mat2!!!")
-   if(sum(is.na(colnames(mat1)))!=0 || sum(is.na(rownames(mat2)))!=0)
-      stop("Error: There is NA in the column name of mat1 or the row name of mat2!!!")
-   mat2<-mat2[colnames(mat1),]
-   if(is.null(rownames(mat1)))
-      rownames(mat1)<-paste0("up_pse",seq=1:nrow(mat1))
+   else{
+      if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+         rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+         rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
+      }
+      if(sum(!(rownames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
+         stop("Error: please check whether the column name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
+      if(sum(is.na(rownames(mat1)))!=0 | sum(is.na(rownames(mat2)))!=0)
+         stop("Error: There is NA in the column name of network.or.subnet_mat1 or the row name of subnet_mat2!!!")
+      mat2<-mat2[rownames(mat1),]
+   }
+
+
+
+   if(is.null(colnames(mat1)))
+      colnames(mat1)<-paste0("up_spe",seq=1:ncol(mat1))
    if(is.null(colnames(mat2)))
-      colnames(mat2)<-paste0("down_pse",seq=1:ncol(mat2))
-   spe<-unique(c(rownames(mat1),colnames(mat1),rownames(mat2),colnames(mat2)))
+      colnames(mat2)<-paste0("down_spe",seq=1:ncol(mat2))
+   spe<-unique(c(colnames(mat1),rownames(mat1),rownames(mat2),colnames(mat2)))
    me_interlayer<-function(mat,U,V,isDirected=FALSE){
       spe_v<-NULL
       mat[mat[]>0]<-1
@@ -37,13 +61,13 @@ edgelist_from_matrices<-function(mat1,mat2,isDirected1=T,isDirected2=T){
       rownames(spe_mat)<-NULL
       return(spe_mat)
    }
-   matt<-rbind(me_interlayer(mat1,1,2,isDirected1),me_interlayer(mat2,2,3,isDirected2))
+   matt<-rbind(me_interlayer(t(mat1),1,2,isDirected1),me_interlayer(mat2,2,3,isDirected2))
    for (i in 1:sum(!(is.na(spe)))) {
       matt[matt[,1]%in%spe[i],1]<-i
       matt[matt[,3]%in%spe[i],3]<-i
    }
    matt<-as.data.frame(matt)
    matt<-apply(matt, 2,function(x){as.numeric(x)})
-   degree<-c(rowSums(mat1),colSums(mat1)+rowSums(mat2),colSums(mat2))
+   degree<-c(colSums(mat1),rowSums(mat1)+rowSums(mat2),colSums(mat2))
    return(list(matt,spe=spe,degree=degree))
 }
