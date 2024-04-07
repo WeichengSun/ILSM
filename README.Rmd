@@ -27,15 +27,13 @@ knitr::include_graphics("./man/figure/conbine_1.png")
 
 ## Installation
 
-<!-- Installing the development version from CRAN: -->
+Installing the development version from CRAN:
 
-<!-- ```{r echo = TRUE, eval = FALSE} -->
+```{r echo = TRUE, eval = FALSE}
+install.packages("ILSM") 
+```
 
-<!-- install.packages("ILSM") -->
-
-<!-- ``` -->
-
-You can install the development version of ILSM from GitHub:
+You can also install the development version of ILSM from GitHub:
 
 ```{r echo = TRUE, eval = FALSE}
 devtools::install_github("WeichengSun/ILSM")
