@@ -27,7 +27,7 @@ test_that("Ensure the accuracy of the conversion into a matrix", {
    expect_identical(class(N[[4]]),c("matrix","array"))
    expect_true(sum(!(as.matrix(M)==as.matrix(N[[1]])))==0)
    expect_identical(sum(!(as.matrix(N[[1]])==N[[2]]))==0,TRUE)
-   expect_identical(sum(colnames(N[[3]])==rownames(N[[4]])),5L)
+   expect_identical(sum(rownames(N[[3]])==rownames(N[[4]])),5L)
    expect_identical(sum(sort(rownames(N[[2]]))==sort(c(rownames(N[[3]]),colnames(N[[3]]),colnames(N[[4]])))),15L)
 })
 
