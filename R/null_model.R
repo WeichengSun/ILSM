@@ -49,7 +49,7 @@
 #' null_model(d,number=2,null_type="Savue")
 
 
-null_model<-function(network,number=NULL,null_type=c("subnetwork1","subnetwork2","all","Savue")){
+null_model<-function(network, number=NULL, null_type=c("subnetwork1","subnetwork2","all","Savue")){
    mat<-as.matrix(network[])
    mat1<-mat[V(network)$level==0,V(network)$level==1]
    mat2<-mat[V(network)$level==1,V(network)$level==2]
