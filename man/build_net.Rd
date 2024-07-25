@@ -18,7 +18,7 @@ build_net(lay_0, lay_1, lay_2, C_lay, asmatrices = FALSE)
 \item{asmatrices}{Logical. whether to output the overall adjacency matrix of the network and the corresponding interaction matrix of the respective subnetworks. Defaults to FALSE.}
 }
 \value{
-Return a tripatite network of direction. From the first layers to the second layer and from the second layer to the third layer.
+Return a tripatite network of direction. The network contains three groups of species and interactions within layers, and there is no link among each group of nodes within one layer.
 }
 \description{
 Generating a network of three layers. All layers of network contain \code{lay_0}, \code{lay_1} and \code{lay_2} nodes respectively.
