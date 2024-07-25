@@ -11,7 +11,7 @@ null_model(
 )
 }
 \arguments{
-\item{network}{A multilayer(tripartite) network of 'igraph' class. The network contains interlayer links and without intralayer links.}
+\item{network}{A multilayer(tripartite) network of 'igraph' class. The network contains three groups of species and interactions within layers without interactions between each group of species.}
 
 \item{number}{A numeric value. The number of null model.  Default to NULL representing number 1.}
 
@@ -27,8 +27,8 @@ The null model could be generated according to different matrix scrambling algor
 \strong{null_type}
 
 \itemize{
-\item{For each of the four types of null models, there are corresponding algorithms. The first type, “subnetwork1”, involved scrambling the adjacency matrix of the first and second layers of the multilayer network.}
-\item{The second type, “subnetwork2”, focused on scrambling the adjacency matrix of the second and third layers. }
+\item{For each of the four types of null models, there are corresponding algorithms. The first type, “subnetwork1”, involved scrambling the adjacency matrix of the first and second groups of the multilayer network.}
+\item{The second type, “subnetwork2”, focused on scrambling the adjacency matrix of the second and third groups. }
 \item{Comprehensively, the third type, “all”, blended the approaches of the first two to disarrange the entire network's adjacency matrix, achieving a thorough perturbation of the network's structure. }
 \item{The last type named “Savue” that disarranged inherent structure in terms of the groups of species connected by each interconnecting species of every subnetworks, thus exhibiting different interconnection patterns.}}
 
