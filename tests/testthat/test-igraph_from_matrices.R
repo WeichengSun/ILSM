@@ -21,11 +21,11 @@ test_that("Determine the type of matrices of inputing", {
    expect_error(igraph_from_matrices(m1,m7),
                 "Make sure matrices either have no row names or have full row names. No NA!!!")
    expect_error(igraph_from_matrices(m4,m5),
-                "Error: There is NA in the column name of mat1 or the row name of mat2!!!")
+                "Make sure matrices either have no row names or have full row names. No NA!!!")
    expect_error(igraph_from_matrices(m3,m7),
-                "Error: There is NA in the column name of mat1 or the row name of mat2!!!")
+                "Make sure matrices either have no row names or have full row names. No NA!!!")
    expect_error(igraph_from_matrices(m3,m8),
-                "Error: please check whether the column name of mat1 is corresponding to the row name of mat2!!!")
+                "Make sure matrices either have no row names or have full row names. No NA!!!")
 })
 
 
@@ -46,7 +46,7 @@ test_that("Make sure the function is implemented", {
    expect_identical(length(M),
                     11L)
    expect_true(length(M)==length(m))
-   expect_length(motif_count(N),
-                    44L)
-   expect_true(motif_count(M)[1]==motif_count(m)[1])
+   expect_length(icmotif_count(N),
+                    48L)
+   expect_true(icmotif_count(M)[1]==icmotif_count(m)[1])
 })
