@@ -14,16 +14,36 @@ knitr::opts_chunk$set(
 )
 ```
 
-The visualization of multilayer interaction network:
+The visualization of an example multilayer interaction network with three parties of nodes and two interaction layers (a, two common forms in literature) and interconnection structures (b, interconnection pattern, c, interconnection motif, d, versatility). Different colors of nodes indicate different parties of species, and the dashed lines indicate the shared species. (a) The shared species in the left panel were indicated by dashed links, and those in the right panel have links from both layers.
 
-```{r echo=F, out.width = "90%"}
-knitr::include_graphics("../man/figure/conbine_1.png")
+```{r echo=F, out.width = "100%"}
+knitr::include_graphics("../man/figure/conbine.png")
 ```
 
-In multilayer network, 44 types of motifs of nodes ranging from 3 to 6 are shown. The green squares, cyan circles, and blue squares represent the first, second, and third layers of the network, respectively. The graph in the first row represents only one node in the middle layer with increasing complexity, similarly, the graph in the second to fourth rows represents a motif with two nodes in the middle layer, and finally the motif in the fifth row represents a motif with three nodes node in the middle layer, which also tends to be the most complex.
+In multilayer network, 48 types of motifs of nodes ranging from 3 to 6 are obtained by that
 
-The numbers "1" to "65" in the cyan circle represent the roles in which the 65 nodes are located.
+```{r echo = T,eval = F}
+library(ILSM)
+type=c("M111","M112","M113","M114","M211","M212","M213","M311","M312","M411","M121","M122-1",
+       "M122-2","M122-3","M123-1","M123-2","M123-3","M123-4","M123-5","M221-1","M221-2",
+       "M221-3","M222-1","M222-2","M222-3","M222-4","M222-5","M222-6","M222-7","M222-8",
+       "M222-9","M321-1","M321-2","M321-3","M321-4","M321-5","M131","M132-1","M132-2",
+       "M132-3","M132-4","M132-5","M231-1","M231-2","M231-3","M231-4","M231-5","M141")
+mr <- par(mfrow=c(6,8),mar=c(1,1,3,1))
+a<-Multi_motif("all")
+ for(i in 1:48){
+     plot(a[[i]],
+          vertex.size=30, vertex.label=NA,
+          vertex.color="#D0E7ED",main=type[i])
+}
+par(mr)
+
+```
+
+The green squares, cyan circles, and blue squares represent the first, second, and third groups of nodes of the network, respectively. The graph in the first row represents only one node in the middle group with increasing complexity, similarly, the graph in the second to fourth rows represents a motif with two nodes in the middle group, and finally the motif in the fifth row represents a motif with three nodes node in the middle group, which also tends to be the most complex.
+
+The numbers from 1 to 70 in the cyan circle represent the roles in which the 70 nodes are located.
 
 ```{r echo=F, out.width = "100%" }
-knitr::include_graphics("../man/figure/motif_motify.png")
+knitr::include_graphics("../man/figure/motif_ILSM.png")
 ```
