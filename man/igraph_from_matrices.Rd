@@ -52,7 +52,9 @@ set.seed(12)
 MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
 MAT[[1]]
 
+tmat<-t(MAT[[3]])
+colnames(tmat)<-NULL
 igraph_from_matrices(MAT[[3]],MAT[[4]])
-M <- igraph_from_matrices(t(MAT[[3]]),MAT[[4]])
+M <- igraph_from_matrices(tmat,MAT[[4]])
 M
 }
