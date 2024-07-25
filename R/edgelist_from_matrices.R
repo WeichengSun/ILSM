@@ -1,36 +1,25 @@
 edgelist_from_matrices<-function(mat1,mat2,isDirected1=T,isDirected2=T){
-   if(nrow(mat1)!=nrow(mat2)){
-      if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-         rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-         rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
-         matrow<-unique(c(rownames(mat1),rownames(mat2)))
-      }
-      if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
-         matrow<-unique(c(rownames(mat1),rownames(mat2)))
-      else
-         stop("Make sure matrices either have no row names or have full row names. No NA!!!")
-      mat_1<-matrix(0,length(matrow),ncol(mat1))
-      rownames(mat_1)<-matrow
-      mat_1[rownames(mat1),]<-mat1
-      mat_1[mat_1>0]<-1
-      mat_2<-matrix(0,length(matrow),ncol(mat2))
-      rownames(mat_2)<-matrow
-      mat_2[rownames(mat2),]<-mat2
-      mat_2[mat_2>0]<-1
-      mat1<-mat_1
-      mat2<-mat_2
+   if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+      rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+      rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
+      matrow<-unique(c(rownames(mat1),rownames(mat2)))
    }
-   else{
-      if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-         rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-         rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
-      }
-      if(sum(!(rownames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
-         stop("Error: please check whether the column name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
-      if(sum(is.na(rownames(mat1)))!=0 | sum(is.na(rownames(mat2)))!=0)
-         stop("Error: There is NA in the column name of network.or.subnet_mat1 or the row name of subnet_mat2!!!")
-      mat2<-mat2[rownames(mat1),]
-   }
+   if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
+      matrow<-unique(c(rownames(mat1),rownames(mat2)))
+   else
+      stop("Make sure matrices either have no row names or have full row names. No NA!!!")
+   mat_1<-matrix(0,length(matrow),ncol(mat1))
+   rownames(mat_1)<-matrow
+   colnames(mat_1)<-colnames(mat1)
+   mat_1[rownames(mat1),]<-mat1
+   mat_1[mat_1>0]<-1
+   mat_2<-matrix(0,length(matrow),ncol(mat2))
+   rownames(mat_2)<-matrow
+   colnames(mat_2)<-colnames(mat2)
+   mat_2[rownames(mat2),]<-mat2
+   mat_2[mat_2>0]<-1
+   mat1<-mat_1
+   mat2<-mat_2
 
 
 
