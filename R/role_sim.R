@@ -2,13 +2,13 @@
 #'
 #' The average of Similarity of 65 roles of interconnecting species of multilayer network.
 #'
-#' @param spe_role_mat A matrix of 65 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role65.
+#' @param spe_role_mat A matrix of 65 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
 #'
 #' @details
 #'
 #' \strong{spe_role_mat}
 #'
-#' Should acquire from function \code{Midlayer_role}.
+#' Should acquire from function \code{motif_role}.
 #'
 #' @return
 #' Return a numeric value.
@@ -19,12 +19,12 @@
 #'
 #' set.seed(12)
 #' d <- build_net(11,22,21,0.2)
-#' mr <- Midlayer_role(d)
+#' mr <- icmotif_role(d)
 #' role_sim(mr)
 #'
 #' set.seed(1)
 #' D <- build_net(11,22,21,0.2)
-#' role_sim(Midlayer_role(D))
+#' role_sim(icmotif_role(D))
 #'
 role_sim<-function(spe_role_mat){
   logi<-(rowSums(spe_role_mat)!=0)
