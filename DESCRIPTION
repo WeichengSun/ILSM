@@ -1,6 +1,6 @@
 Package: ILSM
-Title: Analyze Inter-Layer Structure of Multilayer Ecological Network
-Version: 1.0.2
+Title: Analyze Interconnection Structure of Multilayer Interaction Networks
+Version: 1.0.3.1
 Authors@R: c(
     person("WeiCheng", "Sun", , "sunwch2023@lzu.edu.cn", role = c("aut", "cre")),
     person("Chuan", "Yan", , "yanchuan@lzu.edu.cn", role = c("aut")),
@@ -11,7 +11,7 @@ Description:
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Imports: 
     stats,
     Matrix,
