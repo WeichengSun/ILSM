@@ -1,14 +1,14 @@
 #' Defined multilayer motifs
 #'
-#' Acquiring each or all of 44 motifs of definition of multilayer network.
+#' Acquiring each or all of 48 motifs of definition of multilayer network.
 #'
-#' @param type Character. 45 values representing each and all types of multilayer motifs.
+#' @param type Character. 49 values representing each and all types of multilayer motifs.
 #'
 #' @return
 #'
-#' If \code{type} is one of 44 motifs of definition, function returns a corresponding motif of "igraph".
+#' If \code{type} is one of 48 motifs of definition, function returns a corresponding motif of "igraph".
 #'
-#' If \code{type} is "all", function returns a list containing 44 corresponding motifs of "igraph".
+#' If \code{type} is "all", function returns a list containing 48 corresponding motifs of "igraph".
 #'
 #' @export
 #'
@@ -18,18 +18,20 @@
 #' @importFrom igraph layout_with_sugiyama
 #' @examples
 #'
-#' type<-c("M111","M112","M113","M211","M212","M213","M311","M312","M121-1",
-#' "M122-1","M122-2","M122-3","M123-1","M123-2","M123-3","M123-4","M123-5",
-#' "M221-1","M221-2","M221-3","M222-1","M222-2","M222-3","M222-4","M222-5",
-#' "M222-6","M222-7","M222-8","M321-1","M321-2","M321-3","M321-4","M321-5",
-#' "M131","M132-1","M132-2","M132-3","M132-4","M132-5","M231-1","M231-2",
-#' "M231-3","M231-4","M231-5")
+#' type<-c("M111","M112","M113","M114","M211","M212","M213","M311",
+#' "M312","M411","M121","M122-1","M122-2","M122-3","M123-1",
+#' "M123-2","M123-3","M123-4","M123-5","M221-1","M221-2",
+#' "M221-3","M222-1","M222-2","M222-3","M222-4","M222-5",
+#' "M222-6","M222-7","M222-8","M222-9","M321-1","M321-2",
+#' "M321-3","M321-4","M321-5","M131","M132-1","M132-2",
+#' "M132-3","M132-4","M132-5","M231-1","M231-2","M231-3",
+#' "M231-4","M231-5","M141")
 #'
 #' m<-Multi_motif("M222-4")
 #' plot(m,main="M222-4")
 #'
 #' mr <- par(mfrow=c(6,8),mar=c(1,1,3,1))
-#' for(i in 1:44){
+#' for(i in 1:48){
 #'     plot(Multi_motif("all")[[i]],
 #'     vertex.size=30, vertex.label=NA,
 #'     vertex.color="blue",main=type[i])
@@ -37,10 +39,12 @@
 #' par(mr)
 #'
 
- Multi_motif<-function(type=c("M111","M112","M113","M211","M212","M213","M311","M312","M121-1","M122-1","M122-2",
-                             "M122-3","M123-1","M123-2","M123-3","M123-4","M123-5","M221-1","M221-2","M221-3","M222-1","M222-2",
-                             "M222-3","M222-4","M222-5","M222-6","M222-7","M222-8","M321-1","M321-2","M321-3","M321-4","M321-5",
-                             "M131","M132-1","M132-2","M132-3","M132-4","M132-5","M231-1","M231-2","M231-3","M231-4","M231-5","all")){
+ Multi_motif<-function(type=c("M111","M112","M113","M114","M211","M212","M213","M311","M312","M411","M121","M122-1",
+                              "M122-2","M122-3","M123-1","M123-2","M123-3","M123-4","M123-5","M221-1","M221-2",
+                              "M221-3","M222-1","M222-2","M222-3","M222-4","M222-5","M222-6","M222-7","M222-8",
+                              "M222-9","M321-1","M321-2","M321-3","M321-4","M321-5","M131","M132-1","M132-2",
+                              "M132-3","M132-4","M132-5","M231-1","M231-2","M231-3","M231-4","M231-5","M141",
+                              "all")){
     if(is.null(type))
         type<-"all"
     if(type=="M111"){
@@ -66,6 +70,14 @@
        V(M113)$level<-c(0:2,2,2)
        M113$layout<-layout_with_sugiyama(M113,layers=V(M113)$level)$layout
        return(M113)
+    }
+    if(type=="M114"){
+        M114<-matrix(c("1","2","2","2","2","2","3","4","5","6"),5,2)
+        M114<-graph_from_edgelist(M114)
+        M114<-as.undirected(M114)
+        V(M114)$level<-c(0:2,2,2,2)
+        M114$layout<-layout_with_sugiyama(M114,layers=V(M114)$level)$layout
+        return(M114)
     }
     if(type=="M211"){
        M211<-matrix(c("1","2","3","3","3","4"),3,2)
@@ -122,7 +134,15 @@
        M312$layout<-layout_with_sugiyama(M312,layers=V(M312)$level)$layout
        return(M312)
     }
-    if(type=="M121-1"){
+    if(type=="M411"){
+        M411<-matrix(c("1","2","3","4","5","5","5","5","5","6"),5,2)
+        M411<-graph_from_edgelist(M411)
+        M411<-as.undirected(M411)
+        V(M411)$level<-c(0,1,0,0,0,2)
+        M411$layout<-layout_with_sugiyama(M411,layers=V(M411)$level)$layout
+        return(M411)
+    }
+    if(type=="M121"){
        M1211<-matrix(c("1","1","2","3","2","3","4","4"),4,2)
        M1211<-graph_from_edgelist(M1211)
        NET<-as.undirected(M1211)
@@ -343,6 +363,17 @@
        M2228$layout<-layout_with_sugiyama(M2228,layers=V(M2228)$level)$layout
        return(M2228)
     }
+    if(type=="M222-9"){
+        M2229<-matrix(c("1","2","2","3","4","4","3","3","4","5","5","6"),6,2)
+        M2229<-graph_from_edgelist(M2229)
+        NET<-as.undirected(M2229)
+        V(NET)$level[(V(NET)$name)%in%c("1","2")]<-0
+        V(NET)$level[(V(NET)$name)%in%c("3","4")]<-1
+        V(NET)$level[(V(NET)$name)%in%c("5","6")]<-2
+        M2229<-NET
+        M2229$layout<-layout_with_sugiyama(M2229,layers=V(M2229)$level)$layout
+        return(M2229)
+    }
     if(type=="M321-1"){
        M3211<-matrix(c("1","2","3","4","5","4","4","5","6","6"),5,2)
        M3211<-graph_from_edgelist(M3211)
@@ -519,6 +550,17 @@
        M2315$layout<-layout_with_sugiyama(M2315,layers=V(M2315)$level)$layout
        return(M2315)
     }
+    if(type=="M141"){
+        M141<-matrix(c("1","1","1","1","2","3","4","5","2","3","4","5","6","6","6","6"),8,2)
+        M141<-graph_from_edgelist(M141)
+        NET<-as.undirected(M141)
+        V(NET)$level[(V(NET)$name)%in%c("1")]<-0
+        V(NET)$level[(V(NET)$name)%in%c("2","3","4","5")]<-1
+        V(NET)$level[(V(NET)$name)%in%c("6")]<-2
+        M141<-NET
+        M141$layout<-layout_with_sugiyama(M141,layers=V(M141)$level)$layout
+        return(M141)
+    }
 
     if(type=="all"){
        M111<-matrix(c("1","2","2","3"),2,2)
@@ -538,6 +580,12 @@
        M113<-as.undirected(M113)
        V(M113)$level<-c(0:2,2,2)
        M113$layout<-layout_with_sugiyama(M113,layers=V(M113)$level)$layout
+
+       M114<-matrix(c("1","2","2","2","2","2","3","4","5","6"),5,2)
+       M114<-graph_from_edgelist(M114)
+       M114<-as.undirected(M114)
+       V(M114)$level<-c(0:2,2,2,2)
+       M114$layout<-layout_with_sugiyama(M114,layers=V(M114)$level)$layout
 
        M211<-matrix(c("1","2","3","3","3","4"),3,2)
        M211<-graph_from_edgelist(M211)
@@ -583,6 +631,12 @@
        V(NET)$level[(V(NET)$name)%in%c("5","6")]<-2
        M312<-NET
        M312$layout<-layout_with_sugiyama(M312,layers=V(M312)$level)$layout
+
+       M411<-matrix(c("1","2","3","4","5","5","5","5","5","6"),5,2)
+       M411<-graph_from_edgelist(M411)
+       M411<-as.undirected(M411)
+       V(M411)$level<-c(0,1,0,0,0,2)
+       M411$layout<-layout_with_sugiyama(M411,layers=V(M411)$level)$layout
 
        M1211<-matrix(c("1","1","2","3","2","3","4","4"),4,2)
        M1211<-graph_from_edgelist(M1211)
@@ -764,6 +818,15 @@
        M2228<-NET
        M2228$layout<-layout_with_sugiyama(M2228,layers=V(M2228)$level)$layout
 
+       M2229<-matrix(c("1","2","2","3","4","4","3","3","4","5","5","6"),6,2)
+       M2229<-graph_from_edgelist(M2229)
+       NET<-as.undirected(M2229)
+       V(NET)$level[(V(NET)$name)%in%c("1","2")]<-0
+       V(NET)$level[(V(NET)$name)%in%c("3","4")]<-1
+       V(NET)$level[(V(NET)$name)%in%c("5","6")]<-2
+       M2229<-NET
+       M2229$layout<-layout_with_sugiyama(M2229,layers=V(M2229)$level)$layout
+
        M3211<-matrix(c("1","2","3","4","5","4","4","5","6","6"),5,2)
        M3211<-graph_from_edgelist(M3211)
        NET<-as.undirected(M3211)
@@ -908,9 +971,18 @@
        M2315<-NET
        M2315$layout<-layout_with_sugiyama(M2315,layers=V(M2315)$level)$layout
 
-       return(list(M111,M112,M113,M211,M212,M213,M311,M312,M1211,M1221,M1222,M1223,M1231,M1232,M1233,M1234,
-                   M1235,M2211,M2212,M2213,M2221,M2222,M2223,M2224,M2225,M2226,M2227,M2228,M3211,
-                   M3212,M3213,M3214,M3215,M131,M1321,M1322,M1323,M1324,M1325,M2311,M2312,M2313,M2314,M2315))
+       M141<-matrix(c("1","1","1","1","2","3","4","5","2","3","4","5","6","6","6","6"),8,2)
+       M141<-graph_from_edgelist(M141)
+       NET<-as.undirected(M141)
+       V(NET)$level[(V(NET)$name)%in%c("1")]<-0
+       V(NET)$level[(V(NET)$name)%in%c("2","3","4","5")]<-1
+       V(NET)$level[(V(NET)$name)%in%c("6")]<-2
+       M141<-NET
+       M141$layout<-layout_with_sugiyama(M141,layers=V(M141)$level)$layout
+
+       return(list(M111,M112,M113,M114,M211,M212,M213,M311,M312,M411,M1211,M1221,M1222,M1223,M1231,M1232,M1233,M1234,
+                   M1235,M2211,M2212,M2213,M2221,M2222,M2223,M2224,M2225,M2226,M2227,M2228,M2229,M3211,
+                   M3212,M3213,M3214,M3215,M131,M1321,M1322,M1323,M1324,M1325,M2311,M2312,M2313,M2314,M2315,M141))
     }
 }
 
