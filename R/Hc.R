@@ -2,7 +2,7 @@
 #'
 #' This function counts degree hub that the proportion of interconnecting species serving as the core node of the network degree.
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains interlayer links and without intralayer links, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
@@ -32,30 +32,33 @@
 #'
 #'
 #' @return
-#' Print a "Hc= ;" and Return a numeric value representing the degree hub of network.
+#' Print a "hc= ;" and Return a numeric value representing the degree hub of network.
 #'
 #' @importFrom igraph V
 #' @export
 #' @references
 #'
-#' Domínguez-García, V., & Kéfi, S. (2021). The structure and robustness of tripartite ecological networks. bioRxiv, 2021-10.
+#' Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.
 #'
+#' Domínguez-García, V., & Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
+#'
+#' Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.
 #'
 #' @examples
 #'
 #' set.seed(15)
 #' d <- build_net(11,15,17,0.2)
-#' Hc(d)
+#' hc(d)
 #'
 #' md1<-matrix(sample(c(0,1),80,replace=TRUE),8,10)
 #' md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
-#' Hc(md1,md2)
+#' hc(md1,md2)
 #'
 #' mdw1<-matrix(sample(c(rep(0,60),runif(60,0,1))),12,10)
 #' mdw2<-matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
-#' Hc(mdw1,mdw2)
+#' hc(mdw1,mdw2)
 #'
-Hc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
+hc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
    if(inherits(network.or.subnet_mat1,"igraph")){
       network<-network.or.subnet_mat1
       mat<-as.matrix(network[])
@@ -70,7 +73,7 @@ Hc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
       # five_summ<-quantile(link_degree,0.8)
       # H_C<-sum((rowSums(m1)+rowSums(m2))>=five_summ)/sum(logi)
       H_C<-hub/round(length(link_degree)*0.2)
-      message(paste(c("H_C"),"=",seq=c(H_C)),"\n")
+      message(paste(c("hc"),"=",seq=c(H_C)),"\n")
       return(H_C)
    }
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))){
@@ -97,7 +100,7 @@ Hc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
          link_degree<-order(rowSums(mat1)+rowSums(mat2),decreasing = T)
          hub<-sum(logi[link_degree[1:round(length(link_degree)*0.2)]])
          H_C<-hub/round(length(link_degree)*0.2)
-         message(paste(c("H_C"),"=",seq=c(H_C)),"\n")
+         message(paste(c("hc"),"=",seq=c(H_C)),"\n")
          return(H_C)
 
 
