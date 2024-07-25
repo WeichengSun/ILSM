@@ -2,7 +2,7 @@
 #'
 #' Calculating correlation of interconnecting species generalism among Subnetworks ("general_'~'cor") and correlation between similarities of interconnecing species interaction partners in two subnetworks ("similar_'~'cor").
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains interlayer links and without intralayer links, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
@@ -97,38 +97,27 @@ subnet_cor<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE){
       else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T && inherits(subnet_mat2,c("matrix","data.frame"))==T){
          mat1<-network.or.subnet_mat1
          mat2<-subnet_mat2
-         if(nrow(mat1)!=nrow(mat2)){
-            if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-               rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-               rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
-               matrow<-unique(c(rownames(mat1),rownames(mat2)))
-            }
-            if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
-               matrow<-unique(c(rownames(mat1),rownames(mat2)))
-            else
-               stop("Make sure matrices either have no row names or have full row names. No NA!!!")
-            mat_1<-matrix(0,length(matrow),ncol(mat1))
-            rownames(mat_1)<-matrow
-            mat_1[rownames(mat1),]<-mat1
-            mat_1[mat_1>0]<-1
-            mat_2<-matrix(0,length(matrow),ncol(mat2))
-            rownames(mat_2)<-matrow
-            mat_2[rownames(mat2),]<-mat2
-            mat_2[mat_2>0]<-1
-            mat1<-mat_1
-            mat2<-mat_2
+         if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+            rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+            rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
+            matrow<-unique(c(rownames(mat1),rownames(mat2)))
          }
-         else{
-            if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-               rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-               rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat1))
-            }
-            if(sum(!(rownames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
-               stop("Error: please check whether the column name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
-            if(sum(is.na(rownames(mat1)))!=0 || sum(is.na(rownames(mat2)))!=0)
-               stop("Error: There is NA in the column name of network.or.subnet_mat1 or the row name of subnet_mat2!!!")
-            mat2<-mat2[rownames(mat1),]
-         }
+         if(nrow(mat1)!=nrow(mat2))
+            message("re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
+         if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
+            matrow<-unique(c(rownames(mat1),rownames(mat2)))
+         else
+            stop("Make sure matrices either have no row names or have full row names. No NA!!!")
+         mat_1<-matrix(0,length(matrow),ncol(mat1))
+         rownames(mat_1)<-matrow
+         mat_1[rownames(mat1),]<-mat1
+         mat_1[mat_1>0]<-1
+         mat_2<-matrix(0,length(matrow),ncol(mat2))
+         rownames(mat_2)<-matrow
+         mat_2[rownames(mat2),]<-mat2
+         mat_2[mat_2>0]<-1
+         mat1<-mat_1
+         mat2<-mat_2
       }
       else
          stop("please check the type of 'network.or.subnet_mat1'")
@@ -158,36 +147,25 @@ subnet_cor<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE){
       if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T && inherits(subnet_mat2,c("matrix","data.frame"))==T){
          mat1<-network.or.subnet_mat1
          mat2<-subnet_mat2
-         if(nrow(mat1)!=nrow(mat2)){
-            if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-               rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-               rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
-               matrow<-unique(c(rownames(mat1),rownames(mat2)))
-            }
-            if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
-               matrow<-unique(c(rownames(mat1),rownames(mat2)))
-            else
-               stop("Make sure matrices either have no row names or have full row names (no NA)!!!")
-            mat_1<-matrix(0,length(matrow),ncol(mat1))
-            rownames(mat_1)<-matrow
-            mat_1[rownames(mat1),]<-mat1
-            mat_2<-matrix(0,length(matrow),ncol(mat2))
-            rownames(mat_2)<-matrow
-            mat_2[rownames(mat2),]<-mat2
-            mat1<-mat_1
-            mat2<-mat_2
+         if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+            rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
+            rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
+            matrow<-unique(c(rownames(mat1),rownames(mat2)))
          }
-         else{
-            if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-               rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-               rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat1))
-            }
-            if(sum(!(rownames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 )
-               stop("Error: please check whether the column name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
-            if(sum(is.na(rownames(mat1)))!=0 || sum(is.na(rownames(mat2)))!=0)
-               stop("Error: There is NA in the column name of network.or.subnet_mat1 or the row name of subnet_mat2!!!")
-            mat2<-mat2[rownames(mat1),]
-         }
+         if(nrow(mat1)!=nrow(mat2))
+            message("re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
+         if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
+            matrow<-unique(c(rownames(mat1),rownames(mat2)))
+         else
+            stop("Make sure matrices either have no row names or have full row names. No NA!!!")
+         mat_1<-matrix(0,length(matrow),ncol(mat1))
+         rownames(mat_1)<-matrow
+         mat_1[rownames(mat1),]<-mat1
+         mat_2<-matrix(0,length(matrow),ncol(mat2))
+         rownames(mat_2)<-matrow
+         mat_2[rownames(mat2),]<-mat2
+         mat1<-mat_1
+         mat2<-mat_2
       }
       else
          stop("please check the type of 'network.or.subnet_mat1'")
