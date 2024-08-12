@@ -133,101 +133,97 @@ icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
    L1<-ncol(PH)
    if(L1 < 4L)
       stop("Error: please input a large 'number of interconnecting species >=4' network data!!!")
-   PH_add<-t(PH)%*%PH
-   HP_add<-HP%*%t(HP)
-   HP_ratio<-HP%*%(1-t(HP))
-   PH_ratio<-t(PH)%*%(1-PH)
-   Two<-function(s){
-      sum(s)*(sum(s)-1)/2
-   }
-   Two_3<-function(s){
-      sum(s)*(sum(s)-1)*(sum(s)-2)/6
-   }
+   Ob<-colSums(PH)
+   Rb<-rowSums(HP)
+   Ubb<-t(PH)%*%PH
+   Xbb<-t(PH)%*%(1-PH)
+   XT<-t(Xbb)
+   Vbb<-HP%*%t(HP)
+   Ybb<-HP%*%(1-t(HP))
+   YT<-t(Ybb)
+   UVbb<-Ubb*Vbb
+   Two<-function(a){ return(a*(a-1)/2) }
+   Three<-function(a){ return(a*(a-1)*(a-2)/6)}
+   Four<-function(a){ return(a*(a-1)*(a-2)*(a-3)/24)}
+
    PP<-PH%*%HP
-   PHP_add<-PH_add*HP_add
-   ############################################################
-   M111<-sum(PP)##
-   ############################################################
-   M112=sum(PH%*%apply(HP,1,Two))
-   ############################################################
-   M211<-sum(apply((PH),2,Two)%*%HP)
-   ############################################################
-   M212<-sum(apply(PH,2,Two)%*%apply(HP,1,Two))
-   ############################################################
-   M121<-sum(PP*(PP-1)/2)##
-   ############################################################
-   M122_1<-sum(PH_add*HP_ratio*t(HP_ratio))/2
-   ############################################################
-   M122_2<-sum(PHP_add*HP_ratio)##
-   ############################################################
-   M<-PHP_add*(HP_add-1)##
-   M122_3<-sum(M[lower.tri(M)])/2
-   ############################################################
-   M221_1<-sum(HP_add*PH_ratio*t(PH_ratio))/2
-   ############################################################
-   M221_2<-sum(PHP_add*(PH_ratio))##
-   ############################################################
-   M<-PHP_add*(PH_add-1)##
-   M221_3<-sum(M[lower.tri(M)])/2
-   ############################################################
-   M222_1<-sum(PH_add*PH_ratio*HP_ratio*t(HP_ratio))
-   ############################################################
-   M222_2<-sum(PH_add*(PH_add-1)*HP_ratio*t(HP_ratio))/4
-   ############################################################
-   M222_3<-sum(PH_ratio*t(PH_ratio)*HP_add*HP_ratio)
-   ############################################################
-   M222_4<-sum(PHP_add*PH_ratio*HP_ratio)##
-   ############################################################
-   M222_5<-sum((PHP_add*(PH_add-1)/2)*HP_ratio)##
-   ############################################################
-   M222_6<-sum(PH_ratio*t(PH_ratio)*HP_add*(HP_add-1))/4
-   ############################################################
-   M222_7<-sum(PHP_add*PH_ratio*(HP_add-1)/2)##
-   ############################################################
-   M<-PHP_add*(PH_add-1)*(HP_add-1)/4##
-   M222_8<-sum(M[lower.tri(M)])
-   ###########################################################
-   M222_9<-sum(PHP_add*PH_ratio*t(HP_ratio))##
-   ###########################################################
-   b<-apply(HP,1,Two_3)
-   M113<-sum(PH%*%apply(HP,1,Two_3))
-   ###########################################################
-   M114<-sum(PH%*%apply(HP,1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
-   ###########################################################
-   M311<-sum(t(HP)%*%apply(t(PH),1,Two_3))
-   ###########################################################
-   M411<-sum(t(HP)%*%apply(t(PH),1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
-   ###########################################################
-   M213<-sum(apply(PH,2,Two)%*%apply(HP, 1,Two_3))
-   ###########################################################
-   M312<-sum(apply(PH,2,Two_3)%*%apply(HP,1, Two))
-   ###########################################################
-   M123_1<-sum(PH_add*(HP_ratio*(HP_ratio-1)/2)*t(HP_ratio))
-   ###########################################################
-   M123_2<-sum(PHP_add*(HP_ratio*(HP_ratio-1)/2))##
-   ###########################################################
-   M123_3<-sum(PHP_add*HP_ratio*t(HP_ratio))/2##
-   ###########################################################
-   M123_4<-sum(PHP_add*((HP_add-1)/2)*HP_ratio)##
-   ###########################################################
-   M<-PHP_add*((HP_add-1)*(HP_add-2)/6)
-   M123_5<-sum(M[lower.tri(M)])
-   ###########################################################
-   M321_1<-sum((PH_ratio*(PH_ratio-1)/2)*t(PH_ratio)*HP_add)
-   ###########################################################
-   M321_2<-sum((PH_ratio*(PH_ratio-1)/2)*PHP_add)##
-   ###########################################################
-   M321_3<-sum(PHP_add*PH_ratio*t(PH_ratio))/2##
-   ############(##############################################
-   M321_4<-sum((PHP_add*(PH_add-1)/2)*PH_ratio)##
-   ###########################################################
-   M<-(PHP_add*(PH_add-1)*(PH_add-2)/6)##
-   M321_5<-sum(M[lower.tri(M)])
-   ###########################################################
-   M131<-sum(PP*(PP-1)*(PP-2)/6)##
-   ###########################################################
-   M141<-sum(PP*(PP-1)*(PP-2)*(PP-3)/24)
-   ###########################################################
+
+   M111 <- sum(Ob*Rb) #=sum(PP)
+
+   M112 <- sum(Ob*Two(Rb)) #=sum(PH%*%apply(HP,1,Two))
+
+   M113 <- sum(Ob*Three(Rb))  #=sum(PH%*%apply(HP,1,Two_3))
+
+   M114 <- sum(Ob*Four(Rb)) #=sum(PH%*%apply(HP,1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
+
+   M211 <- sum(Two(Ob)*Rb) #=sum(apply((PH),2,Two)%*%HP)
+
+   M212 <- sum(Two(Ob)*Two(Rb))  #=sum(apply(PH,2,Two)%*%apply(HP,1,Two))
+
+   M213 <- sum(Two(Ob)*Three(Rb))  #=sum(apply(PH,2,Two)%*%apply(HP, 1,Two_3))
+
+   M311 <- sum(Three(Ob)*Rb)  #=sum(t(HP)%*%apply(t(PH),1,Two_3))
+
+   M312 <- sum(Three(Ob)*Two(Rb))  #=sum(apply(PH,2,Two_3)%*%apply(HP,1, Two))
+
+   M411 <- sum(Four(Ob)*Rb) #=sum(t(HP)%*%apply(t(PH),1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
+
+   M121 <- (sum(UVbb)-M111)/2 #=sum(PP*(PP-1)/2)##
+
+   M122_1 <- sum(Ubb*Ybb*YT)/2 #=sum(PH_add*HP_ratio*t(HP_ratio))/2
+
+   M122_2 <- sum(UVbb*Ybb) #=sum(PHP_add*HP_ratio)##
+
+   M122_3 <- (sum(Ubb*Two(Vbb))-M112)/2 # M<-PHP_add*(HP_add-1); =sum(M[lower.tri(M)])/2
+
+   M123_1 <- sum(Ubb*Two(Ybb)*YT) #=sum(PH_add*(HP_ratio*(HP_ratio-1)/2)*t(HP_ratio))
+
+   M123_2 <- sum(UVbb*Two(YT)) #=sum(PHP_add*(HP_ratio*(HP_ratio-1)/2))##
+
+   M123_3 <- sum(UVbb*Ybb*YT)/2 #=sum(PHP_add*HP_ratio*t(HP_ratio))/2##
+
+   M123_4 <- sum(Ubb*Two(Vbb)*Ybb) #=sum(PHP_add*((HP_add-1)/2)*HP_ratio)##
+
+   M123_5 <- (sum(Ubb*Three(Vbb))-M113)/2 #  M<-PHP_add*((HP_add-1)*(HP_add-2)/6); =sum(M[lower.tri(M)])
+
+   M221_1 <- sum(Xbb*XT*Vbb)/2 #=sum(HP_add*PH_ratio*t(PH_ratio))/2
+
+   M221_2 <- sum(UVbb*Xbb) #=sum(PHP_add*(PH_ratio))##
+
+   M221_3 <- (sum(Two(Ubb)*Vbb)-M211)/2 #M<-PHP_add*(PH_add-1); =sum(M[lower.tri(M)])/2
+
+   M222_1 <- sum(Ubb*Xbb*Ybb*YT) #=sum(PH_add*PH_ratio*HP_ratio*t(HP_ratio))
+
+   M222_2 <- sum(Two(Ubb)*Ybb*YT)/2 #=sum(PH_add*(PH_add-1)*HP_ratio*t(HP_ratio))/4
+
+   M222_3 <- sum(Xbb*XT*Ybb*Vbb) #=sum(PH_ratio*t(PH_ratio)*HP_add*HP_ratio)
+
+   M222_4 <- sum(UVbb*Xbb*Ybb) #=sum(PHP_add*PH_ratio*HP_ratio)##
+
+   M222_5 <- sum(Two(Ubb)*Vbb*YT) #=sum((PHP_add*(PH_add-1)/2)*HP_ratio)##
+
+   M222_6 <- sum(Xbb*XT*Two(Vbb))/2 #=sum(PH_ratio*t(PH_ratio)*HP_add*(HP_add-1))/4
+
+   M222_7 <- sum(Ubb*Xbb*Two(Vbb)) #=sum(PHP_add*PH_ratio*(HP_add-1)/2)##
+
+   M222_8 <- (sum(Two(Ubb)*Two(Vbb))-M212)/2 #M<-PHP_add*(PH_add-1)*(HP_add-1)/4; =sum(M[lower.tri(M)])
+
+   M222_9 <- sum(UVbb*Xbb*YT) #=sum(PHP_add*PH_ratio*t(HP_ratio))##
+
+   M321_1 <- sum(Two(Xbb)*XT*Vbb) #=sum((PH_ratio*(PH_ratio-1)/2)*t(PH_ratio)*HP_add)
+
+   M321_2 <- sum(UVbb*Two(XT)) #=sum((PH_ratio*(PH_ratio-1)/2)*PHP_add)##
+
+   M321_3 <- sum(UVbb*Xbb*XT)/2 #=sum(PHP_add*PH_ratio*t(PH_ratio))/2##
+
+   M321_4 <- sum(Two(Ubb)*XT*Vbb) #=sum((PHP_add*(PH_add-1)/2)*PH_ratio)##
+
+   M321_5 <- (sum(Three(Ubb)*Vbb)-M311)/2 #M<-(PHP_add*(PH_add-1)*(PH_add-2)/6); =sum(M[lower.tri(M)])
+
+   M131 <- sum(Three(PP))
+
+   M141 <- sum(Four(PP))
+
    M1321=M1322=M1323=M1324=M1325=M2311=M2312=M2313=M2314=M2315<-0
    for(i in 1:L1){
       for(j in 1:L1){
