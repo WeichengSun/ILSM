@@ -112,25 +112,7 @@ icmotif_role<-function(network.or.subnet_mat1, subnet_mat2=NULL){
       mat_2[mat_2>0]<-1
       mat1<-mat_1
       mat2<-mat_2
-      # else{
-      #    if(sum(!(rownames(mat1)%in%(rownames(mat2))),na.rm = TRUE)!=0 ){
-      #       message("Error: please check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
-      #       matrow<-unique(c(rownames(mat1),rownames(mat2)))
-      #       mat_1<-matrix(0,length(matrow),ncol(mat1))
-      #       rownames(mat_1)<-matrow
-      #       mat_1[rownames(mat1),]<-mat1
-      #       mat_1[mat_1>0]<-1
-      #       mat_2<-matrix(0,length(matrow),ncol(mat2))
-      #       rownames(mat_2)<-matrow
-      #       mat_2[rownames(mat2),]<-mat2
-      #       mat_2[mat_2>0]<-1
-      #       mat1<-mat_1
-      #       mat2<-mat_2
-      #    }
-      #    if(sum(is.na(rownames(mat1)))!=0 || sum(is.na(rownames(mat2)))!=0)
-      #       stop("Error: There is NA in the row name of network.or.subnet_mat1 or the row name of subnet_mat2!!!")
-      #    mat2<-mat2[rownames(mat1),]
-      # }
+
       PH<-t(mat1)
       HP<-mat2
       logi<-(apply(PH,2,sum)*apply(HP,1,sum))!=0
@@ -145,119 +127,131 @@ icmotif_role<-function(network.or.subnet_mat1, subnet_mat2=NULL){
    L1<-ncol(PH)
    if(L1 < 4L)
       stop("Error: please input a large 'number of interconnecting species >=4' network data!!!")
-   PH_add<-t(PH)%*%PH
-   HP_add<-HP%*%t(HP)
-   HP_ratio<-HP%*%(1-t(HP))
-   PH_ratio<-t(PH)%*%(1-PH)
+   # PH_add<-t(PH)%*%PH
+   # HP_add<-HP%*%t(HP)
+   # HP_ratio<-HP%*%(1-t(HP))
+   # PH_ratio<-t(PH)%*%(1-PH)
+   Ob<-colSums(PH)
+   Rb<-rowSums(HP)
+   Ubb<-t(PH)%*%PH
+   Xbb<-t(PH)%*%(1-PH)
+   XT<-t(Xbb)
+   Vbb<-HP%*%t(HP)
+   Ybb<-HP%*%(1-t(HP))
+   YT<-t(Ybb)
+   UVbb<-Ubb*Vbb
+   Two<-function(a){ return(a*(a-1)/2) }
+   Three<-function(a){ return(a*(a-1)*(a-2)/6)}
+   Four<-function(a){ return(a*(a-1)*(a-2)*(a-3)/24)}
    HH_role<-NULL
 
-   M111<-(apply(PH,2,sum)*apply(HP,1,sum))
-   HH_role<-cbind(HH_role,M111)
+   M111 <- Ob*Rb
+   HH_role <- cbind(HH_role,M111)
 
-   M112<-(apply(PH,2,sum)*apply(HP,1,function(i){sum(i)*(sum(i)-1)/2}))
-   HH_role<-cbind(HH_role,M112)
+   M112 <- Ob*Two(Rb)
+   HH_role <- cbind(HH_role,M112)
 
-   M113<-(apply(PH,2,sum)*apply(HP,1,function(i){sum(i)*(sum(i)-1)*(sum(i)-2)/6}))
-   HH_role<-cbind(HH_role,M113)
+   M113 <- Ob*Three(Rb)
+   HH_role <- cbind(HH_role,M113)
 
-   M114<-(apply(PH,2,sum)*apply(HP,1,function(i){sum(i)*(sum(i)-1)*(sum(i)-2)*(sum(i)-3)/24}))
-   HH_role<-cbind(HH_role,M114)
+   M114<-Ob*Four(Rb)
+   HH_role <- cbind(HH_role,M114)
 
-   M211<-apply(PH,2,function(i){sum(i)*(sum(i)-1)/2})*apply(HP,1,sum)
-   HH_role<-cbind(HH_role,M211)
+   M211 <- Two(Ob)*Rb
+   HH_role <- cbind(HH_role,M211)
 
-   M212<-(apply(PH,2,function(i){sum(i)*(sum(i)-1)/2})*apply(HP,1,function(i){sum(i)*(sum(i)-1)/2}))
-   HH_role<-cbind(HH_role,M212)
+   M212 <- Two(Ob)*Two(Rb)
+   HH_role <- cbind(HH_role,M212)
 
-   M213<-apply(PH,2,function(i){sum(i)*(sum(i)-1)/2})*apply(HP,1,function(i){sum(i)*(sum(i)-1)*(sum(i)-2)/6})
-   HH_role<-cbind(HH_role,M213)
+   M213 <- Two(Ob)*Three(Rb)
+   HH_role <- cbind(HH_role,M213)
 
-   M311<-apply(PH,2,function(i){sum(i)*(sum(i)-1)*(sum(i)-2)/6})*apply(HP,1,sum)
-   HH_role<-cbind(HH_role,M311)
+   M311 <- Three(Ob)*Rb
+   HH_role <- cbind(HH_role,M311)
 
-   M312<-apply(PH,2,function(i){sum(i)*(sum(i)-1)*(sum(i)-2)/6})*apply(HP,1,function(i){sum(i)*(sum(i)-1)/2})
-   HH_role<-cbind(HH_role,M312)
+   M312 <- Three(Ob)*Two(Rb)
+   HH_role <- cbind(HH_role,M312)
 
-   M411<-apply(PH,2,function(i){sum(i)*(sum(i)-1)*(sum(i)-2)*(sum(i)-3)/24})*apply(HP,1,sum)
-   HH_role<-cbind(HH_role,M411)
+   M411 <- Four(Ob)*Rb
+   HH_role <- cbind(HH_role,M411)
 
-   M121_1<-(PH_add*HP_add)*((PH_add*HP_add)%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M121_1)+colSums(M121_1))
+   # M121#
+   HH_role <- cbind(HH_role,rowSums(UVbb)-M111)
 
-   M122_1<-(PH_add*HP_ratio*t(HP_ratio))*((PH_add*HP_ratio*t(HP_ratio))%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M122_1)+colSums(M122_1))
+   M122_1 <- Ubb*Ybb*YT
+   HH_role <- cbind(HH_role,rowSums(M122_1))
 
-   M122_2<-PH_add*HP_add*HP_ratio
-   HH_role<-cbind(HH_role,colSums(M122_2),rowSums(M122_2))
+   M122_2 <- UVbb*Ybb
+   HH_role <- cbind(HH_role,colSums(M122_2),rowSums(M122_2))
 
-   M122_3<-(PH_add*HP_add*(HP_add-1)/2)*((PH_add*HP_add*(HP_add-1)/2)%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M122_3)+colSums(M122_3))
+   M122_3 <- Ubb*Two(Vbb)
+   HH_role <- cbind(HH_role,rowSums(M122_3)-M112)
 
-   M123_1<-PH_add*(HP_ratio*(HP_ratio-1)/2)*t(HP_ratio)
-   HH_role<-cbind(HH_role,rowSums(M123_1),colSums(M123_1))
+   M123_1 <- Ubb*Two(Ybb)*YT
+   HH_role <- cbind(HH_role,rowSums(M123_1),colSums(M123_1))
 
-   M123_2<-PH_add*HP_add*(HP_ratio*(HP_ratio-1)/2)
-   HH_role<-cbind(HH_role,colSums(M123_2),rowSums(M123_2))
+   M123_2 <- UVbb*Two(YT)
+   HH_role <- cbind(HH_role,rowSums(M123_2),colSums(M123_2))
 
-   M123_3<-PH_add*HP_add*HP_ratio*t(HP_ratio)/2
-   HH_role<-cbind(HH_role,rowSums(M123_3)+colSums(M123_3))
+   M123_3 <- UVbb*Ybb*YT
+   HH_role <- cbind(HH_role,rowSums(M123_3))
 
-   M123_4<-PH_add*(HP_add*(HP_add-1)/2)*HP_ratio
-   HH_role<-cbind(HH_role,rowSums(M123_4),colSums(M123_4))
+   M123_4 <- Ubb*Two(Vbb)*Ybb
+   HH_role <- cbind(HH_role,rowSums(M123_4),colSums(M123_4))
 
-   M123_5<-(PH_add*(HP_add*(HP_add-1)*(HP_add-2)/6))*((PH_add*(HP_add*(HP_add-1)*(HP_add-2)/6))%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M123_5)+colSums(M123_5))
+   M123_5 <- Ubb*Three(Vbb)
+   HH_role <- cbind(HH_role,rowSums(M123_5)-M113)
 
-   M221_1<-(HP_add*PH_ratio*t(PH_ratio))* ((HP_add*PH_ratio*t(PH_ratio))%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M221_1)+colSums(M221_1))
+   M221_1 <- Xbb*XT*Vbb
+   HH_role <- cbind(HH_role,rowSums(M221_1))
 
-   M221_2<-PH_add*(PH_ratio)*HP_add
-   HH_role<-cbind(HH_role,rowSums(M221_2),colSums(M221_2))
+   M221_2 <- UVbb*Xbb
+   HH_role <- cbind(HH_role,rowSums(M221_2),colSums(M221_2))
 
-   M221_3<-(PH_add*(PH_add-1)*HP_add/2)*((PH_add*(PH_add-1)*HP_add/2)%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M221_3)+colSums(M221_3))
+   M221_3 <- Two(Ubb)*Vbb
+   HH_role <- cbind(HH_role,rowSums(M221_3)-M211)
 
-   M222_1<-PH_add*PH_ratio*HP_ratio*t(HP_ratio)
-   HH_role<-cbind(HH_role,rowSums(M222_1),colSums(M222_1))
+   M222_1 <- Ubb*Xbb*Ybb*YT
+   HH_role <- cbind(HH_role,rowSums(M222_1),colSums(M222_1))
 
-   M222_2<-PH_add*(PH_add-1)*HP_ratio*t(HP_ratio)/4
-   HH_role<-cbind(HH_role,rowSums(M222_2)+colSums(M222_2))
+   M222_2 <- Two(Ubb)*Ybb*YT
+   HH_role <- cbind(HH_role,rowSums(M222_2))
 
-   M222_3<-PH_ratio*t(PH_ratio)*HP_add*HP_ratio
-   HH_role<-cbind(HH_role,rowSums(M222_3),colSums(M222_3))
+   M222_3 <- Xbb*XT*Ybb*Vbb
+   HH_role <- cbind(HH_role,rowSums(M222_3),colSums(M222_3))
 
-   M222_4<-PH_add*HP_add*PH_ratio*HP_ratio
-   HH_role<-cbind(HH_role,rowSums(M222_4),colSums(M222_4))
+   M222_4 <- UVbb*Xbb*Ybb
+   HH_role <- cbind(HH_role,rowSums(M222_4),colSums(M222_4))
 
-   M222_5<-(PH_add*(PH_add-1)/2)*HP_add*HP_ratio
-   HH_role<-cbind(HH_role,colSums(M222_5),rowSums(M222_5))
+   M222_5 <- Two(Ubb)*Vbb*YT
+   HH_role <- cbind(HH_role,rowSums(M222_5),colSums(M222_5))
 
-   M222_6<-PH_ratio*t(PH_ratio)*HP_add*(HP_add-1)/4
-   HH_role<-cbind(HH_role,rowSums(M222_6)+colSums(M222_6))
+   M222_6 <- Xbb*XT*Two(Vbb)
+   HH_role <- cbind(HH_role,rowSums(M222_6))
 
-   M222_7<-PH_add*PH_ratio*HP_add*(HP_add-1)/2
-   HH_role<-cbind(HH_role,rowSums(M222_7),colSums(M222_7))
+   M222_7 <- Ubb*Xbb*Two(Vbb)
+   HH_role <- cbind(HH_role,rowSums(M222_7),colSums(M222_7))
 
-   M222_8<-(PH_add*(PH_add-1)*HP_add*(HP_add-1)/4)*((PH_add*(PH_add-1)*HP_add*(HP_add-1)/4)%>%upper.tri())
-   HH_role<-cbind(HH_role,rowSums(M222_8)+colSums(M222_8))
+   M222_8 <- Two(Ubb)*Two(Vbb)
+   HH_role <- cbind(HH_role,rowSums(M222_8)-M212)
 
-   M222_9<-PH_add*HP_add*PH_ratio*t(HP_ratio)
-   HH_role<-cbind(HH_role,rowSums(M222_9),colSums(M222_9))
+   M222_9 <- UVbb*Xbb*YT
+   HH_role <- cbind(HH_role,rowSums(M222_9),colSums(M222_9))
 
-   M321_1<-(PH_ratio*(PH_ratio-1)/2)*t(PH_ratio)*HP_add
-   HH_role<-cbind(HH_role,rowSums(M321_1),colSums(M321_1))
+   M321_1 <- Two(Xbb)*XT*Vbb
+   HH_role <- cbind(HH_role,rowSums(M321_1),colSums(M321_1))
 
-   M321_2<-(PH_ratio*(PH_ratio-1)/2)*PH_add*HP_add
-   HH_role<-cbind(HH_role,colSums(M321_2),rowSums(M321_2))
+   M321_2 <- UVbb*Two(XT)
+   HH_role <- cbind(HH_role,rowSums(M321_2),colSums(M321_2))
 
-   M321_3<-(PH_add*PH_ratio*t(PH_ratio)*HP_add/2)
-   HH_role<-cbind(HH_role,colSums(M321_3)+rowSums(M321_3))
+   M321_3 <- UVbb*Xbb*XT
+   HH_role <- cbind(HH_role,rowSums(M321_3))
 
-   M321_4<-(PH_add*(PH_add-1)/2)*PH_ratio*HP_add
-   HH_role<-cbind(HH_role,colSums(M321_4),rowSums(M321_4))
+   M321_4 <- Two(Ubb)*XT*Vbb
+   HH_role <- cbind(HH_role,rowSums(M321_4),colSums(M321_4))
 
-   M321_5<-(HP_add*PH_add*(PH_add-1)*(PH_add-2)/6)*((HP_add*PH_add*(PH_add-1)*(PH_add-2)/6)%>%upper.tri())
-   HH_role<-cbind(HH_role,colSums(M321_5)+rowSums(M321_5))
+   M321_5 <- Three(Ubb)*Vbb
+   HH_role <- cbind(HH_role,rowSums(M321_5)-M311)
 
 ####################
    M131=M1321=M1321_1=M1322=M1322_1=M1323=M1323_1=M1324=M1324_1=M1325=M2311=M2311_1=M2312=M2312_1=M2313=M2313_1=M2314=M2314_1=M2315=M141<-rep(0,L1)
