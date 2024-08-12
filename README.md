@@ -58,7 +58,6 @@ in which the 70 nodes are located.
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(ILSM)
 ## generate a network
 set.seed(12)
 N <- build_net(11,15,16,0.2)
