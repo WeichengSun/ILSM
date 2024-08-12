@@ -54,7 +54,6 @@ In multilayer network, 48 types of motifs of nodes ranging from 3 to 6 are shown
 This is a basic example which shows you how to solve a common problem:
 
 ```{r echo = TRUE, eval = FALSE}
-library(ILSM)
 ## generate a network
 set.seed(12)
 N <- build_net(11,15,16,0.2)
