@@ -36,17 +36,21 @@
 #'
 #' @examples
 #'
+#' ## generate a random multilayer network
 #' set.seed(12)
-#' d <- build_net(11,22,21,0.2)
+#' Net <- build_net(11,15,16,0.2)
+#'
+#' data(PPH_Coltparkmeadow)
+#' Net <- PPH_Coltparkmeadow
 #'
 #' set.seed(123)
-#' null_model(d)
+#' null_model(Net)
 #' set.seed(123)
-#' null_model(d,null_type="subnetwork1")
+#' null_model(Net,null_type="subnetwork1")
 #' set.seed(123)
-#' null_model(d,null_type="Savue")
+#' null_model(Net,null_type="Savue")
 #' set.seed(123)
-#' null_model(d,number=2,null_type="Savue")
+#' null_model(Net,number=2,null_type="Savue")
 
 
 null_model<-function(network, number=NULL, null_type=c("subnetwork1","subnetwork2","all","Savue")){
