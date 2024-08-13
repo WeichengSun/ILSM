@@ -22,13 +22,16 @@ Should acquire from function \code{motif_role}.
 }
 \examples{
 
+## generate a random multilayer network
 set.seed(12)
-d <- build_net(11,22,21,0.2)
-mr <- icmotif_role(d)
-role_sim(mr)
+Net <- build_net(11,15,16,0.2)
+role_sim(icmotif_role(Net))
 
-set.seed(1)
-D <- build_net(11,22,21,0.2)
-role_sim(icmotif_role(D))
+data(PPH_Coltparkmeadow)
+Net <- PPH_Coltparkmeadow
+role_sim(icmotif_role(Net))
+
+
+
 
 }
