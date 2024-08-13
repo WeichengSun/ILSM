@@ -38,17 +38,21 @@ About a network of type "igraph", It can be obtained from the connection matrice
 }
 \examples{
 
+## generate a random multilayer network
 set.seed(12)
-d <- build_net(11,22,21,0.2)
+Net <- build_net(11,15,16,0.2)
+
+data(PPH_Coltparkmeadow)
+Net <- PPH_Coltparkmeadow
 
 set.seed(123)
-null_model(d)
+null_model(Net)
 set.seed(123)
-null_model(d,null_type="subnetwork1")
+null_model(Net,null_type="subnetwork1")
 set.seed(123)
-null_model(d,null_type="Savue")
+null_model(Net,null_type="Savue")
 set.seed(123)
-null_model(d,number=2,null_type="Savue")
+null_model(Net,number=2,null_type="Savue")
 }
 \references{
 Vázquez, D. P., C. J. Melian, N. M. Williams, N. Blüthgen, B. R. Krasnov, and R. Poulin. 2007. Species abundance and asymmetric interaction strength in ecological networks. Oikos 116: 1120-1127.
