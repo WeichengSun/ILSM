@@ -53,26 +53,28 @@ About a network of type "igraph", It can be obtained from the connection matrice
 }
 \examples{
 
+
+## generate a random multilayer network
 set.seed(12)
-d <- build_net(11,22,21,0.2)
-m <- icmotif_count(d)
-m
+Net <- build_net(11,15,16,0.2)
+
+data(PPH_Coltparkmeadow)
+Net <- PPH_Coltparkmeadow
+icmotif_count(Net)
 
 set.seed(12)
-d <- build_net(11,22,21,0.2,asmatrices=TRUE)
-
-MAT<-d
+MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
 icmotif_count(MAT[[3]],MAT[[4]])
 
-md1<-matrix(sample(c(0,1),120,replace=TRUE),8,15)
-md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+md1 <- matrix(sample(c(0,1),120,replace=TRUE),8,15)
+md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
 icmotif_count(md1,md2)
 
-R<-rownames(MAT[[4]])[12]
-MR<-MAT[[4]][12,]
-MAT[[4]]<-MAT[[4]][-12,]
-MAT[[4]]<-rbind(MAT[[4]],MR)
-rownames(MAT[[4]])[22]<-R
+R <- rownames(MAT[[4]])[12]
+MR <- MAT[[4]][12,]
+MAT[[4]] <- MAT[[4]][-12,]
+MAT[[4]] <- rbind(MAT[[4]],MR)
+rownames(MAT[[4]])[22] <- R
 
 icmotif_count(MAT[[3]],MAT[[4]])
 
