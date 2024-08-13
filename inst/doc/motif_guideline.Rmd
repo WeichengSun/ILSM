@@ -40,9 +40,9 @@ par(mr)
 
 ```
 
-The green squares, cyan circles, and blue squares represent the first, second, and third groups of nodes of the network, respectively. The graph in the first row represents only one node in the middle group with increasing complexity, similarly, the graph in the second to fourth rows represents a motif with two nodes in the middle group, and finally the motif in the fifth row represents a motif with three nodes node in the middle group, which also tends to be the most complex.
+The figure below shows the 48 forms of interconnection motifs with 3-6 nodes. Blue and grey nodes form one layer, and grey and orange nodes form the other layer. Grey nodes are connector nodes. The motifs are named "MABC-i": M means "motif',"A" is the number of a-nodes, "B" is the number of b-nodes, "C" is the number of c-nodes and "i" is the serial number for the motifs with the same "ABC". The interconnection motifs are ordered by the number of connector nodes (from 1 to 4). The numbers from 1 to 70 in connector nodes represent the unique roles.
 
-The numbers from 1 to 70 in the cyan circle represent the roles in which the 70 nodes are located.
+The numbers from 1 to 70 in the grey circle represent the roles in which the 70 nodes are located.
 
 ```{r echo=F, out.width = "100%" }
 knitr::include_graphics("../man/figure/motif_ILSM.png")
