@@ -6,22 +6,18 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-In view of the analysis of the structural characteristics of the
-multilayer network (species-sharing species-other species) has been
-complete, however, there is still a lack of a unified operation that can
-quickly obtain the corresponding characteristics of the multilayer
-network and explore Mesoscale structure of the network (motif). To solve
-this insufficiency, ‘ILSM’ was designed for supporting calculating such
-metrics of multilayer networks by functions of R package.
+ILSM is designed for analyzing interconnection structures including
+interconnection patterns, versatility and motifs in multilayer
+interaction networks.
 
-The visualization of an example multilayer interaction network with
-three parties of nodes and two interaction layers (a, two common forms
-in literature) and interconnection structures (b, interconnection
+The figure below shows an example multilayer interaction network (a,
+with three groups of species and two interaction layers, showing two
+common forms) and interconnection structures (b, interconnection
 pattern, c, interconnection motif, d, versatility). Different colors of
-nodes indicate different parties of species, and the dashed lines
-indicate the shared species. (a) The shared species in the left panel
-were indicated by dashed links, and those in the right panel have links
-from both layers.
+nodes indicate different groups of species, and the dashed lines
+indicate the connector species. In panel a, the connector species in the
+left panel were indicated by dashed links, and those in the right panel
+have links from both layers.
 
 <img src="./man/figure/conbine.png" width="100%" />
 
@@ -38,45 +34,48 @@ You can install the development version of ILSM from GitHub:
 devtools::install_github("WeichengSun/ILSM")
 ```
 
-## motif guideline of Multilayer network
+## Interconnection motifs
 
 <img src="./man/figure/motif_ILSM.png" width="2074" />
 
-In multilayer network, 48 types of motifs of nodes ranging from 3 to 6
-are shown. The green squares, cyan circles, and blue squares represent
-the first, second, and third groups of nodes of the network,
-respectively. The graph in the first row represents only one node in the
-middle group with increasing complexity, similarly, the graph in the
-second to fourth rows represents a motif with two nodes in the middle
-group, and finally the motif in the fifth row represents a motif with
-three nodes node in the middle group, which also tends to be the most
-complex. The numbers from 1 to 70 in the cyan circle represent the roles
-in which the 70 nodes are located.
+The figure below shows the 48 forms of interconnection motifs with 3-6
+nodes. Blue and grey nodes form one layer, and grey and orange nodes
+form the other layer. Grey nodes are connector nodes. The motifs are
+named “MABC-i”: M means “motif’,”A” is the number of a-nodes, “B” is the
+number of b-nodes, “C” is the number of c-nodes and “i” is the serial
+number for the motifs with the same “ABC”. The interconnection motifs
+are ordered by the number of connector nodes (from 1 to 4). The numbers
+from 1 to 70 in connector nodes represent the unique roles.
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is an example showing the uses of different functions:
 
 ``` r
-## generate a network
+library(ILSM)
+## generate a random multilayer network
 set.seed(12)
-N <- build_net(11,15,16,0.2)
+Net <- build_net(11,15,16,0.2)# This funciton creats a two-layered network with 11,15, 16 nodes in three groups and the connectance is 0.2 
 
-## calculate the frequency of motifs
-icmotif_count(N)
+##Or use a pollinator-plant-herbivore network from Villa-Galaviz et. al. 2020. Journal of Animal Ecology.
+data(PPH_Coltparkmeadow)
+Net <- PPH_Coltparkmeadow
 
-## measure the roles of connector node
-icmotif_role(N)
+## calculate the frequency of interconnection motifs
+icmotif_count(Net)
 
-## Five interconnection pattern
-coid(N)
-cois(N)
-poc(N)
-pc(N)
-hc(N)
+##the roles of connector node within interconnection motifs
+icmotif_role(Net)
 
-## examine node versatility
-node_cv(N)
+## Five interconnection patterns
+poc(Net)
+coid(Net)
+cois(Net)
+pc(Net)
+hc(Net)
+
+## connector nodes' versatility
+node_cv(Net)
 ```
 
 ## License
@@ -105,3 +104,6 @@ to community stability. Ecology, 97(4), 908-917.
 Pilosof, S., Porter, M. A., Pascual, M., & Kéfi, S. (2017). The
 multilayer nature of ecological networks. Nature Ecology & Evolution,
 1(4), 0101.
+
+Domenico, M. D. 2022. Multilayer Networks: Analysis and Visualization.
+Introduction to muxViz with R. . Springer, Cham.
