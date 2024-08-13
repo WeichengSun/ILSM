@@ -45,16 +45,20 @@
 #'
 #' @examples
 #'
-#' set.seed(15)
-#' d <- build_net(11,15,17,0.2)
-#' pc(d)
+#' ## generate a random multilayer network
+#' set.seed(12)
+#' Net <- build_net(11,15,16,0.2)
 #'
-#' md1<-matrix(sample(c(0,1),80,replace=TRUE),8,10)
-#' md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+#' data(PPH_Coltparkmeadow)
+#' Net <- PPH_Coltparkmeadow
+#' pc(Net)
+#'
+#' md1 <- matrix(sample(c(0,1),80,replace=TRUE),8,10)
+#' md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
 #' pc(md1,md2)
 #'
-#' mdw1<-matrix(sample(c(rep(0,60),runif(60,0,1))),12,10)
-#' mdw2<-matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
+#' mdw1 <- matrix(sample(c(rep(0,60),runif(60,0,1))),12,10)
+#' mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
 #' pc(mdw1,mdw2)
 #'
 pc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
