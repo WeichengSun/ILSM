@@ -23,11 +23,6 @@ have links from both layers.
 
 ## Installation
 
-<!-- Installing the development version from CRAN: -->
-<!-- ```{r echo = TRUE, eval = FALSE} -->
-<!-- install.packages("ILSM") -->
-<!-- ``` -->
-
 You can install the development version of ILSM from GitHub:
 
 ``` r
