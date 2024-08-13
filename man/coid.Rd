@@ -63,26 +63,30 @@ About a network of type "igraph", It can be obtained from the connection matrice
 }
 \examples{
 
+## generate a random multilayer network
 set.seed(12)
-d <- build_net(11,15,17,0.2)
-coid(d)
+Net <- build_net(11,15,16,0.2)
 
-md1<-matrix(sample(c(0,1),110,replace=TRUE),10,11)
-md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+data(PPH_Coltparkmeadow)
+Net <- PPH_Coltparkmeadow
+coid(Net)
+
+md1 <- matrix(sample(c(0,1),110,replace=TRUE),10,11)
+md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
 coid(md1,md2)
 coid(md1,md2,weighted=TRUE)
 
-md1<-matrix(sample(c(0,1),80,replace=TRUE),8,10)
-md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+md1 <- matrix(sample(c(0,1),80,replace=TRUE),8,10)
+md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
 coid(md1,md2)
 
-mdw1<-matrix(runif(110,0,1),10,11)
-mdw2<-matrix(runif(120,0,1),10,12)
+mdw1 <- matrix(runif(110,0,1),10,11)
+mdw2 <- matrix(runif(120,0,1),10,12)
 coid(mdw1,mdw2,weighted=TRUE)
 
 set.seed(1)
-mdw1<-matrix(runif(80,0,1),8,10)
-mdw2<-matrix(runif(120,0,1),10,12)
+mdw1 <- matrix(runif(80,0,1),8,10)
+mdw2 <- matrix(runif(120,0,1),10,12)
 coid(mdw1,mdw2,weighted=TRUE)
 
 
