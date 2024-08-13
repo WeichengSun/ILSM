@@ -52,24 +52,28 @@
 #'
 #' @examples
 #'
+#' ## generate a random multilayer network
 #' set.seed(12)
-#' d <- build_net(11,22,21,0.2)
-#' icmotif_role(d)
+#' Net <- build_net(11,15,16,0.2)
+#'
+#' data(PPH_Coltparkmeadow)
+#' Net <- PPH_Coltparkmeadow
+#' icmotif_role(Net)
 #'
 #' set.seed(12)
 #' MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
 #'
 #' icmotif_role(MAT[[3]],MAT[[4]])
 #'
-#' md1<-matrix(sample(c(0,1),88,replace=TRUE),8,11)
-#' md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+#' md1 <- matrix(sample(c(0,1),88,replace=TRUE),8,11)
+#' md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
 #' icmotif_role(md1,md2)
 #'
-#' R<-rownames(MAT[[4]])[12]
-#' MR<-MAT[[4]][12,]
-#' MAT[[4]]<-MAT[[4]][-12,]
-#' MAT[[4]]<-rbind(MAT[[4]],MR)
-#' rownames(MAT[[4]])[22]<-R
+#' R <- rownames(MAT[[4]])[12]
+#' MR <- MAT[[4]][12,]
+#' MAT[[4]] <- MAT[[4]][-12,]
+#' MAT[[4]] <- rbind(MAT[[4]],MR)
+#' rownames(MAT[[4]])[22] <- R
 #'
 #' icmotif_role(MAT[[3]],MAT[[4]])
 #'
