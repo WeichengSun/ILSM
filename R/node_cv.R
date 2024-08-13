@@ -74,14 +74,17 @@
 #'
 #' @examples
 #'
+#' ## generate a random multilayer network
 #' set.seed(12)
-#' d <- build_net(11,22,21,0.2,asmatrices=TRUE)
-#' d
-#' node_cv(d[[1]])
+#' Net <- build_net(11,15,16,0.2)
 #'
-#' MAT<-d
-#' tmat<-t(MAT[[3]])
-#' colnames(tmat)<-NULL
+#' data(PPH_Coltparkmeadow)
+#' Net <- PPH_Coltparkmeadow
+#' node_cv(Net)
+#'
+#' MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
+#' tmat <- t(MAT[[3]])
+#' colnames(tmat) <- NULL
 #' node_cv(MAT[[3]],MAT[[4]])
 #' node_cv(tmat,MAT[[4]])
 #' node_cv(MAT[[3]],MAT[[4]],type="pagerank")
