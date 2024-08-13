@@ -42,16 +42,20 @@ About a network of type "igraph", It can be obtained from the connection matrice
 }
 \examples{
 
-set.seed(15)
-d <- build_net(11,15,17,0.2)
-hc(d)
+## generate a random multilayer network
+set.seed(12)
+Net <- build_net(11,15,16,0.2)
 
-md1<-matrix(sample(c(0,1),80,replace=TRUE),8,10)
-md2<-matrix(sample(c(0,1),120,replace=TRUE),10,12)
+data(PPH_Coltparkmeadow)
+Net <- PPH_Coltparkmeadow
+hc(Net)
+
+md1 <- matrix(sample(c(0,1),80,replace=TRUE),8,10)
+md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
 hc(md1,md2)
 
-mdw1<-matrix(sample(c(rep(0,60),runif(60,0,1))),12,10)
-mdw2<-matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
+mdw1 <- matrix(sample(c(rep(0,60),runif(60,0,1))),12,10)
+mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
 hc(mdw1,mdw2)
 
 }
