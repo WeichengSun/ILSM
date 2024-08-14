@@ -16,7 +16,7 @@ Each row and column of matrix represents single species in the second and third 
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
 }
 \value{
-Print a "hc= ;" and Return a numeric value representing the degree hub of network.
+Print a "HC= ;" and Return a numeric value representing the degree hub of network.
 }
 \description{
 This function counts degree hub that the proportion of interconnecting species serving as the core node of the network degree.
