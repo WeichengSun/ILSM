@@ -16,7 +16,7 @@ Each row and column of matrix represents single species in the second and third 
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
 }
 \value{
-Print a "pc= ;" and Return a numeric value representing difference in the degree of interconnecting nodes within two subnetworks of multialyer network.
+Print a "PCc= ;" and Return a numeric value representing difference in the degree of interconnecting nodes within two subnetworks of multialyer network.
 }
 \description{
 Counting participation ratio that the difference in the degree of interconnecting nodes within two subnetworks.
