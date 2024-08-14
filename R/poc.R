@@ -29,7 +29,7 @@
 #' About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}.
 #'
 #' @return
-#' Print a "poc= ;" and Return a numeric value representing the proportion of sharing species in intermediate layer.
+#' Print a "POC= ;" and Return a numeric value representing the proportion of sharing species in intermediate layer.
 #'
 #' @import igraph
 #' @export
@@ -73,7 +73,7 @@ poc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
       mat2<-mat[V(network)$level==1,V(network)$level==2]
       logi<-rowSums(mat1)*rowSums(mat2)!=0
       C<-sum(logi)/nrow(mat1)
-      message(paste(c("poc"),"=",seq=c(C)),"\n")
+      message(paste(c("POC"),"=",seq=c(C)),"\n")
       return(C)
    }
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))){
@@ -97,7 +97,7 @@ poc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
          mat2[mat2>0]<-1
          logi<-rowSums(mat1)*rowSums(mat2)!=0
          C<-sum(logi)/nrow(mat1)
-         message(paste(c("poc"),"=",seq=c(C)),"\n")
+         message(paste(c("POC"),"=",seq=c(C)),"\n")
          return(C)
       }
       else
