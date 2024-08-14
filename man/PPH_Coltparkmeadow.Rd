@@ -2,7 +2,6 @@
 % Please edit documentation in R/PPH_Coltparkmeadow.R
 \name{PPH_Coltparkmeadow}
 \alias{PPH_Coltparkmeadow}
-\alias{data}
 \title{A pollinator-plant-herbivore network from Villa-Galaviz et. al. 2020. Journal of Animal Ecology}
 \usage{
 data(PPH_Coltparkmeadow)
