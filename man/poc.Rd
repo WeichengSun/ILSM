@@ -16,7 +16,7 @@ Each row and column of matrix represents single species in the second and third 
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
 }
 \value{
-Print a "poc= ;" and Return a numeric value representing the proportion of sharing species in intermediate layer.
+Print a "POC= ;" and Return a numeric value representing the proportion of sharing species in intermediate layer.
 }
 \description{
 Calculating the proportion of species sharing with other species of two subnetworks in intermediate layer.
