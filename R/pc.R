@@ -30,7 +30,7 @@
 #'
 #'
 #' @return
-#' Print a "pc= ;" and Return a numeric value representing difference in the degree of interconnecting nodes within two subnetworks of multialyer network.
+#' Print a "PCc= ;" and Return a numeric value representing difference in the degree of interconnecting nodes within two subnetworks of multialyer network.
 #'
 #' @import igraph
 #' @export
@@ -71,7 +71,7 @@ pc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
       m1<-mat1[logi,]
       m2<-mat2[logi,]
       PR_C<-mean(2*apply(rbind(rowSums(m1),rowSums(m2)),2,min)/apply(rbind(rowSums(m1),rowSums(m2)),2,sum))
-      message(paste(c("pc"),"=",seq=c(PR_C)),"\n")
+      message(paste(c("PCc"),"=",seq=c(PR_C)),"\n")
       return(PR_C)
    }
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))){
@@ -97,7 +97,7 @@ pc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
          m1<-mat1[logi,]
          m2<-mat2[logi,]
          PR_C<-mean(2*apply(rbind(rowSums(m1),rowSums(m2)),2,min)/apply(rbind(rowSums(m1),rowSums(m2)),2,sum))
-         message(paste(c("pc"),"=",seq=c(PR_C)),"\n")
+         message(paste(c("PCc"),"=",seq=c(PR_C)),"\n")
          return(PR_C)
       }
       else
