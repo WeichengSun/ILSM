@@ -10,6 +10,7 @@
 #' @name PPH_Coltparkmeadow
 #'
 #' @usage data(PPH_Coltparkmeadow)
+#' @keywords datasets
 #'
 #' @references
 #'
@@ -18,4 +19,5 @@
 #' @examples
 #' data(PPH_Coltparkmeadow)
 #'
-data(PPH_Coltparkmeadow)
+
+load("data/PPH_Coltparkmeadow.rda")
