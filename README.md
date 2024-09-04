@@ -19,7 +19,7 @@ indicate the connector species. In panel a, the connector species in the
 left panel were indicated by dashed links, and those in the right panel
 have links from both layers.
 
-<img src="./man/figure/conbine.png" width="100%" />
+<img src="./man/figure/combine.png" width="100%" />
 
 ## Installation
 
