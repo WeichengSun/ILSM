@@ -5,7 +5,7 @@ knitr::opts_chunk$set(
 )
 
 ## ----echo=F, out.width = "100%"-----------------------------------------------
-knitr::include_graphics("../man/figure/conbine.png")
+knitr::include_graphics("../man/figure/combine.png")
 
 ## ----echo = T,eval = F--------------------------------------------------------
 #  library(ILSM)
