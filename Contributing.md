@@ -1,0 +1,22 @@
+Contribute
+================
+2024-09-05
+
+## Supportting guidelines
+
+If you use or support our package, I recommend that you first get the
+source code from [CRAN](https://cran.r-project.org/web/packages/ILSM/)
+and [Github](https://github.com/WeichengSun/ILSM/tree/main/R), make your
+changes and new help for a certain line or section of the specified
+function, and second, edit a new folder containing the code you provided
+and the Rmarkdown file. In this way, we can systematically understand
+your suggestions and optimize them. Finally, please keep in touch with
+us by email: <sunwch2023@lzu.edu.cn>.
+
+Of course, you can also contact us directly by submitting a bug ,so you
+should consider [Report a Bug](#Report-a-Bug)
+
+## Report a Bug
+
+Consistent with numerous projects, Bug reports should be filed on the
+[GitHub Issues](https://github.com/WeichengSun/ILSM/issues).
