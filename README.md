@@ -4,6 +4,8 @@
 # ILSM
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ILSM is designed for analyzing interconnection structures including
