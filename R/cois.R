@@ -124,7 +124,7 @@ cois<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE){
          mat2<-mat_2
       }
       else
-         stop("please check the type of 'network.or.subnet_mat1'")
+         stop("please check the type of 'network.or.subnet_mat1' or 'subnet_mat2'")
       logi<-(as.numeric(rowSums(mat1))*as.numeric(rowSums(mat2)))!=0
       mat1<-mat1[logi,]
       mat2<-mat2[logi,]
@@ -171,7 +171,7 @@ cois<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE){
          mat2<-mat_2
       }
       else
-         stop("please check the type of 'network.or.subnet_mat1'")
+         stop("please check the type of 'network.or.subnet_mat1' or 'subnet_mat2'")
       subnet_mat1<-mat1
       subnet_mat2<-mat2
       logi<-(as.numeric(rowSums(subnet_mat1))*as.numeric(rowSums(subnet_mat2)))!=0
