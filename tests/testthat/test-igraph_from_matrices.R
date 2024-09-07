@@ -30,6 +30,7 @@ test_that("Determine the type of matrices of inputing", {
 
 
 test_that("Make sure the function is implemented", {
+   set.seed(1)
    m1<-matrix(sample(c(rep(1,7),rep(0,3))),5,2)
    rownames(m1)<-paste0("species",seq=1:5)
    m2<-matrix(sample(c(rep(1,9),rep(0,6))),5,3)
