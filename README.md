@@ -6,8 +6,17 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
+[![Project Status: Inactive – The project has reached a stable, usable
+state but is no longer being actively developed; support/maintenance
+will be provided as time
+allows.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ILSM)](https://cran.r-project.org/package=ILSM)
 [![Codecov test
 coverage](https://codecov.io/gh/WeichengSun/ILSM/graph/badge.svg)](https://app.codecov.io/gh/WeichengSun/ILSM)
+![RStudio CRAN
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/ILSM)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html##Stable)
 
 <!-- badges: end -->
 
@@ -107,3 +116,9 @@ multilayer nature of ecological networks. Nature Ecology & Evolution,
 
 Domenico, M. D. 2022. Multilayer Networks: Analysis and Visualization.
 Introduction to muxViz with R. . Springer, Cham.
+
+## Citation
+
+Manuscript is being prepared for submission and citations are currently
+available at CRAN
+[10.32614/CRAN.package.ILSM](https://cran.r-project.org/web/packages/ILSM/index.html)
