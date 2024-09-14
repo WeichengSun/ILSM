@@ -10,11 +10,9 @@
 state but is no longer being actively developed; support/maintenance
 will be provided as time
 allows.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ILSM)](https://cran.r-project.org/package=ILSM)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ILSM)](https://www.r-pkg.org/pkg/ILSM)
 [![Codecov test
 coverage](https://codecov.io/gh/WeichengSun/ILSM/graph/badge.svg)](https://app.codecov.io/gh/WeichengSun/ILSM)
-![RStudio CRAN
-downloads](http://cranlogs.r-pkg.org/badges/grand-total/ILSM)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html##Stable)
 
