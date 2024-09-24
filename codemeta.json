@@ -1,37 +1,38 @@
 {
-    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
-    "type": "SoftwareSourceCode",
-    "codeRepository": "git+https://github.com/WeichengSun/ILSM.git",
-    "dateCreated": "2024-03-31",
-    "datePublished": "2024-04-07",
-    "description": "In view of the analysis of the structural characteristics of the multilayer network has been complete, however, there is still a lack of a unified operation that can quickly obtain the corresponding characteristics of the multilayer network. To solve this insufficiency, 'ILSM' was designed for supporting calculating such metrics of multilayer networks by functions of this R package.",
-    "license": "https://spdx.org/licenses/MIT",
-    "name": "ILSM",
-    "issueTracker": "https://github.com/WeichengSun/ILSM/issues",
-    "version": "1.0.3.2",
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "ILSM",
+  "description": " In view of the analysis of the structural characteristics of the multilayer network has been complete, however, there is still a lack of a unified operation that can quickly obtain the corresponding characteristics of the multilayer network. To solve this insufficiency, 'ILSM' was designed for supporting calculating such metrics of multilayer networks by functions of this R package.",
+  "name": "ILSM: Analyze Interconnection Structure of Multilayer Interaction Networks",
+  "codeRepository": "https://github.com/WeichengSun/ILSM",
+  "issueTracker": "https://github.com/WeichengSun/ILSM/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "1.0.3.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.3.3 (2024-02-29 ucrt)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
-      "givenName": "Weicheng",
+      "givenName": "WeiCheng",
       "familyName": "Sun",
       "email": "sunwch2023@lzu.edu.cn"
-    }
-  ],
-  "contributor": [
+    },
     {
       "@type": "Person",
       "givenName": "Chuan",
       "familyName": "Yan",
       "email": "yanchuan@lzu.edu.cn"
-    }
-  ],
-  "contributor": [
+    },
     {
       "@type": "Person",
       "givenName": "Yangyang",
@@ -42,7 +43,7 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": "Weicheng",
+      "givenName": "WeiCheng",
       "familyName": "Sun",
       "email": "sunwch2023@lzu.edu.cn"
     }
@@ -86,36 +87,22 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-   "softwareRequirements": {
+  "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.4.0"
+      "version": ">= 3.5.0"
     },
     "2": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
-      "name": "stats",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=stats"
+      "name": "stats"
     },
     "3": {
       "@type": "SoftwareApplication",
       "identifier": "Matrix",
-      "name": "Matrix",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=Matrix"
+      "name": "Matrix"
     },
     "4": {
       "@type": "SoftwareApplication",
@@ -129,6 +116,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=igraph"
     },
-   },
-    "readme": "https://github.com/WeichengSun/ILSM/blob/main/README.md"
+    "SystemRequirements": null
+  },
+  "fileSize": "25997.097KB",
+  "releaseNotes": "https://github.com/WeichengSun/ILSM/blob/master/NEWS.md",
+  "readme": "https://github.com/WeichengSun/ILSM/blob/main/README.md",
+  "contIntegration": ["https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/WeichengSun/ILSM", "https://github.com/WeichengSun/ILSM/actions?query=workflow%3Apkgcheck"],
+  "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html##Stable"],
+  "relatedLink": "https://CRAN.R-project.org/package=ILSM"
 }
