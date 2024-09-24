@@ -20,3 +20,8 @@ jobs:
       issues: write
     steps:
       - uses: ropensci-review-tools/pkgcheck-action@main
+      - name: Save state
+      run: echo "{name}={value}" >> $GITHUB_STATE
+
+      - name: Set output
+      run: echo "{name}={value}" >> $GITHUB_OUTPUT
