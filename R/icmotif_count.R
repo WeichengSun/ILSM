@@ -226,7 +226,7 @@ icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
 
    M141 <- sum(Four(PP))
 
-   M1321=M1322=M1323=M1324=M1325=M2311=M2312=M2313=M2314=M2315<-0
+   M1321<-M1322<-M1323<-M1324<-M1325<-M2311<-M2312<-M2313<-M2314<-M2315<-0
    for(i in 1:L1){
       for(j in 1:L1){
          if(i!=j){
