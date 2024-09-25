@@ -2,7 +2,7 @@ Package: ILSM
 Title: Analyze Interconnection Structure of Multilayer Interaction Networks
 Version: 1.0.3.2
 Authors@R: c(
-    person("WeiCheng", "Sun", , "sunwch2023@lzu.edu.cn", role = c("aut", "cre")),
+    person("Weicheng", "Sun", , "sunwch2023@lzu.edu.cn", role = c("aut", "cre")),
     person("Chuan", "Yan", , "yanchuan@lzu.edu.cn", role = c("aut")),
     person("Yangyang", "Zhao", , "120220907711@lzu.edu.cn", role = c("aut")))
 Description: 
