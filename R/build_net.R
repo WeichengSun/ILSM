@@ -17,6 +17,17 @@
 #' @return
 #' Return a tripatite network of direction. The network contains three groups of species and interactions within layers, and there is no link among each group of nodes within one layer.
 #' @export
+#'
+#' @srrstats {G1.0} This standard belongs here.
+#' @srrstats {G2.0} It can input single- or multi- data.
+#' @srrstats {G2.0a} It provide explicit secondary documentation.
+#' @srrstats {G2.4,G2.4b} This standard belongs here.
+#' @srrstats {G2.6} It accepts one-dimensional input.
+#'
+#' @references
+#'
+#' Pilosof, S., Porter, M., Pascual, M. et al. The multilayer nature of ecological networks. Nat Ecol Evol 1, 0101 (2017). https://doi.org/10.1038/s41559-017-0101
+#'
 #' @examples
 #'
 #' set.seed(12)
