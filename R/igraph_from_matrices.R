@@ -38,6 +38,10 @@
 #' Return a network of type "igraph".
 #' @export
 #'
+#' @srrstats {G2.8} It makes the matrices to \code{igraph} data.
+#' @srrstats {G2.11,G2.12} The parameters \code{mat1} and \code{mat2} have defined columns.
+#' @srrstats {G5.2,G5.2a} Here the message produced within R code by 'stop()' and 'message()'.
+#'
 #' @importFrom igraph graph_from_adjacency_matrix
 #' @importFrom igraph V
 #'
@@ -95,9 +99,9 @@ igraph_from_matrices<-function(mat1, mat2, isDirected1=TRUE, isDirected2=TRUE){
       MAT[colnames(mat2),rownames(mat2)]<-t(mat2)
    NET<-graph_from_adjacency_matrix(MAT)
    V(NET)$name<-spe
-   levell<-spe
+   levell<-rep(1,length(spe))
    levell[spe%in%colnames(mat1)]<-0
-   levell[spe%in%rownames(mat1)]<-1
+   # levell[spe%in%rownames(mat1)]<-1
    levell[spe%in%colnames(mat2)]<-2
    V(NET)$level<-levell
    return(NET)
