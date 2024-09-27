@@ -7,13 +7,16 @@
 role_sim(spe_role_mat)
 }
 \arguments{
-\item{spe_role_mat}{A matrix of 65 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.}
+\item{spe_role_mat}{A matrix of 65 columns representing the roles of
+interconnecting species in the motifs. Columns names are Role1, Role2,
+Role3 ... Role70.}
 }
 \value{
 Return a numeric value.
 }
 \description{
-The average of Similarity of 65 roles of interconnecting species of multilayer network.
+The average of Similarity of 65 roles of interconnecting species of
+multilayer network.
 }
 \details{
 \strong{spe_role_mat}
