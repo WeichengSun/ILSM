@@ -50,6 +50,18 @@
 #'  M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1, M321_2,
 #'  M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4, M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.
 #'
+#' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
+#' @srrstats {G1.3,G1.4} This standard belongs here.
+#' @srrstats {G2.1} It can input single- or multi- data.
+#' @srrstats {G2.1a} Because the input data flexibility of \code{network.or.subnet_mat1} and \code{subnet_mat2}, it provide explicit secondary documentation.
+#' @srrstats {G2.4,G2.4a} This standard belongs here.
+#' @srrstats {G2.7} It accepts two types of \code{network.or.subnet_mat1}.
+#' @srrstats {G2.13} It checks the possibility of ('NA') data.
+#' @srrstats {G2.14,G2.14a} For the missing ('NA') data, it provide the error on missing data.
+#' @srrstats {G2.15} This function never assume non-missingness, and never pass data with potential missing values to any base routines with default `na.rm = FALSE`-type parameters.
+#' @srrstats {G3.0} All numeric equality comparisons ensure that they are made between integers
+#' @srrstats {G5.0} The software contains standard data sets with known properties, such as \code{data: PPH_Coltparkmeadow}.
+#' @srrstats {G5.2,G5.2a} Here the message produced within R code by 'stop()'.
 #'
 #' @references
 #' Pilosof, S., Porter, M. A., Pascual, M., & Kéfi, S. (2017). The multilayer nature of ecological networks. Nature Ecology & Evolution, 1(4), 0101.
