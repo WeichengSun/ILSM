@@ -1,7 +1,7 @@
 
 test_that("Determine the type of result", {
 
-#' @srrstast {G5.6,G5.6a} This standard exist at here.
+#' @srrstats {G5.6,G5.6a} This standard exist at here.
 
    type=c("M111","M112","M113","M114","M211","M212","M213","M311","M312","M411","M121","M122-1","M122-2",
           "M122-3","M123-1","M123-2","M123-3","M123-4","M123-5","M221-1","M221-2","M221-3","M222-1","M222-2",
