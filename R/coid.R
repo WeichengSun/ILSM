@@ -55,6 +55,9 @@
 #' If \code{weighted} = FALSE, the results will show "CoID= ;" and If \code{weighted} = TRUE, the results will show "CoID_weight= ;"
 #' @import igraph
 #' @export
+#'
+#' @srrstats {G2.14b,G2.16} It ignores to handle missing (`NA`) data.
+#'
 #' @references
 #'
 #' Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
