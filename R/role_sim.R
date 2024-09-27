@@ -1,8 +1,11 @@
 #' Similarity of roles of interconnecting species
 #'
-#' The average of Similarity of 65 roles of interconnecting species of multilayer network.
+#' The average of Similarity of 65 roles of interconnecting species of
+#'   multilayer network.
 #'
-#' @param spe_role_mat A matrix of 65 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
+#' @param spe_role_mat A matrix of 65 columns representing the roles of
+#'   interconnecting species in the motifs. Columns names are Role1, Role2,
+#'   Role3 ... Role70.
 #'
 #' @details
 #'
@@ -14,6 +17,9 @@
 #' Return a numeric value.
 #'
 #' @export
+#'
+#' @srrstats {G1.1} The algorithm is the first implementation of a novel
+#'   algorithm.
 #'
 #' @examples
 #'
