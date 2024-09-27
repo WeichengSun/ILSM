@@ -60,6 +60,10 @@
 #' Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
 #'
 #'
+#' @srrstats {G1.5} This standard belongs here.
+#' @srrstats {G2.2} This standard belongs here.
+#'
+#'
 #' @examples
 #'
 #' ## generate a random multilayer network
