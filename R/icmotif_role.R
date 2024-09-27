@@ -47,6 +47,8 @@
 #'
 #' Each row of matrix corresponds to a interconnecting species in the second layer of network. If a interconnecting species is linked to both the second and third level species, the elements in this row are not all zero, otherwise the elements are all zero.
 #'
+#' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
+#'
 #' @references
 #' Simmons, B. I., Sweering, M. J., Schillinger, M., Dicks, L. V., Sutherland, W. J., & Di Clemente, R. (2019). bmotif: A package for motif analyses of bipartite networks. Methods in Ecology and Evolution, 10(5), 695-701.
 #'
