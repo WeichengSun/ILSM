@@ -1,3 +1,5 @@
+#' A part of code of package 'muxViz'
+#'
 #'
 #' @importFrom Matrix sparseMatrix
 #' @importFrom Matrix drop0
@@ -5,6 +7,8 @@
 #' @importFrom Matrix Matrix
 #' @importFrom igraph graph_from_adjacency_matrix
 #' @importFrom igraph distances
+#' @noRd
+#'
 #'
 
 sumR_r<-function (A, n)
@@ -28,6 +32,7 @@ diagR_r<- function(x, n, offset = 0) {
    M[which(row(M) + offset == col(M))] <- x
    return(M)
 }
+
 
 GetLargestEigenv_r<-function (Matrix)
 {
