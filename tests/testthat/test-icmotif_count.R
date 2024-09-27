@@ -1,5 +1,5 @@
 test_that("Determine the type of parameters", {
-
+#' @srrstats {G5.8,G5.8b,G5.8c,G5.8d} The test data include: numeric vector, 'NA' data and data with less fields(less than minimum).
 
    expect_error(icmotif_count(c(1:10)),
                 "Error: please check the tyep of network.or.subnet_mat1 and other parameters!!!")
