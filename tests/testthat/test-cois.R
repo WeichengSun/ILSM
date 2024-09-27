@@ -1,5 +1,5 @@
 test_that("Determine the type of parameters", {
-
+#' srrstats {G5.6b} This standard exist at here.
 
    expect_error(cois(c(1:10)),
                 "please check the type of 'network.or.subnet_mat1'")
@@ -8,7 +8,8 @@ test_that("Determine the type of parameters", {
    expect_error(cois(c(T, F, F, T, NA)),
                 "please check the type of 'network.or.subnet_mat1'")
    expect_error(cois(matrix(1:10,2,5),c("a", "b", "c")),
-                "please check the type of 'network.or.subnet_mat1' or 'subnet_mat2'")
+                paste0("please check the type of 'network.or.subnet_mat1' or ",
+                "'subnet_mat2'"))
    m1<-matrix(1:10,5,2)
    rownames(m1)<-paste0("species",seq=1:5)
    m3<-matrix(1:12,6,2)
@@ -22,13 +23,17 @@ test_that("Determine the type of parameters", {
    m7<-matrix(1:18,6,3)
    rownames(m7)<-c(paste0("species",seq=c(1,3,2,5,4)),NA)
    expect_error(cois(m1,m7),
-                "Make sure matrices either have no row names or have full row names. No NA!!!")
+                paste0("Make sure matrices either have no row names or have ",
+                       "full row names. No NA!!!"))
    expect_message(cois(m1,m6),
-                  "re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
+                  paste0("re-check whether the row name of ",
+   "network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!"))
    expect_error(cois(m4,m5),
-                "Make sure matrices either have no row names or have full row names. No NA!!!")
+                paste0("Make sure matrices either have no row names or have ",
+                "full row names. No NA!!!"))
    expect_error(cois(m3,m7),
-                "Make sure matrices either have no row names or have full row names. No NA!!!")
+                paste0("Make sure matrices either have no row names or have ",
+                "full row names. No NA!!!"))
 })
 
 
@@ -41,6 +46,7 @@ test_that("Input a big network data", {
    MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
    expect_error(cois(t(MAT[[3]]),t(MAT[[4]])), "subscript out of bounds" )
 
+   set.seed(2)
    MA<-build_net(5,3,3,0.9)
    expect_identical(class(cois(MA)), "numeric")
    m8<-matrix(1:6,3,2)
