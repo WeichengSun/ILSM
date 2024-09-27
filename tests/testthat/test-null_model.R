@@ -1,4 +1,6 @@
 test_that("Determine the type of null model", {
+
+   #' @srrstats {G5.5} This test runs with a fixed random seed.
    ma<-Multi_motif("all")
    for(i in 23:31){
       expect_error(null_model(ma[[i]],null_type = "a"),
