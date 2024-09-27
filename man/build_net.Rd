@@ -34,3 +34,6 @@ N <- build_net(11,15,16,0.2,asmatrices=FALSE)
 N
 
 }
+\references{
+Pilosof, S., Porter, M., Pascual, M. et al. The multilayer nature of ecological networks. Nat Ecol Evol 1, 0101 (2017). https://doi.org/10.1038/s41559-017-0101
+}
