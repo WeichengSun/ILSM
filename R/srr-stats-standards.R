@@ -39,7 +39,7 @@ NULL
 #'   outcome exists, a test is not considered necessary
 #' @srrstatsNA {G5.4,G5.4a,G5.4b,G5.4c} We double the skeleton of comparisons
 #'   using binding frameworks.
-#' @srrstatsNA {G5.8d} Input a Zero-length data which is meaningless.
+#' @srrstatsNA {G5.8a} Input a Zero-length data which is meaningless.
 #' @srrstatsNA {G5.9,G5.9a,G5.9b} The software was intended to demonstrate the
 #'   computability of the algorithm and the entity framework, so we did not
 #'   conduct interference tests.
