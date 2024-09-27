@@ -6,6 +6,10 @@
 #' @param isDirected2 Logical; Default TRUE.
 #'
 #' @return
+#' An extended link list (ELL). This is a table with five columns (but can
+#' contain more if link attributes exist). Link lists can also be called edge
+#' lists (these are interchangeable terms)
+#'
 #' @noRd
 
 edgelist_from_matrices<-function(mat1,mat2,isDirected1=T,isDirected2=T){
