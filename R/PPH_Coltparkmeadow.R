@@ -12,6 +12,8 @@
 #' @usage data(PPH_Coltparkmeadow)
 #' @keywords datasets
 #'
+#' @srrstats {G5.1} This standard belongs here.
+#'
 #' @references
 #'
 #' Villa‐Galaviz, E., S. M. Smart, E. L. Clare, S. E. Ward, and J. Memmott. 2021. Differential effects of fertilisers on pollination and parasitoid interaction networks. Journal of animal ecology 90:404-414.
