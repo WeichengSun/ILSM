@@ -32,6 +32,8 @@
 #' @importFrom igraph V
 #' @importFrom igraph graph_from_adjacency_matrix
 #'
+#' @srrstats {G2.3} For univariate character input.
+#' @srrstats {G2.3a} It provide four options of parameter: null_type.
 #' @export
 #'
 #' @examples
