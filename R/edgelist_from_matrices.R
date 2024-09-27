@@ -1,3 +1,13 @@
+#' Convert interaction matrices into a list of vector of edges.
+#'
+#' @param mat1 A matrix.
+#' @param mat2 A matrix.
+#' @param isDirected1 Logical; Default TRUE.
+#' @param isDirected2 Logical; Default TRUE.
+#'
+#' @return
+#' @noRd
+
 edgelist_from_matrices<-function(mat1,mat2,isDirected1=T,isDirected2=T){
    if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
       rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
