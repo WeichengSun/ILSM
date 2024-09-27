@@ -37,6 +37,9 @@ test_that("Determine the type of matrices of inputing", {
 
 
 test_that("Make sure the function is implemented", {
+
+   #' @srrstats {G5.7} The software ensures the high efficiency of algorithm performance.
+
    m1<-matrix(sample(c(rep(1,5),rep(0,5))),5,2)
    rownames(m1)<-paste0("species",seq=1:5)
    m2<-matrix(sample(c(rep(1,7),rep(0,8))),5,3)
