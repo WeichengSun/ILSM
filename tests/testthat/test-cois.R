@@ -1,5 +1,6 @@
 test_that("Determine the type of parameters", {
-#' srrstats {G5.6b} This standard exist at here.
+
+#' @srrstats {G5.6b} This standard exist at here.
 
    expect_error(cois(c(1:10)),
                 "please check the type of 'network.or.subnet_mat1'")
