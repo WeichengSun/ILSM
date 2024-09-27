@@ -1,8 +1,17 @@
-
+#' Adject the size of real interconnection network
+#'
+#' @param network the primary multilayer network
+#'
 #' @importFrom igraph V
 #' @importFrom igraph as_adjacency_matrix
 #' @importFrom igraph graph_from_adjacency_matrix
-
+#' @noRd
+#'
+#' @srrstats {G1.4a} This is a non-exported function.
+#'
+#' @return
+#'
+#' A network only containing the interconnection nodes/species.
 
 
 adject_net<-function(network){
