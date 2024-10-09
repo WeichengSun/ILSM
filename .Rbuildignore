@@ -1,3 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^Contributing\.Rmd$
+^README\.Rmd$
+^codemeta\.json$
