@@ -1,48 +1,76 @@
 #' Counting the degree hub of multilayer network
 #'
-#' This function counts degree hub that the proportion of interconnecting species serving as the core node of the network degree.
+#' This function counts degree hub that the proportion of interconnecting
+#' species serving as the core node of the network degree.
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
-#'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
-#'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
+#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of
+#' 'igraph' class which contains three groups of species and interactions within
+#'  layers without interactions between each group of species, or a numeric
+#'  matrix(or data.frame) representing interactions between two groups of
+#'  species.
+#'  Each row and column of matrix represents single species in the second and
+#'  first groups of the tripartite network respectively.
+#'  Elements of matrix are non-zero numbers if the two groups of species are
+#'  connected, and 0 otherwise.
 #'
-#' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions between two groups of species.
-#'  Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
-#'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.
+#' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions
+#' between two groups of species.
+#'  Each row and column of matrix represents single species in the second and
+#'  third groups of the tripartite network respectively.
+#'  Elements of matrix are non-zero numbers if the two groups of species are
+#'  connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph",
+#'  \code{subnet_mat2} defaults to NULL.
 #'
 #' @details
 #'
-#' \strong{network.or.subnet_mat1} and \strong{subnet_mat2}
+#' \strong{network.or.subnet_mat1 and subnet_mat2}
 #'
 #' There are two types of \code{network.or.subnet_mat1} that can be processed:
 #' \itemize{
-#' \item{(1). Input in a network of type "igraph" alone.}
-#' \item{(2). Must be entered as data frame or matrix with \code{subnet_mat2}.}
+#' \item Input in a network of type "igraph" alone.
+#' \item Must be entered as data frame or matrix with \code{subnet_mat2}.
 #' }
 #'
-#' If the type of inputting is data frame or matrix, please make sure the row of \code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.
+#' If the type of inputting is data frame or matrix, please make sure the row of
+#'  \code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the
+#'  second group of species that both belong to two subnetworks and interact
+#'  with other groups of species.
 #' \itemize{
-#' \item{Try to make the rows of both matrices have the same attributes. Or we default:}
-#' \item{(1). If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.}
-#' \item{(2). If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.}
-#' \item{The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!}
+#' \item Try to make the rows of both matrices have the same attributes. Or we
+#' default.
+#' \item 1. If both matrices have row names, then the function counts all row
+#' names to produce two new matrices with the same row names.
+#' \item 2. If at most one matrix has row names, the function assigns new row
+#' names to both matrices on a row-to-row basis (any extra row names are
+#' assigned a new value) and then counts all row names to produce two new
+#' matrices with the same row names.
+#' \item The two matrices can have different numbers of rows, but read our
+#' default handling carefully to make sure the calculation is accurate when
+#' using this function!!!
 #' }
 #'
-#' About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}.
+#' About a network of type "igraph", It can be obtained from the connection
+#' matrices of subnetworks by the function \code{igraph_from_matrices}.
 #'
 #'
 #' @return
-#' Print a "HC= ;" and Return a numeric value representing the degree hub of network.
+#' Print a "HC= ;" and Return a numeric value representing the degree hub of
+#' network.
 #'
 #' @importFrom igraph V
 #' @export
 #' @references
 #'
-#' Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.
+#' Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for
+#' multiplex networks. Physical Review E, 89, 032804.
 #'
-#' Domínguez-García, V., & Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
+#' Domínguez-García, V., & Kéfi, S. (2024). The structure and robustness of
+#' ecological networks with two interaction types. PLOS Computational Biology,
+#' 20(1), e1011770.
 #'
-#' Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.
+#' Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules
+#' and universal roles. Journal of Statistical Mechanics: Theory and
+#' Experiment, 2005, P02001.
 #'
 #' @examples
 #'
