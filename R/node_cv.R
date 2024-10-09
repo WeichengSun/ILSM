@@ -52,10 +52,11 @@
 #'
 #' Return a data frame with the first row "node" for each node of network representing each species.
 #' \itemize{
-#' \item{If \code{type} is either of "degree", "pagerank", "hub", "authority", "katz", "eigenvector", "closeness", the data frame has two columns, and the second column corresponds to either of "Degree", "Pagerank_versatility",
-#' "Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".}
-#' \item{If \code{type} is "all", the data frame has eight columns, and columns form the second to the eighth correspond to "Degree", "Pagerank_versatility",
-#' "Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".}}
+#' \item If \code{type} is either of "degree", "pagerank", "hub", "authority", "katz", "eigenvector", "closeness", the data frame has two columns, and the second column corresponds to either of "Degree", "Pagerank_versatility",
+#' "Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".
+#' \item If \code{type} is "all", the data frame has eight columns, and columns form the second to the eighth correspond to "Degree", "Pagerank_versatility",
+#' "Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".
+#' }
 #'
 #' @references
 #' De Domenico, M., Nicosia, V., Arenas, A., & Latora, V. (2015). Structural reducibility of multilayer networks. Nature communications, 6(1), 6864.
