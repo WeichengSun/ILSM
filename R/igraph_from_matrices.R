@@ -12,24 +12,24 @@
 #' @param isDirected2 Logical. Whether the interaction between the two groups of species in \code{mat2} is unidirectional.Default to TRUE, such as Predation and Herbivory. Otherwise it is bidirectional, such as Mutualism.
 #' @details
 #'
-#' \strong{mat1} and \strong{mat2}
+#' \strong{mat1 and mat2}
 #'
 #' The type of inputting is data frame or matrix, please make sure the row of \code{mat1} and \code{mat2} correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.
 #' \itemize{
-#' \item{Try to make the rows of both matrices have the same attributes. Or we default:}
+#' \item Try to make the rows of both matrices have the same attributes. Or we default:
 #'
-#' \item{When the two matrices can have different numbers of rows:}
+#' \item When the two matrices can have different numbers of rows:
 #' \itemize{
-#' \item{(1). If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.}
-#' \item{(2). If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.}
+#' \item 1. If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.
+#' \item 2. If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.
 #' }
 #'
-#' \item{When the two matrices can have the same numbers of rows:}
+#' \item When the two matrices can have the same numbers of rows:
 #' \itemize{
-#' \item{No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).}
+#' \item No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).
 #' }
 #'
-#' \item{The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!}
+#' \item The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!
 #' }
 #'
 #' The columns of \code{mat1} and \code{mat2} could be empty. If empty, the function also defaults to the suggested assignment.
