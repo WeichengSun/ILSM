@@ -31,10 +31,11 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 \value{
 Return a data frame with the first row "node" for each node of network representing each species.
 \itemize{
-\item{If \code{type} is either of "degree", "pagerank", "hub", "authority", "katz", "eigenvector", "closeness", the data frame has two columns, and the second column corresponds to either of "Degree", "Pagerank_versatility",
-"Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".}
-\item{If \code{type} is "all", the data frame has eight columns, and columns form the second to the eighth correspond to "Degree", "Pagerank_versatility",
-"Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".}}
+\item If \code{type} is either of "degree", "pagerank", "hub", "authority", "katz", "eigenvector", "closeness", the data frame has two columns, and the second column corresponds to either of "Degree", "Pagerank_versatility",
+"Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".
+\item If \code{type} is "all", the data frame has eight columns, and columns form the second to the eighth correspond to "Degree", "Pagerank_versatility",
+"Hub_versatility", "Authority_versatility", "Katz_versatility", "Eigenvector_versatility", "Closeness_versatility".
+}
 }
 \description{
 The versatility of nodes is revealed by several centrality measures that have now been applied to multilayer networks, such as Degree, Pagerank, Hub, Authority, Katz, Eigenvector, and Closeness centrality.
