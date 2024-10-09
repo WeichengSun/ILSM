@@ -90,12 +90,12 @@ M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4, M132-5, M231-1, M2
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><strong>network.or.subnet_mat1</strong> and <strong>subnet_mat2</strong></p>
-<p>There are two types of <code>network.or.subnet_mat1</code> that can be processed:</p><ul><li><p>(1). Input in a network of type "igraph" alone.</p></li>
-<li><p>(2). Must be entered as data frame or matrix with <code>subnet_mat2</code>.</p></li>
+    <p><strong>network.or.subnet_mat1 and subnet_mat2</strong></p>
+<p>There are two types of <code>network.or.subnet_mat1</code> that can be processed:</p><ul><li><p>Input in a network of type "igraph" alone.</p></li>
+<li><p>Must be entered as data frame or matrix with <code>subnet_mat2</code>.</p></li>
 </ul><p>If the type of inputting is data frame or matrix, please make sure the row of <code>network.or.subnet_mat1</code> and <code>subnet_mat2</code> correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.</p><ul><li><p>Try to make the rows of both matrices have the same attributes. Or we default:</p></li>
-<li><p>When the two matrices can have different numbers of rows:</p><ul><li><p>(1). If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.</p></li>
-<li><p>(2). If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.</p></li>
+<li><p>When the two matrices can have different numbers of rows:</p><ul><li><p>1. If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.</p></li>
+<li><p>2. If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.</p></li>
 </ul></li>
 <li><p>When the two matrices can have the same numbers of rows:</p><ul><li><p>No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).</p></li>
 </ul></li>
