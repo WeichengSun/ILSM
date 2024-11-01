@@ -38,9 +38,14 @@ Return a data frame with the first row "node" for each node of network represent
 }
 }
 \description{
-The versatility of nodes is revealed by several centrality measures that have now been applied to multilayer networks, such as Degree, Pagerank, Hub, Authority, Katz, Eigenvector, and Closeness centrality.
+The \code{node_icc} will replace the function \code{node_cv} in tripartite
+network.
+We will temporarily suspend the development of node versatility within the
+multilayer network, but we will continue to move forward with the project.
 }
 \details{
+The versatility of nodes is revealed by several centrality measures that have now been applied to multilayer networks, such as Degree, Pagerank, Hub, Authority, Katz, Eigenvector, and Closeness centrality.
+
 \strong{network.or.subnet_mat1 and subnet_mat2}
 
 There are two types of \code{network.or.subnet_mat1} that can be processed:
