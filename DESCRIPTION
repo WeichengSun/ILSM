@@ -1,13 +1,17 @@
 Package: ILSM
-Title: Analyze Interconnection Structure of Multilayer Interaction Networks
+Title: Analyze Interconnection Structure of Tripartite Interaction Networks
 Version: 1.0.3.2
 Authors@R: c(
     person("Weicheng", "Sun", , "sunwch2023@lzu.edu.cn", role = c("aut", "cre")),
     person("Chuan", "Yan", , "yanchuan@lzu.edu.cn", role = c("aut")),
     person("Yangyang", "Zhao", , "120220907711@lzu.edu.cn", role = c("aut")))
 Description: 
-    In view of the analysis of the structural characteristics of the multilayer network has been complete, however, there is still a lack of a unified operation that can quickly obtain the corresponding characteristics of the multilayer network. 
-    To solve this insufficiency, 'ILSM' was designed for supporting calculating such metrics of multilayer networks by functions of this R package.
+    In view of the analysis of the structural characteristics of the tripartite 
+    network has been complete, however, there is still a lack of a unified 
+    operation that can quickly obtain the corresponding characteristics of the 
+    tripartite network. 
+    To solve this insufficiency, 'ILSM' was designed for supporting calculating 
+    such metrics of tripartite networks by functions of this R package.
 License: MIT + file LICENSE
 URL: https://github.com/WeichengSun/ILSM
 BugReports: https://github.com/WeichengSun/ILSM/issues
