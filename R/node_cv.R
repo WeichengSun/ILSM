@@ -1,5 +1,10 @@
 #' Measuring node versatility of multilayer network
 #'
+#' The \code{node_icc} will replace the function \code{node_cv} in tripartite
+#' network.
+#' We will temporarily suspend the development of node versatility within the
+#' multilayer network, but we will continue to move forward with the project.
+#'
 #' The versatility of nodes is revealed by several centrality measures that have now been applied to multilayer networks, such as Degree, Pagerank, Hub, Authority, Katz, Eigenvector, and Closeness centrality.
 #'
 #' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
