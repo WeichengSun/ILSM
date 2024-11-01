@@ -6,15 +6,15 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
-[![Project Status: Inactive – The project has reached a stable, usable
-state but is no longer being actively developed; support/maintenance
-will be provided as time
-allows.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ILSM)](https://www.r-pkg.org/pkg/ILSM)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN_Status](http://www.r-pkg.org/badges/version/ILSM)](https://cran.r-project.org/package=ILSM)
 [![Codecov test
 coverage](https://codecov.io/gh/WeichengSun/ILSM/graph/badge.svg)](https://app.codecov.io/gh/WeichengSun/ILSM)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html##Stable)
+[![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
@@ -25,13 +25,13 @@ interaction networks.
 The figure below shows an example multilayer interaction network (a,
 with three groups of species and two interaction layers, showing two
 common forms) and interconnection structures (b, interconnection
-pattern, c, interconnection motif, d, versatility). Different colors of
-nodes indicate different groups of species, and the dashed lines
-indicate the connector species. In panel a, the connector species in the
-left panel were indicated by dashed links, and those in the right panel
-have links from both layers.
+pattern, c, interconnection motif, d, interconnection centratility).
+Different colors of nodes indicate different groups of species, and the
+dashed lines indicate the connector species. In panel a, the connector
+species in the left panel were indicated by dashed links, and those in
+the right panel have links from both layers.
 
-<img src="./man/figure/combine.png" width="100%" />
+<img src="./man/figure/pattern.png" width="100%" />
 
 ## Installation
 
@@ -81,8 +81,8 @@ cois(Net)
 pc(Net)
 hc(Net)
 
-## connector nodes' versatility
-node_cv(Net)
+## connector nodes' interconnection centratility
+node_icc(Net)
 ```
 
 ## License
