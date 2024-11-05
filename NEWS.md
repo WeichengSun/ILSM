@@ -1,3 +1,17 @@
+# ILSM 1.0.3.3 *2024-11-01*
+
+Version: ILSM 1.0.3.3
+
+We added the function {node_icc}. We will temporarily suspend the development of node versatility within the multilayer network for function {node_cv}.
+
+Renamed the title: Analyze Interconnection Structure of Tripartite Interaction Networks.
+
+# ILSM 1.0.3.2 *2024-08-04*
+
+Version: ILSM 1.0.3.2
+
+We added the dataset: "PPH_Coltparkmeadow"!!! Such as: data(PPH_Coltparkmeadow).
+
 # ILSM 1.0.3.1 *2024-7-13*
 
 Version: ILSM 1.0.3.1
