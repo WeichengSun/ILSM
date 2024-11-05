@@ -19,7 +19,7 @@ stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecyc
 <!-- badges: end -->
 
 ILSM is designed for analyzing interconnection structures including
-interconnection patterns, versatility and motifs in multilayer
+interconnection patterns, centrality and motifs in multilayer
 interaction networks.
 
 The figure below shows an example multilayer interaction network (a,
