@@ -32,7 +32,8 @@ test_that("Make sure the function is implemented", {
    M1<-V(null_model(N,null_type="all")[[1]])$level
    expect_identical(M,M1)
    expect_identical(length(V(null_model(N,null_type="subnetwork1")[[1]])$name),10L)
-   expect_identical(length(V(null_model(N,null_type="subnetwork2")[[1]])$name),10L)
+   expect_identical(length(V(null_model(N,number=3,null_type="subnetwork2")[[1]])$name),10L)
+   expect_identical(length(V(null_model(N,null_type="Savue")[[1]])$name),10L)
    expect_identical(length(null_model(N,number = 4)),
                     4L)
    expect_length(null_model(N,number = 5),
