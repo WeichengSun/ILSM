@@ -55,4 +55,8 @@ test_that("Input a big network data", {
    m9<-matrix(1:8,2,4)
    rownames(m9)<-paste0("species",seq=c(2,1))
    expect_error(cois(m8,m9), "missing value where TRUE/FALSE needed")
+
+   m10<-matrix((1:16)/2,4,4)
+   m11<-matrix(1:10,5,2)
+   expect_true(is.numeric(cois(m10,m11,TRUE)), TRUE)
 })
