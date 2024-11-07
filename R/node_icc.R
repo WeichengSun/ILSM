@@ -167,7 +167,7 @@ node_icc <- function(network.or.subnet_mat1,subnet_mat2=NULL,isDirected1=TRUE,
    if (type == "degree")
       return(data.frame(node=node, Degree=degree(network)))
    if (type == "pagerank")
-      return(data.frame(node=node, Pagerank_centrality =
+      return(data.frame(node=node, Pagerank_Centrality =
                            page_rank(network, directed = Directed)$vector))
    if (type == "hub")
       return(data.frame(node=node, Hub_Centrality =hub_score(network)$vector))
