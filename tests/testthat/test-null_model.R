@@ -24,6 +24,15 @@ test_that("Make sure the function is implemented", {
    N<-igraph_from_matrices(m1,m2)
    expect_identical(class(N),
                     c("igraph"))
+   expect_identical(length(null_model(N)),
+                    1L)
+   set.seed(2)
+   M<-V(null_model(N)[[1]])$level
+   set.seed(2)
+   M1<-V(null_model(N,null_type="all")[[1]])$level
+   expect_identical(M,M1)
+   expect_identical(length(V(null_model(N,null_type="subnetwork1")[[1]])$name),10L)
+   expect_identical(length(V(null_model(N,null_type="subnetwork2")[[1]])$name),10L)
    expect_identical(length(null_model(N,number = 4)),
                     4L)
    expect_length(null_model(N,number = 5),
