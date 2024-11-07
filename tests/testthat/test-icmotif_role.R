@@ -70,4 +70,16 @@ test_that("Make sure the function is implemented", {
                     70L)
    expect_length(rownames(N),
                  5L)
+
+   m3<-matrix(sample(c(rep(1,9),rep(0,3))),4,3)
+   rownames(m3)<-paste0("species",seq=1:4)
+   m4<-matrix(sample(c(rep(1,13),rep(0,3))),4,4)
+   rownames(m4)<-c(paste0("species",seq=c(1,3,2,4)))
+   M<-icmotif_role(m3,m4)
+   expect_identical(class(M),
+                    c("matrix","array"))
+   expect_identical(ncol(M),
+                    70L)
+   expect_length(rownames(M),
+                 4L)
 })
