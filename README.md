@@ -25,7 +25,7 @@ interaction networks.
 The figure below shows an example multilayer interaction network (a,
 with three groups of species and two interaction layers, showing two
 common forms) and interconnection structures (b, interconnection
-pattern, c, interconnection motif, d, interconnection centratility).
+pattern, c, interconnection motif, d, interconnection centrality).
 Different colors of nodes indicate different groups of species, and the
 dashed lines indicate the connector species. In panel a, the connector
 species in the left panel were indicated by dashed links, and those in
@@ -81,7 +81,7 @@ cois(Net)
 pc(Net)
 hc(Net)
 
-## connector nodes' interconnection centratility
+## connector nodes' interconnection centrality
 node_icc(Net)
 ```
 
