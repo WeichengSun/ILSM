@@ -45,6 +45,22 @@ test_that("Make sure the function is implemented", {
    m2<-matrix(sample(c(rep(1,7),rep(0,8))),5,3)
    rownames(m2)<-c(paste0("species",seq=c(1,3,2,5,4)))
    N<-node_icc(m1,m2)
+   expect_identical(colnames(node_icc(m1,m2,type = "degree"))[2],
+                    "Degree")
+   expect_identical(colnames(node_icc(m1,m2,type = "pagerank"))[2],
+                    "Pagerank_Centrality")
+   expect_identical(colnames(node_icc(m1,m2,type = "hub"))[2],
+                    "Hub_Centrality")
+   expect_identical(colnames(node_icc(m1,m2,type = "authority"))[2],
+                    "Authority_Centrality")
+   expect_identical(colnames(node_icc(m1,m2,type = "eigenvector"))[2],
+                    "Eigenvector_Centrality")
+   expect_identical(colnames(node_icc(m1,m2,type = "closeness"))[2],
+                    "Closeness_Centrality")
+   expect_identical(colnames(node_icc(m1,m2,type = "betweenness"))[2],
+                    "Betweenness_Centrality")
+   expect_identical(class(node_icc(m1,m2,type = "all")),
+                    "data.frame")
    expect_identical(class(N),
                     "data.frame")
    expect_identical(ncol(N),
