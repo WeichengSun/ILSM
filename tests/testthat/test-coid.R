@@ -49,4 +49,9 @@ test_that("Input a big network data", {
    m9<-matrix(1:8,2,4)
    rownames(m9)<-paste0("species",seq=c(2,1))
    expect_true(is.na(coid(m8,m9)), TRUE)
+
+   m10<-matrix((1:16)/2,4,4)
+   m11<-matrix(1:10,5,2)
+   expect_true(is.numeric(coid(m10,m11,TRUE)), TRUE)
+
 })
