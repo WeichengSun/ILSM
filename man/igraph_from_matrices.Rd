@@ -21,7 +21,7 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 Return a network of type "igraph".
 }
 \description{
-Two matrices contain three groups of tropical level species. A multilayer network can be transformed from existing matrices data.
+Two matrices contain three groups of tropical level species. A tripartite network can be transformed from existing matrices data.
 }
 \details{
 \strong{mat1 and mat2}
