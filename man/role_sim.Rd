@@ -16,7 +16,7 @@ Return a numeric value.
 }
 \description{
 The average of Similarity of 65 roles of interconnecting species of
-multilayer network.
+tripartite network.
 }
 \details{
 \strong{spe_role_mat}
@@ -25,7 +25,7 @@ Should acquire from function \code{motif_role}.
 }
 \examples{
 
-## generate a random multilayer network
+## generate a random tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
 role_sim(icmotif_role(Net))
