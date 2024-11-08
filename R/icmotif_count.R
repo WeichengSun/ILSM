@@ -2,7 +2,7 @@
 #'
 #' Calculating the number of 48 motifs from a tripartite interaction network.
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
@@ -73,7 +73,7 @@
 #' @examples
 #'
 #'
-#' ## generate a random multilayer network
+#' ## generate a random tripartite network
 #' set.seed(12)
 #' Net <- build_net(11,15,16,0.2)
 #'
@@ -289,7 +289,7 @@ icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
    #    subnet1_link_position<-bmotif::link_positions(PH,six_node=TRUE,weights =FALSE)
    #    subnet2_link_position<-bmotif::link_positions(HP,six_node=TRUE,weights =FALSE)
    #    motif_list<-list()
-   #    motif_list$multilayernet_motif<-motif
+   #    motif_list$tripartitenet_motif<-motif
    #    motif_list$subnetwork1_motif<-subnet1_motif
    #    motif_list$sunnetwork2_motif<-subnet2_motif
    #    motif_list$subnet1_node_position<-subnet1_node_position
