@@ -4,7 +4,7 @@
 #' measures that have now been applied to tripartite networks, such as Degree,
 #' Pagerank, Hub, Authority, Eigenvector, and Closeness Betweenness centrality.
 #'
-#' @param network.or.subnet_mat1 Either a tripartite (multilayer) network of
+#' @param network.or.subnet_mat1 Either a tripartite network of
 #' 'igraph' class which contains three groups of species and interactions within
 #'  layers without interactions between each group of species, or a numeric
 #'  matrix(or data.frame) representing interactions between two groups of
@@ -126,7 +126,7 @@
 #'
 #' @examples
 #'
-#' ## generate a random multilayer network
+#' ## generate a random tripartite network
 #' set.seed(12)
 #' Net <- build_net(11,15,16,0.2)
 #'
