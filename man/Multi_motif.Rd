@@ -2,7 +2,7 @@
 % Please edit documentation in R/Multi_motif.R
 \name{Multi_motif}
 \alias{Multi_motif}
-\title{Defined multilayer motifs}
+\title{Defined tripartite motifs}
 \usage{
 Multi_motif(
   type = c("M111", "M112", "M113", "M114", "M211", "M212", "M213", "M311", "M312",
@@ -14,7 +14,7 @@ Multi_motif(
 )
 }
 \arguments{
-\item{type}{Character. 49 values representing each and all types of multilayer motifs.}
+\item{type}{Character. 49 values representing each and all types of tripartite motifs.}
 }
 \value{
 If \code{type} is one of 48 motifs of definition, function returns a corresponding motif of "igraph".
@@ -22,7 +22,7 @@ If \code{type} is one of 48 motifs of definition, function returns a correspondi
 If \code{type} is "all", function returns a list containing 48 corresponding motifs of "igraph".
 }
 \description{
-Acquiring each or all of 48 motifs of definition of multilayer network.
+Acquiring each or all of 48 motifs of definition of tripartite network.
 }
 \examples{
 
