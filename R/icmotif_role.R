@@ -1,8 +1,8 @@
 #' Analyzing role of interconnecting node in motifs
 #'
-#' Counting the number of 70 roles about interconnecting species in multilayer network motifs.
+#' Counting the number of 70 roles about interconnecting species in tripartite network motifs.
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
@@ -54,7 +54,7 @@
 #'
 #' @examples
 #'
-#' ## generate a random multilayer network
+#' ## generate a random tripartite network
 #' set.seed(12)
 #' Net <- build_net(11,15,16,0.2)
 #'
