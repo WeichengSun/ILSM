@@ -1,9 +1,9 @@
-#' Counting the degree hub of multilayer network
+#' Counting the degree hub of tripartite network
 #'
 #' This function counts degree hub that the proportion of interconnecting
 #' species serving as the core node of the network degree.
 #'
-#' @param network.or.subnet_mat1 Either a multilayer(tripartite) network of
+#' @param network.or.subnet_mat1 Either a tripartite network of
 #' 'igraph' class which contains three groups of species and interactions within
 #'  layers without interactions between each group of species, or a numeric
 #'  matrix(or data.frame) representing interactions between two groups of
@@ -74,7 +74,7 @@
 #'
 #' @examples
 #'
-#' ## generate a random multilayer network
+#' ## generate a random tripartite network
 #' set.seed(12)
 #' Net <- build_net(11,15,16,0.2)
 #'
