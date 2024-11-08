@@ -1,8 +1,8 @@
-#' Defined multilayer motifs
+#' Defined tripartite motifs
 #'
-#' Acquiring each or all of 48 motifs of definition of multilayer network.
+#' Acquiring each or all of 48 motifs of definition of tripartite network.
 #'
-#' @param type Character. 49 values representing each and all types of multilayer motifs.
+#' @param type Character. 49 values representing each and all types of tripartite motifs.
 #'
 #' @return
 #'
