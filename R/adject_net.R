@@ -1,6 +1,6 @@
 #' Adject the size of real interconnection network
 #'
-#' @param network the primary multilayer network
+#' @param network the primary tripartite network
 #'
 #' @importFrom igraph V
 #' @importFrom igraph as_adjacency_matrix
