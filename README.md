@@ -4,12 +4,12 @@
 # ILSM
 
 <!-- badges: start -->
+<!--[![CRAN_Status](http://www.r-pkg.org/badges/version/ILSM)](https://cran.r-project.org/package=ILSM) -->
 
 [![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![CRAN_Status](http://www.r-pkg.org/badges/version/ILSM)](https://cran.r-project.org/package=ILSM)
 [![Codecov test
 coverage](https://codecov.io/gh/WeichengSun/ILSM/graph/badge.svg)](https://app.codecov.io/gh/WeichengSun/ILSM)
 [![Lifecycle:
@@ -19,10 +19,10 @@ stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecyc
 <!-- badges: end -->
 
 ILSM is designed for analyzing interconnection structures including
-interconnection patterns, centrality and motifs in multilayer
+interconnection patterns, centrality and motifs in tripartite
 interaction networks.
 
-The figure below shows an example multilayer interaction network (a,
+The figure below shows an example tripartite interaction network (a,
 with three groups of species and two interaction layers, showing two
 common forms) and interconnection structures (b, interconnection
 pattern, c, interconnection motif, d, interconnection centrality).
@@ -60,9 +60,9 @@ This is an example showing the uses of different functions:
 
 ``` r
 library(ILSM)
-## generate a random multilayer network
+## generate a random tripartite network
 set.seed(12)
-Net <- build_net(11,15,16,0.2)# This funciton creats a two-layered network with 11,15, 16 nodes in three groups and the connectance is 0.2 
+Net <- build_net(11,15,16,0.2)# This function creates a two-layered network with 11,15, 16 nodes in three groups and the connectivity is 0.2 
 
 ##Or use a pollinator-plant-herbivore network from Villa-Galaviz et. al. 2020. Journal of Animal Ecology.
 data(PPH_Coltparkmeadow)
