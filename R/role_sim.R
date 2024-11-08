@@ -1,7 +1,7 @@
 #' Similarity of roles of interconnecting species
 #'
 #' The average of Similarity of 65 roles of interconnecting species of
-#'   multilayer network.
+#'   tripartite network.
 #'
 #' @param spe_role_mat A matrix of 65 columns representing the roles of
 #'   interconnecting species in the motifs. Columns names are Role1, Role2,
@@ -23,7 +23,7 @@
 #'
 #' @examples
 #'
-#' ## generate a random multilayer network
+#' ## generate a random tripartite network
 #' set.seed(12)
 #' Net <- build_net(11,15,16,0.2)
 #' role_sim(icmotif_role(Net))
