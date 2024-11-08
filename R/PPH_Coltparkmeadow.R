@@ -5,7 +5,7 @@
 #'
 #' @details
 #'
-#' A list with "igraph". This is a classical example of multilayer interaction network.
+#' A list with "igraph". This is a classical example of tripartite interaction network.
 #'
 #' @name PPH_Coltparkmeadow
 #'
