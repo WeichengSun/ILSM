@@ -1,6 +1,6 @@
 #' Transforming matrices into network
 #'
-#' Two matrices contain three groups of tropical level species. A multilayer network can be transformed from existing matrices data.
+#' Two matrices contain three groups of tropical level species. A tripartite network can be transformed from existing matrices data.
 #'
 #' @param mat1 A numeric matrix(or data.frame) representing interactions between two groups of species.Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
