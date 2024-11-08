@@ -10,7 +10,7 @@ data(PPH_Coltparkmeadow)
 A pollinator-plant-herbivore network from Villa-Galaviz et. al. 2020. Journal of Animal Ecology
 }
 \details{
-A list with "igraph". This is a classical example of multilayer interaction network.
+A list with "igraph". This is a classical example of tripartite interaction network.
 }
 \examples{
 data(PPH_Coltparkmeadow)
