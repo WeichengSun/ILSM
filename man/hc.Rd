@@ -2,12 +2,12 @@
 % Please edit documentation in R/hc.R
 \name{hc}
 \alias{hc}
-\title{Counting the degree hub of multilayer network}
+\title{Counting the degree hub of tripartite network}
 \usage{
 hc(network.or.subnet_mat1, subnet_mat2 = NULL)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a multilayer(tripartite) network of
+\item{network.or.subnet_mat1}{Either a tripartite network of
 'igraph' class which contains three groups of species and interactions within
 layers without interactions between each group of species, or a numeric
 matrix(or data.frame) representing interactions between two groups of
@@ -65,7 +65,7 @@ matrices of subnetworks by the function \code{igraph_from_matrices}.
 }
 \examples{
 
-## generate a random multilayer network
+## generate a random tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
 
