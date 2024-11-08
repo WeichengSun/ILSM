@@ -7,7 +7,7 @@
 icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a multilayer(tripartite) network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+\item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.}
 
@@ -21,7 +21,7 @@ Returns a matrix of 70 columns representing the roles of interconnecting species
 Each row of matrix corresponds to a interconnecting species in the second layer of network. If a interconnecting species is linked to both the second and third level species, the elements in this row are not all zero, otherwise the elements are all zero.
 }
 \description{
-Counting the number of 70 roles about interconnecting species in multilayer network motifs.
+Counting the number of 70 roles about interconnecting species in tripartite network motifs.
 }
 \details{
 \strong{network.or.subnet_mat1 and subnet_mat2}
@@ -53,7 +53,7 @@ About a network of type "igraph", It can be obtained from the connection matrice
 }
 \examples{
 
-## generate a random multilayer network
+## generate a random tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
 
