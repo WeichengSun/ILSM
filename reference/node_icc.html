@@ -82,7 +82,7 @@ Pagerank, Hub, Authority, Eigenvector, and Closeness Betweenness centrality.</p>
 
 
 <dl><dt id="arg-network-or-subnet-mat-">network.or.subnet_mat1<a class="anchor" aria-label="anchor" href="#arg-network-or-subnet-mat-"></a></dt>
-<dd><p>Either a tripartite (multilayer) network of
+<dd><p>Either a tripartite network of
 'igraph' class which contains three groups of species and interactions within
 layers without interactions between each group of species, or a numeric
 matrix(or data.frame) representing interactions between two groups of
@@ -183,7 +183,7 @@ multiple networks. arXiv preprint arXiv:1303.4986.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## generate a random multilayer network</span></span></span>
+<span class="r-in"><span><span class="co">## generate a random tripartite network</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Net</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">15</span>,<span class="fl">16</span>,<span class="fl">0.2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
