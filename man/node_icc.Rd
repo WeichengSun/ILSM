@@ -14,7 +14,7 @@ node_icc(
 )
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a tripartite (multilayer) network of
+\item{network.or.subnet_mat1}{Either a tripartite network of
 'igraph' class which contains three groups of species and interactions within
 layers without interactions between each group of species, or a numeric
 matrix(or data.frame) representing interactions between two groups of
@@ -113,7 +113,7 @@ Eigenvector, Closeness and Betweenness centrality.
 }
 \examples{
 
-## generate a random multilayer network
+## generate a random tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
 
