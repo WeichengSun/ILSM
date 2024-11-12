@@ -111,9 +111,9 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">22</span>,<span class="fl">21</span>,<span class="fl">0.2</span>,asmatrices<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 01d07f0 DN-- 54 149 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH efc5d85 DN-- 54 149 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: layout (g/n), name (v/c), level (v/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 01d07f0 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from efc5d85 (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] S2 -&gt;S4  S2 -&gt;S45 S2 -&gt;S40 S2 -&gt;S20 S2 -&gt;S50 S2 -&gt;S25 S26-&gt;S14 S26-&gt;S20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] S26-&gt;S19 S16-&gt;S18 S16-&gt;S39 S16-&gt;S40 S16-&gt;S29 S16-&gt;S37 S16-&gt;S41 S16-&gt;S25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] S16-&gt;S48 S27-&gt;S39 S27-&gt;S45 S27-&gt;S7  S27-&gt;S41 S46-&gt;S18 S46-&gt;S38 S46-&gt;S4 </span>
@@ -128,9 +128,9 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">tmat</span><span class="op">)</span><span class="op">&lt;-</span><span class="cn">NULL</span></span></span>
 <span class="r-in"><span><span class="fu">igraph_from_matrices</span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>,<span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Because you enter two matrices with the same number of rows, the function will default to them having the same row names. Informed!!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 2dccdd5 DN-- 54 149 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 449f30f DN-- 54 149 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: name (v/c), level (v/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 2dccdd5 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 449f30f (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] S2 -&gt;S4  S2 -&gt;S45 S2 -&gt;S40 S2 -&gt;S20 S2 -&gt;S50 S2 -&gt;S25 S26-&gt;S14 S26-&gt;S20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] S26-&gt;S19 S16-&gt;S18 S16-&gt;S39 S16-&gt;S40 S16-&gt;S29 S16-&gt;S37 S16-&gt;S41 S16-&gt;S25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] S16-&gt;S48 S27-&gt;S39 S27-&gt;S45 S27-&gt;S7  S27-&gt;S41 S46-&gt;S18 S46-&gt;S38 S46-&gt;S4 </span>
@@ -143,9 +143,9 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 <span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu">igraph_from_matrices</span><span class="op">(</span><span class="va">tmat</span>,<span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You will obtain a network that contains non-connecting node!!!</span>
 <span class="r-in"><span><span class="va">M</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 92c9890 DN-- 76 149 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH abdd2ae DN-- 76 149 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: name (v/c), level (v/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 92c9890 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from abdd2ae (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] up_spe1 -&gt;S16 up_spe1 -&gt;S46 up_spe1 -&gt;S5  up_spe2 -&gt;S8  up_spe2 -&gt;S51</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [6] up_spe3 -&gt;S46 up_spe3 -&gt;S5  up_spe5 -&gt;S16 up_spe5 -&gt;S27 up_spe6 -&gt;S51</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11] up_spe7 -&gt;S2  up_spe7 -&gt;S46 up_spe7 -&gt;S8  up_spe9 -&gt;S2  up_spe9 -&gt;S27</span>
