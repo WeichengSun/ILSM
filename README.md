@@ -31,7 +31,7 @@ dashed lines indicate the connector species. In panel a, the connector
 species in the left panel were indicated by dashed links, and those in
 the right panel have links from both layers.
 
-<img src="./man/figure/pattern.png" width="100%" />
+![](man/figure/pattern.png)
 
 ## Installation
 
@@ -43,7 +43,7 @@ devtools::install_github("WeichengSun/ILSM")
 
 ## Interconnection motifs
 
-<img src="./man/figure/motif_ILSM.png" width="2074" />
+![](man/figure/motif_ILSM.png)
 
 The figure below shows the 48 forms of interconnection motifs with 3-6
 nodes. Blue and grey nodes form one layer, and grey and orange nodes
