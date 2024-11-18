@@ -11,7 +11,7 @@ null_model(
 )
 }
 \arguments{
-\item{network}{A tripartite network of 'igraph' class. The network contains three groups of species and interactions within layers without interactions between each group of species.}
+\item{network}{A tripartite network of 'igraph' class. The network contains three groups of species and interactions within subnetwork without interactions between each group of species.}
 
 \item{number}{A numeric value. The number of null model.  Default to NULL representing number 1.}
 
