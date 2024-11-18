@@ -2,7 +2,7 @@
 #'
 #' The null model could be generated according to different matrix scrambling algorithms for interconnection patterns in the tripartite network
 #'
-#' @param network A tripartite network of 'igraph' class. The network contains three groups of species and interactions within layers without interactions between each group of species.
+#' @param network A tripartite network of 'igraph' class. The network contains three groups of species and interactions within subnetwork without interactions between each group of species.
 #' @param number A numeric value. The number of null model.  Default to NULL representing number 1.
 #' @param null_type Logical. Four matrix scrambling algorithms. If null_type = NULL, default to "all".
 #'
