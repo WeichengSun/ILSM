@@ -7,7 +7,7 @@
 icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+\item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.}
 
@@ -18,7 +18,7 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 \value{
 Returns a matrix of 70 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
 
-Each row of matrix corresponds to a interconnecting species in the second layer of network. If a interconnecting species is linked to both the second and third level species, the elements in this row are not all zero, otherwise the elements are all zero.
+Each row of matrix corresponds to a interconnecting species in the second group of network. If a interconnecting species is linked to both the first and third group species, the elements in this row are not all zero, otherwise the elements are all zero.
 }
 \description{
 Counting the number of 70 roles about interconnecting species in tripartite network motifs.
