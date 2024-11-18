@@ -2,7 +2,7 @@
 #'
 #' Calculating correlation of interaction degree among subnetworks ("CoID_~").
 #'
-#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
@@ -98,7 +98,7 @@
 coid<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE){
    if(!weighted){
       if(inherits(network.or.subnet_mat1,"igraph")==T){
-         network<-adject_net(network.or.subnet_mat1)
+         network<-adjust_net(network.or.subnet_mat1)
          mat<-as.matrix(network[])
          mat1<-t(mat[V(network)$level==0,V(network)$level==1])
          mat2<-mat[V(network)$level==1,V(network)$level==2]
