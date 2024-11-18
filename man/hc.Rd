@@ -9,7 +9,7 @@ hc(network.or.subnet_mat1, subnet_mat2 = NULL)
 \arguments{
 \item{network.or.subnet_mat1}{Either a tripartite network of
 'igraph' class which contains three groups of species and interactions within
-layers without interactions between each group of species, or a numeric
+subnetwork without interactions between each group of species, or a numeric
 matrix(or data.frame) representing interactions between two groups of
 species.
 Each row and column of matrix represents single species in the second and
