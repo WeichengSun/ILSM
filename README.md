@@ -14,7 +14,6 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 coverage](https://codecov.io/gh/WeichengSun/ILSM/graph/badge.svg)](https://app.codecov.io/gh/WeichengSun/ILSM)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html##Stable)
-[![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
@@ -23,13 +22,11 @@ interconnection patterns, centrality and motifs in tripartite
 interaction networks.
 
 The figure below shows an example tripartite interaction network (a,
-with three groups of species and two interaction layers, showing two
-common forms) and interconnection structures (b, interconnection
+with three groups of species and two interaction subnetworks, showing
+two common forms) and interconnection structures (b, interconnection
 pattern, c, interconnection motif, d, interconnection centrality).
-Different colors of nodes indicate different groups of species, and the
-dashed lines indicate the connector species. In panel a, the connector
-species in the left panel were indicated by dashed links, and those in
-the right panel have links from both layers.
+Different colors of nodes indicate different groups of species. In panel
+a, the connector species have links from both subnetworks.
 
 ![](man/figure/pattern.png)
 
@@ -46,13 +43,14 @@ devtools::install_github("WeichengSun/ILSM")
 ![](man/figure/motif_ILSM.png)
 
 The figure below shows the 48 forms of interconnection motifs with 3-6
-nodes. Blue and grey nodes form one layer, and grey and orange nodes
-form the other layer. Grey nodes are connector nodes. The motifs are
-named “MABC-i”: M means “motif’,”A” is the number of a-nodes, “B” is the
-number of b-nodes, “C” is the number of c-nodes and “i” is the serial
-number for the motifs with the same “ABC”. The interconnection motifs
-are ordered by the number of connector nodes (from 1 to 4). The numbers
-from 1 to 70 in connector nodes represent the unique roles.
+nodes. Blue and grey nodes form one subnetwork, and grey and orange
+nodes form the other subnetwork. Grey nodes are connector nodes. The
+motifs are named “MABC-i”: M means “motif’,”A” is the number of a-nodes,
+“B” is the number of b-nodes, “C” is the number of c-nodes and “i” is
+the serial number for the motifs with the same “ABC”. The
+interconnection motifs are ordered by the number of connector nodes
+(from 1 to 4). The numbers from 1 to 70 in connector nodes represent the
+unique roles.
 
 ## Example
 
@@ -62,7 +60,7 @@ This is an example showing the uses of different functions:
 library(ILSM)
 ## generate a random tripartite network
 set.seed(12)
-Net <- build_net(11,15,16,0.2)# This function creates a two-layered network with 11,15, 16 nodes in three groups and the connectivity is 0.2 
+Net <- build_net(11,15,16,0.2)# This function creates a tripartite with 11,15, 16 nodes in three groups and the connectivity is 0.2 
 
 ##Or use a pollinator-plant-herbivore network from Villa-Galaviz et. al. 2020. Journal of Animal Ecology.
 data(PPH_Coltparkmeadow)
