@@ -3,7 +3,7 @@
 #' The average of Similarity of 65 roles of interconnecting species of
 #'   tripartite network.
 #'
-#' @param spe_role_mat A matrix of 65 columns representing the roles of
+#' @param spe_role_mat A matrix of 70 columns representing the roles of
 #'   interconnecting species in the motifs. Columns names are Role1, Role2,
 #'   Role3 ... Role70.
 #'
