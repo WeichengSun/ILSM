@@ -2,7 +2,7 @@
 #'
 #' Calculating the number of 48 motifs from a tripartite interaction network.
 #'
-#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.
 #'
@@ -101,7 +101,7 @@
 
 icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
    if(inherits(network.or.subnet_mat1,"igraph")==T){
-      network<-adject_net(network.or.subnet_mat1)
+      network<-adjust_net(network.or.subnet_mat1)
       PHP<-as.matrix(network[])
       PHP[PHP>0]<-1
       dimnames(PHP)<-NULL
