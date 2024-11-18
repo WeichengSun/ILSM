@@ -1,8 +1,8 @@
 #' Proportion of interconnection
 #'
-#' Calculating the proportion of species sharing with other species of two subnetworks in intermediate layer.
+#' Calculating the proportion of species sharing with other species of two subnetworks in connectors.
 #'
-#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within layers without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
+#' @param network.or.subnet_mat1 Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if two groups of species are connected, and 0 otherwise.
 #' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions between two groups of species.
@@ -40,7 +40,7 @@
 #' matrices of subnetworks by the function \code{igraph_from_matrices}.
 #'
 #' @return
-#' Print a "POC= ;" and Return a numeric value representing the proportion of sharing species in intermediate layer.
+#' Print a "POC= ;" and Return a numeric value representing the proportion of sharing species in connectors.
 #'
 #' @import igraph
 #' @export
