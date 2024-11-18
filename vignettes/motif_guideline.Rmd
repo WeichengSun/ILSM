@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The visualization of an example tripartite interaction network with three parties of nodes and two interaction layers (a, two common forms in literature) and interconnection structures (b, interconnection pattern, c, interconnection motif, d, interconnection centrality). Different colors of nodes indicate different parties of species, and the dashed lines indicate the shared species. (a) The shared species in the left panel were indicated by dashed links, and those in the right panel have links from both layers.
+The figure below shows an example tripartite interaction network (a, with three groups of species and two interaction subnetworks, showing two common forms) and interconnection structures (b, interconnection pattern, c, interconnection motif, d, interconnection centrality). Different colors of nodes indicate different groups of species. In panel a, the connector species have links from both subnetworks.
 
 ```{r echo=F, out.width = "100%"}
 knitr::include_graphics("../man/figure/pattern.png")
@@ -40,7 +40,7 @@ par(mr)
 
 ```
 
-The figure below shows the 48 forms of interconnection motifs with 3-6 nodes. Blue and grey nodes form one layer, and grey and orange nodes form the other layer. Grey nodes are connector nodes. The motifs are named "MABC-i": M means "motif',"A" is the number of a-nodes, "B" is the number of b-nodes, "C" is the number of c-nodes and "i" is the serial number for the motifs with the same "ABC". The interconnection motifs are ordered by the number of connector nodes (from 1 to 4). The numbers from 1 to 70 in connector nodes represent the unique roles.
+The figure below shows the 48 forms of interconnection motifs with 3-6 nodes. Blue and grey nodes form one subnetwork, and grey and orange nodes form the other subnetwork. Grey nodes are connector nodes. The motifs are named "MABC-i": M means "motif',"A" is the number of a-nodes, "B" is the number of b-nodes, "C" is the number of c-nodes and "i" is the serial number for the motifs with the same "ABC". The interconnection motifs are ordered by the number of connector nodes (from 1 to 4). The numbers from 1 to 70 in connector nodes represent the unique roles.
 
 The numbers from 1 to 70 in the grey circle represent the roles in which the 70 nodes are located.
 
