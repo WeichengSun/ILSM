@@ -9,6 +9,12 @@
 #' @importFrom igraph distances
 #' @noRd
 #'
+#' @references
+#'
+#' Manlio De Domenico, Mason A. Porter, Alex Arenas, Multilayer Analysis and Visualization of Networks, published in Journal of Complex Networks 3, 159-176 (2015) (Open Access)
+#'
+#' Manlio De Domenico, Multilayer Networks: Analysis and Visualization. Introduction to muxViz with R. To be published by Springer-Verlag (2021)
+#'
 #'
 
 sumR_r<-function (A, n)
