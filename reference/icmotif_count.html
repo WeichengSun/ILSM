@@ -63,7 +63,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">icmotif_count</span><span class="op">(</span><span class="va">network.or.subnet_mat1</span>, subnet_mat2 <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">icmotif_count</span><span class="op">(</span><span class="va">network.or.subnet_mat1</span>, subnet_mat2 <span class="op">=</span> <span class="cn">NULL</span>, ic_number <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,12 +81,26 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If <code>network.or.subnet_mat1</code> is "igraph", <code>subnet_mat2</code> defaults to NULL.</p></dd>
 
+
+<dt id="arg-ic-number">ic_number<a class="anchor" aria-label="anchor" href="#arg-ic-number"></a></dt>
+<dd><p>The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Return a numeric vector with the number of 48 motifs: M111, M112, M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
-M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1, M321_2,
-M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4, M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.</p>
+    <p>If <code>ic_number</code> = 4,
+return a numeric vector with the number of 48 motifs: M111, M112, M113,
+M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
+M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1,
+M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1,
+M321_2, M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4,
+M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.</p>
+<p>However if <code>ic_nmeber</code> = 2,
+only return a numeric vector with the number of top 36 motifs: M111, M112,
+M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2,
+M122_3, M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3,
+M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8,
+M321_1, M321_2, M321_3, M321_4, M321_5</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -125,6 +139,11 @@ M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4, M132-5, M231-1, M2
 <span class="r-out co"><span class="r-pr">#&gt;</span> [28]    2800    6840    1530    8124   47962   53347   39968   38250    4930</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [37]      11     204      55       0      44       0     219     550      59</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [46]     154      55       0</span>
+<span class="r-in"><span><span class="fu">icmotif_count</span><span class="op">(</span><span class="va">Net</span>, ic_number<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]     612    1341    1754    1836   10801   22680   24570  134437  278640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] 1269020     123     581     335     180    1818     400     516     180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19]     180    2429    4755     969   25549    3496   10309    6387    2427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28]    2800    6840    1530    8124   47962   53347   39968   38250    4930</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">22</span>,<span class="fl">21</span>,<span class="fl">0.2</span>,asmatrices<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>

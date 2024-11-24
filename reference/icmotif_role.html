@@ -63,7 +63,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">icmotif_role</span><span class="op">(</span><span class="va">network.or.subnet_mat1</span>, subnet_mat2 <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">icmotif_role</span><span class="op">(</span><span class="va">network.or.subnet_mat1</span>, subnet_mat2 <span class="op">=</span> <span class="cn">NULL</span>, ic_number <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,11 +81,24 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If <code>network.or.subnet_mat1</code> is "igraph", <code>subnet_mat2</code> defaults to NULL.</p></dd>
 
+
+<dt id="arg-ic-number">ic_number<a class="anchor" aria-label="anchor" href="#arg-ic-number"></a></dt>
+<dd><p>The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a matrix of 70 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.</p>
-<p>Each row of matrix corresponds to a interconnecting species in the second group of network. If a interconnecting species is linked to both the first and third group species, the elements in this row are not all zero, otherwise the elements are all zero.</p>
+    <p>If <code>ic_number</code> = 4,
+return a matrix of 70 columns representing the roles of interconnecting
+species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.</p>
+<p>Wherever, the <code>ic_number</code> = 2,
+return a matrix of 50 columns representing the roles of interconnecting
+species in the top 30 motifs. Columns names are Role1, Role2,
+Role3 ... Role50.</p>
+<p>Each row of matrix corresponds to a interconnecting species in the second
+group of network. If a interconnecting species is linked to both the first
+and third group species, the elements in this row are not all zero, otherwise
+the elements are all zero.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -436,6 +449,231 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 <span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0</span>
+<span class="r-in"><span><span class="fu">icmotif_role</span><span class="op">(</span><span class="va">Net</span>, ic_number<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role1 role2 role3 role4 role5 role6 role7 role8  role9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris     0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis           0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra           0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum        3     0     0     0     3     0     0     1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus          0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr             0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus           14    91   364  1001     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata      0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis      0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus        0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare    185   370   370   185  3330  6660  6660 38850  77700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus        0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris         0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris        230   460   460   230  5175 10350 10350 75900 151800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens       168   420   560   420  2268  5670  7560 19656  49140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor          0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale      0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense        5     0     0     0    10     0     0    10      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens          6     0     0     0    15     0     0    20      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys       1     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris       0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera      0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum     0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris          0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis       0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra             0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                     0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata       0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus       0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa             0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr            0     0     0     0     0     0     0     0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role10 role11 role12 role13 role14 role15 role16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum         0      0     32      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare  330225     29    536    129    116      0    814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris          0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris      815925    106    276    154     64    180    424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens     122850    103    284     52    155    180    580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense         5      4      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens          15      4     17      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys        0      0     17      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role17 role18 role19 role20 role21 role22 role23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum        70      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare     904    226    174    516      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris          0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris         384     96     96    256      0    180    180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens        390     78    130    260    180      0    180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens          35      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys       35      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role24 role25 role26 role27 role28 role29 role30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum         0      0      0      0     32   1102     16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus            37      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare    1027    648    675    198  12326  11615   3485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris          0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris        2030   3000   1236    885   8570   5411   1925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens       1760   1095   2832    843   4536   6282   1566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense         2      4      8      6      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens           2      8      4      6     85    567      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys        0      0      0      0      0    572      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role31 role32 role33 role34 role35 role36 role37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus           481    148      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare    4108   4801   2592   2895    870    792      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris          0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris        2520   3920   1920   2244   1245    480   2800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens       3200   1440   1875   1248    312   1155   2800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role38 role39 role40 role41 role42 role43 role44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra            0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus             0      0      0      0      0      0    666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare       0      0      0   2904   2700  11106  11655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus         0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris          0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris        5040   1800   1530   4440   1344  28035  12600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens       1800   5040   1530    780   4080   8820  23040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense         0      0      0      0      0      0      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens           0      0      0      0      0      1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera       0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris           0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                      0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          role45 role46 role47 role48 role49 role50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthriscus sylvestris      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Bellis perennis            0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Centaurea nigra            0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cerastium fontanum         0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Conopodium majus           0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Euphrasia agr              0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Holcus lanatus             0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Hypochaeris radicata       0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon autumnalis       0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leontodon hispidus         0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Leucanthemum vulgare    8325   6948  14760   4770   4392    846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Lotus corniculatus         0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Prunella vulgaris          0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus acris        7410  40980  35280  10170  25020   4640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus repens      37608   5415  29880  23292   8820   4366</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rhinanthus minor           0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum officinale       0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium pratense         4      0      8     12      6      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Trifolium repens           0      4      8      6     12      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Veronica chamaedrys        0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis capillaris        0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Agrostis stolonifera       0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Anthoxanthum odoratum      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Caltha palustris           0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Cardamine prantesis        0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Festuca rubra              0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Grass                      0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Plantago lanceolata        0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Ranunculus bulbosus        0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Rumex acetosa              0      0      0      0      0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pl_Taraxacum aggr             0      0      0      0      0      0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">22</span>,<span class="fl">21</span>,<span class="fl">0.2</span>,asmatrices<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
