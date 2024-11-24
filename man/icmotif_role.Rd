@@ -4,7 +4,7 @@
 \alias{icmotif_role}
 \title{Analyzing role of interconnecting node in motifs}
 \usage{
-icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL)
+icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL, ic_number = 4)
 }
 \arguments{
 \item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
@@ -14,11 +14,23 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 \item{subnet_mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.
 Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
+
+\item{ic_number}{The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.}
 }
 \value{
-Returns a matrix of 70 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
+If \code{ic_number} = 4,
+return a matrix of 70 columns representing the roles of interconnecting
+species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
 
-Each row of matrix corresponds to a interconnecting species in the second group of network. If a interconnecting species is linked to both the first and third group species, the elements in this row are not all zero, otherwise the elements are all zero.
+Wherever, the \code{ic_number} = 2,
+return a matrix of 50 columns representing the roles of interconnecting
+species in the top 30 motifs. Columns names are Role1, Role2,
+Role3 ... Role50.
+
+Each row of matrix corresponds to a interconnecting species in the second
+group of network. If a interconnecting species is linked to both the first
+and third group species, the elements in this row are not all zero, otherwise
+the elements are all zero.
 }
 \description{
 Counting the number of 70 roles about interconnecting species in tripartite network motifs.
@@ -60,6 +72,7 @@ Net <- build_net(11,15,16,0.2)
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 icmotif_role(Net)
+icmotif_role(Net, ic_number=2)
 
 set.seed(12)
 MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
