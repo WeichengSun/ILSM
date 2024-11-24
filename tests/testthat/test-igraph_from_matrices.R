@@ -49,5 +49,7 @@ test_that("Make sure the function is implemented", {
    expect_true(length(M)==length(m))
    expect_length(icmotif_count(N),
                     48L)
+   expect_length(icmotif_count(N, ic_number = 2),
+                 36L)
    expect_true(icmotif_count(M)[1]==icmotif_count(m)[1])
 })
