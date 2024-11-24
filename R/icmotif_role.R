@@ -10,6 +10,8 @@
 #'  Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.
 #'
+#' @param ic_number The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.
+#'
 #' @details
 #'
 #' \strong{network.or.subnet_mat1 and subnet_mat2}
@@ -43,11 +45,22 @@
 #' @export
 #'
 #' @return
-#' Returns a matrix of 70 columns representing the roles of interconnecting species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
+#' If \code{ic_number} = 4,
+#' return a matrix of 70 columns representing the roles of interconnecting
+#' species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
 #'
-#' Each row of matrix corresponds to a interconnecting species in the second group of network. If a interconnecting species is linked to both the first and third group species, the elements in this row are not all zero, otherwise the elements are all zero.
+#' Wherever, the \code{ic_number} = 2,
+#' return a matrix of 50 columns representing the roles of interconnecting
+#' species in the top 30 motifs. Columns names are Role1, Role2,
+#' Role3 ... Role50.
 #'
-#' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
+#' Each row of matrix corresponds to a interconnecting species in the second
+#' group of network. If a interconnecting species is linked to both the first
+#' and third group species, the elements in this row are not all zero, otherwise
+#'  the elements are all zero.
+#'
+#' @srrstats {G1.1} The algorithm is the first implementation of a novel
+#' lgorithm.
 #'
 #' @references
 #' Simmons, B. I., Sweering, M. J., Schillinger, M., Dicks, L. V., Sutherland, W. J., & Di Clemente, R. (2019). bmotif: A package for motif analyses of bipartite networks. Methods in Ecology and Evolution, 10(5), 695-701.
@@ -61,6 +74,7 @@
 #' data(PPH_Coltparkmeadow)
 #' Net <- PPH_Coltparkmeadow
 #' icmotif_role(Net)
+#' icmotif_role(Net, ic_number=2)
 #'
 #' set.seed(12)
 #' MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
@@ -81,7 +95,7 @@
 #'
 #'
 
-icmotif_role<-function(network.or.subnet_mat1, subnet_mat2=NULL){
+icmotif_role<-function(network.or.subnet_mat1, subnet_mat2=NULL, ic_number=4){
    if(inherits(network.or.subnet_mat1,"igraph")==T){
       network<-adjust_net(network.or.subnet_mat1)
       PHP<-as.matrix(network[])
@@ -258,6 +272,13 @@ icmotif_role<-function(network.or.subnet_mat1, subnet_mat2=NULL){
 
    M321_5 <- Three(Ubb)*Vbb
    HH_role <- cbind(HH_role,rowSums(M321_5)-M311)
+
+   if(ic_number==2){
+      role<-role[,1:50]
+      role[rownames(HH_role),]<-HH_role
+      colnames(role)<-paste0("role",c(1:50))
+      return(role)
+   }
 
 ####################
    M131<-M1321<-M1321_1<-M1322<-M1322_1<-M1323<-M1323_1<-M1324<-rep(0,L1)
