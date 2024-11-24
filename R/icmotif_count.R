@@ -9,6 +9,7 @@
 #' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions between two groups of species.
 #'  Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
 #'  Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.
+#' @param ic_number The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.
 #'
 #' @import igraph
 #'
@@ -46,9 +47,20 @@
 #'
 #'
 #' @return
-#'  Return a numeric vector with the number of 48 motifs: M111, M112, M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
-#'  M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1, M321_2,
-#'  M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4, M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.
+#' If \code{ic_number} = 4,
+#'  return a numeric vector with the number of 48 motifs: M111, M112, M113,
+#'  M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
+#'  M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1,
+#'  M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1,
+#'  M321_2, M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4,
+#'  M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.
+#'
+#' However if \code{ic_nmeber} = 2,
+#'  only return a numeric vector with the number of top 36 motifs: M111, M112,
+#'  M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2,
+#'  M122_3, M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3,
+#'  M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8,
+#'  M321_1, M321_2, M321_3, M321_4, M321_5
 #'
 #' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
 #' @srrstats {G1.3,G1.4} This standard belongs here.
@@ -80,6 +92,7 @@
 #' data(PPH_Coltparkmeadow)
 #' Net <- PPH_Coltparkmeadow
 #' icmotif_count(Net)
+#' icmotif_count(Net, ic_number=2)
 #'
 #' set.seed(12)
 #' MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
@@ -99,7 +112,7 @@
 #'
 #'
 
-icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
+icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL, ic_number=4){
    if(inherits(network.or.subnet_mat1,"igraph")==T){
       network<-adjust_net(network.or.subnet_mat1)
       PHP<-as.matrix(network[])
@@ -233,6 +246,13 @@ icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL){
    M321_4 <- sum(Two(Ubb)*XT*Vbb) #=sum((PHP_add*(PH_add-1)/2)*PH_ratio)##
 
    M321_5 <- (sum(Three(Ubb)*Vbb)-M311)/2 #M<-(PHP_add*(PH_add-1)*(PH_add-2)/6); =sum(M[lower.tri(M)])
+
+   if(ic_number==2)
+      return(c(M111, M112, M113, M114, M211, M212, M213, M311, M312, M411,
+               M121, M122_1, M122_2, M122_3, M123_1, M123_2, M123_3,
+               M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2,
+               M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_9, M321_1,
+               M321_2, M321_3, M321_4, M321_5))
 
    M131 <- sum(Three(PP))
 
