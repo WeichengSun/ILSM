@@ -4,7 +4,7 @@
 \alias{icmotif_count}
 \title{Calculating the number of 48 motifs}
 \usage{
-icmotif_count(network.or.subnet_mat1, subnet_mat2 = NULL)
+icmotif_count(network.or.subnet_mat1, subnet_mat2 = NULL, ic_number = 4)
 }
 \arguments{
 \item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
@@ -14,11 +14,24 @@ Elements of matrix are non-zero numbers if the two groups of species are connect
 \item{subnet_mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.
 Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
 Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
+
+\item{ic_number}{The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.}
 }
 \value{
-Return a numeric vector with the number of 48 motifs: M111, M112, M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
-M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1, M321_2,
-M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4, M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.
+If \code{ic_number} = 4,
+return a numeric vector with the number of 48 motifs: M111, M112, M113,
+M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
+M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1,
+M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1,
+M321_2, M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4,
+M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.
+
+However if \code{ic_nmeber} = 2,
+only return a numeric vector with the number of top 36 motifs: M111, M112,
+M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2,
+M122_3, M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3,
+M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8,
+M321_1, M321_2, M321_3, M321_4, M321_5
 }
 \description{
 Calculating the number of 48 motifs from a tripartite interaction network.
@@ -61,6 +74,7 @@ Net <- build_net(11,15,16,0.2)
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 icmotif_count(Net)
+icmotif_count(Net, ic_number=2)
 
 set.seed(12)
 MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
