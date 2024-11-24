@@ -64,10 +64,13 @@ test_that("Make sure the function is implemented", {
    m2<-matrix(sample(c(rep(1,13),rep(0,2))),5,3)
    rownames(m2)<-c(paste0("species",seq=c(1,3,2,5,4)))
    N<-icmotif_role(m1,m2)
+   M<-icmotif_role(m1,m2,2)
    expect_identical(class(N),
                     c("matrix","array"))
    expect_identical(ncol(N),
                     70L)
+   expect_identical(ncol(M),
+                    50L)
    expect_length(rownames(N),
                  5L)
 
