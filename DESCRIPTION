@@ -21,7 +21,6 @@ RoxygenNote: 7.3.2
 Depends: R (>= 3.5.0)
 Imports: 
     stats,
-    Matrix,
     igraph
 Suggests: 
     knitr,
