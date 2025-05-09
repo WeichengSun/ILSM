@@ -150,18 +150,18 @@ coid<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,weight_t
       general_weight1<-apply(subnet_mat1,1,function(x){
          if(sum(x)==0){return(0)}
          else{x<-x[x!=0];
-         if (weight_type=="shannon"){return(-sum((x/sum(x))*(log(x/sum(x))))}
+         if (weight_type=="shannon"){return(-sum((x/sum(x))*(log(x/sum(x)))))}
          else if (weight_type=="sum"){return(sum(x))}
          else{ stop("weight_type should be 'shannon' or 'sum'")}
-         )}
+         }
       })
       general_weight2<-apply(subnet_mat2,1,function(x){
          if(sum(x)==0){return(0)}
          else{x<-x[x!=0];
-         if (weight_type=="shannon"){return(-sum((x/sum(x))*(log(x/sum(x))))}
+         if (weight_type=="shannon"){return(-sum((x/sum(x))*(log(x/sum(x)))))}
          else if (weight_type=="sum"){return(sum(x))}
          else{ stop("weight_type should be 'shannon' or 'sum'")}
-         )}
+         }
       })
       general_weight_cor<-cor(general_weight1,general_weight2,method=method)
       message(paste0("CoID_weight= ",seq=round(general_weight_cor,8),";"),"\n")
