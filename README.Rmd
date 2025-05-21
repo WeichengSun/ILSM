@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ILSM
+# ILSM: A package for analyzing the interconnection structure of tripartite interaction networks
 
 <!-- badges: start -->
 
@@ -23,54 +23,91 @@ knitr::opts_chunk$set(
 
 ILSM is designed for analyzing interconnection structures including interconnection patterns, centrality and motifs in tripartite interaction networks.
 
-The figure below shows an example tripartite interaction network (a, with three groups of species and two interaction subnetworks, showing two common forms) and interconnection structures (b, interconnection pattern, c, interconnection motif, d, interconnection centrality). Different colors of nodes indicate different groups of species. In panel a, the connector species have links from both subnetworks.
-
-![](man/figure/pattern.png)
-
 ## Installation
 
 You can install the development version of ILSM from GitHub:
 
-```{r echo = TRUE, eval = FALSE}
+```{r echo = T, eval = F}
 devtools::install_github("WeichengSun/ILSM")
 ```
 
-## Interconnection motifs
+## Definition of a tripartite network
+For clarification in this following context, we refer to a tripartite network as a two-subnetwork interaction network: it is composed of three sets of nodes (a-nodes, b-nodes, and c-nodes) and two subnetworks (the P subnetwork with links between a-nodes and b-nodes, and the Q subnetwork with links between b-nodes and c-nodes); the b-nodes are the shared set of nodes; connector nodes are the common nodes of both subnetworks in the b-nodes (Fig. 1a). No intra-guild interactions are considered if not specified.
 
-![](man/figure/motif_ILSM.png)
 
-The figure below shows the 48 forms of interconnection motifs with 3-6 nodes. Blue and grey nodes form one subnetwork, and grey and orange nodes form the other subnetwork. Grey nodes are connector nodes. The motifs are named "MABC-i": M means "motif',"A" is the number of a-nodes, "B" is the number of b-nodes, "C" is the number of c-nodes and "i" is the serial number for the motifs with the same "ABC". The interconnection motifs are ordered by the number of connector nodes (from 1 to 4). The numbers from 1 to 70 in connector nodes represent the unique roles.
+We provide three examples to showcase the functionality of the 'ILSM' package and the ecological application of interconnection motif analysis. First, we provide a worked example to show how to calculate interconnection patterns,  motifs and centralities. Second, we compare the differences of interconnection patterns, centralities and motifs in characterizing variation of empirical plant-herbivore-parasitoid (PHP) and pollinator-plant-herbivore (PPH) networks. Finally, we compare the profiles of interconnection motifs to see if they can differentiate PHP and PPH networks.
 
-## Example
 
-This is an example showing the uses of different functions:
+## A worked example of analyzing interconnection structures
+As a worked example, we use a published pollinator-plant-herbivore (PPH) binary tripartite network (Villa-Galaviz et al. 2021). This PPH network is a subset of a large hybrid network including plants, flower visitors, leaf minors, and parasitoids from a long-term nutrient manipulation experiment (Colt Park Meadows) located at 300 m elevation in the Ingleborough National Nature Reserve in the Yorkshire Dales, northern England (54°12′N, 2°21′W). It contained pollinators, plants and herbivores, corresponding with mutualistic interactions in the pollinator-plant subnetwork and antagonistic interactions in the plant-herbivore subnetwork. Plants are the shared set of species between two subnetworks. We also generate random weights to show the analysis of interconnection structures for weighted or quntitative tripartite networks.
 
-```{r echo = TRUE, eval = FALSE}
-library(ILSM)
-## generate a random tripartite network
-set.seed(12)
-Net <- build_net(11,15,16,0.2)# This function creates a tripartite with 11,15, 16 nodes in three groups and the connectivity is 0.2 
+### Interconnection pattern
+Interconnection pattern refers a macro-scale property on how connector nodes (species) interconnect two subnetworks. Five interconnection patterns are supported including proportion of connector nodes (POC), correlation of interaction degree (CoID),  correlation of interaction similarity (CoIS), participation coefficient (PC), and proportion of connector nodes in shared node hubs (HC).
 
-##Or use a pollinator-plant-herbivore network from Villa-Galaviz et. al. 2020. Journal of Animal Ecology.
+```{r echo=T, eval = F, out.width = "100%"}
+library(ILSM);library(igraph)
 data(PPH_Coltparkmeadow)
-Net <- PPH_Coltparkmeadow
-
-## calculate the frequency of interconnection motifs
-icmotif_count(Net)
-
-##the roles of connector node within interconnection motifs
-icmotif_role(Net)
-
-## Five interconnection patterns
-poc(Net)
-coid(Net)
-cois(Net)
-pc(Net)
-hc(Net)
-
-## connector nodes' interconnection centrality
-node_icc(Net)
+E(PPH_Coltparkmeadow)$weight<-runif(length(E(PPH_Coltparkmeadow)),0.1,1)#Generating random weights for showing the weighted interconnection structures.
+#proportion of connector nodes
+poc(PPH_Coltparkmeadow)
+#correlation of interaction degree 
+coid(PPH_Coltparkmeadow)
+coid(PPH_Coltparkmeadow,weighted=T)
+#correlation of interaction similarity
+cois(PPH_Coltparkmeadow)
+cois(PPH_Coltparkmeadow,weighted=T)
+#participation coefficient 
+pc(PPH_Coltparkmeadow)
+pc(PPH_Coltparkmeadow,weighted=T)
+#proportion of connector nodes in shared node hubs
+hc(PPH_Coltparkmeadow)
+hc(PPH_Coltparkmeadow,weighted=T)
 ```
+### Interconnection motif
+
+Here, we define 48 forms of interconneciton motifs (Fig. 2). An interconnection motif must comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). We further restricted each motif to contain six nodes and no intra-guild interactions. 
+
+The 48 interconnection motifs are provided as  'igraph' objects by 'Multi_motif' in this package.
+```{r echo=T,eval = F}
+library(ILSM)
+motif_names<-c("M111","M112","M113","M114","M211","M212","M213","M311","M312","M411","M121","M122-1",
+       "M122-2","M122-3","M123-1","M123-2","M123-3","M123-4","M123-5","M221-1","M221-2",
+       "M221-3","M222-1","M222-2","M222-3","M222-4","M222-5","M222-6","M222-7","M222-8",
+       "M222-9","M321-1","M321-2","M321-3","M321-4","M321-5","M131","M132-1","M132-2",
+       "M132-3","M132-4","M132-5","M231-1","M231-2","M231-3","M231-4","M231-5","M141")
+mr <- par(mfrow=c(6,8),mar=c(1,1,3,1))
+IM_res<-Multi_motif("all")
+ for(i in 1:48){
+     plot(a[[i]],
+          vertex.size=30, vertex.label=NA,
+          vertex.color="#D0E7ED",main=motif_names[i])
+}
+par(mr)
+
+```
+
+The 48 interconnection motifs are named named "MABC-i": M means "motif',"A" is the number of a-nodes, "B" is the number of b-nodes, "C" is the number of c-nodes and "i" is the serial number for the motifs with the same "ABC". The interconnection motifs are ordered by the number of connector nodes (from 1 to 4). The numbers from 1 to 70 in connector nodes represent the unique roles defined by motifs. 
+
+```{r echo=T,eval = T,out.width = "100%" }
+knitr::include_graphics("../man/figure/motif_ILSM.png")
+```
+Fig. 2. The 48 forms of interconnection motifs with 3-6 nodes and no intra-guild interactions. Blue and grey nodes from one subnetwork, and grey and orange nodes from the other subnetwork. Grey nodes are connector nodes. 
+
+For a tripartite network, the 'icmotif_count' gives the counts of each motif and 'icmotif_role' gives counts of roles.
+```{r echo = T,eval = F}
+icmotif_count(PPH_Coltparkmeadow)
+icmotif_role(PPH_Coltparkmeadow)
+icmotif_count(PPH_Coltparkmeadow, weighted=T)
+icmotif_role(PPH_Coltparkmeadow, weighted=T)
+```
+
+### Interconnection centrality
+Interconnection centrality is to measure the importance of connector nodes in connecting two subnetworks in a tripartite network. This is different from common centrality measures (e.g., from 'igraph') that treat connectors equally with other nodes. Three metrics are provided in this package. For binary networks, interconnection degree centrality of each connector species is defined as the product of its degree values from two subnetworks, interconnection betweenness centrality is defined by the number of shortest paths from a-nodes to c-nodes going through connector species and interconnection closeness centrality is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes. For weighted networks, interaction strengths are used in the calculation of weighted degree, shortest path, and distance.
+```{r echo = T, eval = F}
+node_icc(PPH_Coltparkmeadow)
+node_icc(PPH_Coltparkmeadow,weighted=T)
+```
+
 
 ## License
 
