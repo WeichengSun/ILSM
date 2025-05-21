@@ -88,6 +88,14 @@ structures in tripartite interaction networks</h1>
 
     
     
+<p>For clarification in this following context, we refer to a tripartite
+network as a two-subnetwork interaction network: it is composed of three
+sets of nodes (a-nodes, b-nodes, and c-nodes) and two subnetworks (the P
+subnetwork with links between a-nodes and b-nodes, and the Q subnetwork
+with links between b-nodes and c-nodes); the b-nodes are the shared set
+of nodes; connector nodes are the common nodes of both subnetworks in
+the b-nodes (Fig. 1a). No intra-guild interactions are considered if not
+specified.</p>
 <p>In this vignette, we provide three examples to showcase the
 functionality of the ‘ILSM’ package and the ecological application of
 interconnection motif analysis. First, we provide a worked example to
@@ -97,16 +105,8 @@ centralities and motifs in characterizing variation of empirical
 plant-herbivore-parasitoid (PHP) and pollinator-plant-herbivore (PPH)
 networks. Finally, we compare the profiles of interconnection motifs to
 see if they can differentiate PHP and PPH networks.</p>
-<p>For clarification in this following context, we refer to a tripartite
-network as a two-subnetwork interaction network: it is composed of three
-sets of nodes (a-nodes, b-nodes, and c-nodes) and two subnetworks (the P
-subnetwork with links between a-nodes and b-nodes, and the Q subnetwork
-with links between b-nodes and c-nodes); the b-nodes are the shared set
-of nodes; connector nodes are the common nodes of both subnetworks in
-the b-nodes (Fig. 1a). No intra-guild interactions are considered if not
-specified.</p>
 <div class="section level2">
-<h2 id="a-worked-example-of-interconnection-structures">A worked example of interconnection structures<a class="anchor" aria-label="anchor" href="#a-worked-example-of-interconnection-structures"></a>
+<h2 id="a-worked-example-of-analyzing-interconnection-structures">A worked example of analyzing interconnection structures<a class="anchor" aria-label="anchor" href="#a-worked-example-of-analyzing-interconnection-structures"></a>
 </h2>
 <p>As a worked example, we use a published pollinator-plant-herbivore
 (PPH) binary tripartite network (Villa-Galaviz et al. 2021). This PPH
@@ -161,6 +161,21 @@ restricted each motif to contain six nodes and no intra-guild
 interactions.</p>
 <p>The 48 interconnection motifs are provided as ‘igraph’ objects by
 ‘Multi_motif’ in this package.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/WeichengSun/ILSM" class="external-link">ILSM</a></span><span class="op">)</span></span>
+<span><span class="va">motif_names</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M111"</span>,<span class="st">"M112"</span>,<span class="st">"M113"</span>,<span class="st">"M114"</span>,<span class="st">"M211"</span>,<span class="st">"M212"</span>,<span class="st">"M213"</span>,<span class="st">"M311"</span>,<span class="st">"M312"</span>,<span class="st">"M411"</span>,<span class="st">"M121"</span>,<span class="st">"M122-1"</span>,</span>
+<span>       <span class="st">"M122-2"</span>,<span class="st">"M122-3"</span>,<span class="st">"M123-1"</span>,<span class="st">"M123-2"</span>,<span class="st">"M123-3"</span>,<span class="st">"M123-4"</span>,<span class="st">"M123-5"</span>,<span class="st">"M221-1"</span>,<span class="st">"M221-2"</span>,</span>
+<span>       <span class="st">"M221-3"</span>,<span class="st">"M222-1"</span>,<span class="st">"M222-2"</span>,<span class="st">"M222-3"</span>,<span class="st">"M222-4"</span>,<span class="st">"M222-5"</span>,<span class="st">"M222-6"</span>,<span class="st">"M222-7"</span>,<span class="st">"M222-8"</span>,</span>
+<span>       <span class="st">"M222-9"</span>,<span class="st">"M321-1"</span>,<span class="st">"M321-2"</span>,<span class="st">"M321-3"</span>,<span class="st">"M321-4"</span>,<span class="st">"M321-5"</span>,<span class="st">"M131"</span>,<span class="st">"M132-1"</span>,<span class="st">"M132-2"</span>,</span>
+<span>       <span class="st">"M132-3"</span>,<span class="st">"M132-4"</span>,<span class="st">"M132-5"</span>,<span class="st">"M231-1"</span>,<span class="st">"M231-2"</span>,<span class="st">"M231-3"</span>,<span class="st">"M231-4"</span>,<span class="st">"M231-5"</span>,<span class="st">"M141"</span><span class="op">)</span></span>
+<span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">IM_res</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/Multi_motif.html">Multi_motif</a></span><span class="op">(</span><span class="st">"all"</span><span class="op">)</span></span>
+<span> <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">48</span><span class="op">)</span><span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">a</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>          vertex.size<span class="op">=</span><span class="fl">30</span>, vertex.label<span class="op">=</span><span class="cn">NA</span>,</span>
+<span>          vertex.color<span class="op">=</span><span class="st">"#D0E7ED"</span>,main<span class="op">=</span><span class="va">motif_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">mr</span><span class="op">)</span></span></code></pre></div>
 <p>The 48 interconnection motifs are named named “MABC-i”: M means
 “motif’,”A” is the number of a-nodes, “B” is the number of b-nodes, “C”
 is the number of c-nodes and “i” is the serial number for the motifs
@@ -174,6 +189,11 @@ orange nodes from the other subnetwork. Grey nodes are connector
 nodes.</p>
 <p>For a tripartite network, the ‘icmotif_count’ gives the counts of
 each motif and ‘icmotif_role’ gives counts of roles.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/icmotif_count.html">icmotif_count</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/icmotif_role.html">icmotif_role</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/icmotif_count.html">icmotif_count</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span>, weighted<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/icmotif_role.html">icmotif_role</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span>, weighted<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="interconnection-centrality">Interconnection centrality<a class="anchor" aria-label="anchor" href="#interconnection-centrality"></a>
@@ -191,6 +211,9 @@ the inverse of the sum of distances from connector species to both
 a-nodes and c-nodes. For weighted networks, interaction strengths are
 used in the calculation of weighted degree, shortest path, and
 distance.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/node_icc.html">node_icc</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/node_icc.html">node_icc</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span>,weighted<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p>###Extensional analysis</p>
 </div>
 </div>

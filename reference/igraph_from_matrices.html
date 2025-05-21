@@ -96,9 +96,9 @@ Elements in matrices are non-zero values if two nodes are linked with or without
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">22</span>,<span class="fl">21</span>,<span class="fl">0.2</span>,output_matrices<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 0917634 UN-- 54 146 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 943655c UN-- 54 146 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: layout (g/n), name (v/c), level (v/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 0917634 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 943655c (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] a1 --b1  a1 --b3  a1 --b7  a1 --b19 a1 --b22 a2 --b5  a2 --b8  a2 --b9 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] a2 --b13 a2 --b21 a3 --b13 a3 --b17 a3 --b20 a4 --b5  a4 --b9  a4 --b11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] a4 --b15 a5 --b1  a5 --b5  a5 --b9  a5 --b11 a6 --b1  a6 --b3  a6 --b8 </span>
@@ -112,9 +112,9 @@ Elements in matrices are non-zero values if two nodes are linked with or without
 <span class="r-in"><span><span class="va">tmat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">tmat</span><span class="op">)</span><span class="op">&lt;-</span><span class="cn">NULL</span></span></span>
 <span class="r-in"><span><span class="fu">igraph_from_matrices</span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>,<span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH a90902c UN-- 54 146 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 33e84dd UN-- 54 146 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: layout (g/n), name (v/c), level (v/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from a90902c (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 33e84dd (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] a1 --b1  a1 --b3  a1 --b7  a1 --b19 a1 --b22 a2 --b5  a2 --b8  a2 --b9 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] a2 --b13 a2 --b21 a3 --b13 a3 --b17 a3 --b20 a4 --b5  a4 --b9  a4 --b11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] a4 --b15 a5 --b1  a5 --b5  a5 --b9  a5 --b11 a6 --b1  a6 --b3  a6 --b8 </span>
