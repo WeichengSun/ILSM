@@ -2,114 +2,46 @@
 % Please edit documentation in R/node_icc.R
 \name{node_icc}
 \alias{node_icc}
-\title{Measuring Interconnection Centrality of Tripartite Interaction Network}
+\title{Interconnection centrality for connector nodes in a tripartite network}
 \usage{
-node_icc(
-  network.or.subnet_mat1,
-  subnet_mat2 = NULL,
-  isDirected1 = TRUE,
-  isDirected2 = TRUE,
-  type = c("degree", "pagerank", "hub", "authority", "eigenvector", "closeness",
-    "betweenness", "all")
-)
+node_icc(network.or.subnet_mat1, subnet_mat2 = NULL, weighted = F)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a tripartite network of
-'igraph' class which contains three groups of species and interactions within
-subnetwork without interactions between each group of species, or a numeric
-matrix(or data.frame) representing interactions between two groups of
-species.
-Each row and column of matrix represents single species in the second and
-first groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are
-connected, and 0 otherwise.}
+\item{network.or.subnet_mat1}{Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.}
 
-\item{subnet_mat2}{A numeric matrix(or data.frame) representing interactions
-between two groups of species.
-Each row and column of matrix represents single species in the second and
-third groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are
-connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph",
-\code{subnet_mat2} defaults to NULL.}
+\item{subnet_mat2}{The matrix representing one subnetwork.}
 
-\item{isDirected1}{Logical. Whether the interaction between the two groups of
-species in \code{mat1} is unidirectional.Default to TRUE, such as Predation
-and Herbivory. Otherwise it is bidirectional, such as Mutualism.}
-
-\item{isDirected2}{Logical. Whether the interaction between the two groups of
-species in \code{mat2} is unidirectional.Default to TRUE, such as Predation
-and Herbivory. Otherwise it is bidirectional, such as Mutualism.}
-
-\item{type}{Character. Including "degree", "pagerank", "hub", "authority",
-"eigenvector", "closeness", "betweenness", and "all".}
-}
-\value{
-Return a data frame with the first row "node" for each node of network
-representing each species.
-\itemize{
-\item If \code{type} is either of "degree", "pagerank", "hub", "authority",
-"eigenvector", "closeness", "betweenness" the data frame has two columns, and
-the second column corresponds to either of "Degree", "Pagerank_Centrality",
-"Hub_Centrality", "Authority_Centrality", "Eigenvector_Centrality",
-"Closeness_Centrality", "Betweenness_Centrality".
-\item If \code{type} is "all", the data frame has eight columns, and columns
-form the second to the eighth correspond to "Degree", "Pagerank_Centrality",
-"Hub_Centrality", "Authority_Centrality", "Eigenvector_Centrality",
-"Closeness_Centrality", "Betweenness_Centrality".
-}
-}
-\description{
-The Interconnection Centrality of nodes is revealed by several centrality
-measures that have now been applied to tripartite networks, such as Degree,
-Pagerank, Hub, Authority, Eigenvector, and Closeness Betweenness centrality.
-}
-\details{
+\item{weighted}{Logical. If true, link strengths of connector nodes are used. Default to FALSE.
+#' @details
+This function calculates interconnection degree, betweenness and closeness centrality for connector nodes.
+For binary networks, interconnection degree centrality of each connector species is defined as the product of its degree values from two subnetworks,
+interconnection betweenness centrality is defined by the number of shortest paths from a-nodes to c-nodes going through connector species,
+and interconnection closeness centrality is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes.
+For weighted networks, interaction strengths are used in the calculation of weighted degree, shorest path, and distance.
 \strong{network.or.subnet_mat1 and subnet_mat2}
 
-There are two types of \code{network.or.subnet_mat1} that can be processed:
+\strong{weighted}
+
+If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices.If a weighted network is provided, it will be transformed to a binary network.
+If the \code{weighted} = TRUE, the input network can only be two matrices.
+
+\strong{network.or.subnet_mat1 and subnet_mat2}
+
+There are two types of inputs \code{network.or.subnet_mat1} that can be processed:
 \itemize{
-\item Input in a network of type "igraph" alone.
-\item Must be entered as data frame or matrix with \code{subnet_mat2}.
+\item Input is a network of type "igraph" alone.
+\item Must be entered as matrix with \code{subnet_mat2}.
 }
 
-If the type of inputting is data frame or matrix, please make sure the row of
-\code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the
-second group of species that both belong to two subnetworks and interact
-with other groups of species.
-\itemize{
-\item Try to make the rows of both matrices have the same attributes. Or we
-default:
-
-\item When the two matrices can have different numbers of rows:
-\itemize{
-\item 1. If both matrices have row names, then the function counts all row
-names to produce two new matrices with the same row names.
-\item 2. If at most one matrix has row names, the function assigns new row
-names to both matrices on a row-to-row basis (any extra row names are
-assigned a new value) and then counts all row names to produce two new
-matrices with the same row names.
+If the inputs are two matrices, please make sure the rows of
+\code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
+names to produce connector nodes. Otherwise, row numbers are assigned as row names.}
 }
-
-\item When the two matrices can have the same numbers of rows:
-\itemize{
-\item No matter how the row names of the two matrices are arranged, as long
-as the row names are exactly the same; But we don't handle matrices with
-empty row names (the function will give an error).
+\value{
+Return a data frame with interconnection degree, betweenness and closeness.
 }
-
-\item The two matrices can have different numbers of rows, but read our
-default handling carefully to make sure the calculation is accurate when
-using this function!!!
-}
-About a network of type "igraph", It can be obtained from the connection
-matrices of subnetworks by the function \code{igraph_from_matrices}.
-
-\strong{type}
-
-\code{type} "degree", "pagerank", "hub", "authority", "eigenvector",
-"closeness" and "betweenness" correspond to Degree, PageRank, Hub, Authority,
-Eigenvector, Closeness and Betweenness centrality.
-\code{type} "all" integrates the above centrality.
+\description{
+Calculating interconnection centrality (degree, betweenness and closeness) specified for connector nodes in a tripartite network.
 }
 \examples{
 
@@ -120,25 +52,29 @@ Net <- build_net(11,15,16,0.2)
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 node_icc(Net)
+set.seed(13)
+E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+node_icc(Net,weighted=T)
 
-MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
-tmat <- t(MAT[[3]])
-colnames(tmat) <- NULL
-node_icc(MAT[[3]],MAT[[4]])
-node_icc(tmat,MAT[[4]])
-node_icc(MAT[[3]],MAT[[4]],type="pagerank")
+##input as binary matrices,with row names.
+set.seed(12)
+md1 <- matrix(sample(c(0,1),5*8,replace=TRUE),5,8,dimnames = list(paste0("b",1:5),paste0("c",1:8)))
+md2 <- matrix(sample(c(0,1),20*30,replace=TRUE),20,30,dimnames = list(paste0("b",1:20),paste0("a",1:30)))
+node_icc(md1,md2)
 
-node_icc(MAT[[3]],MAT[[4]],isDirected2=FALSE)
-
-
-
+##input as weighted matrices,with row numbers as row names.
+set.seed(17)
+mdw1 <- matrix(sample(c(rep(0,20),runif(20,0,1))),5,8)
+mdw2 <- matrix(sample(c(rep(0,500),runif(100,0,1))),20,30)
+node_icc(mdw1,mdw2)
+node_icc(mdw1,mdw2,weighted=T)
 
 }
 \references{
 De Domenico, M., Nicosia, V., Arenas, A., & Latora, V. (2015). Structural
 reducibility of multilayer networks. Nature communications, 6(1), 6864.
 
-De Domenico, M., Solé-Ribalta, A., Omodei, E., Gómez, S., & Arenas, A.
+De Domenico, M., SolC)-Ribalta, A., Omodei, E., GC3mez, S., & Arenas, A.
 (2013). Centrality in interconnected multilayer networks. arXiv preprint
 arXiv:1311.2906.
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/coid.R
 \name{coid}
 \alias{coid}
-\title{Correlation of degree of connector nodes: CoID}
+\title{Correlation of degree of connector nodes}
 \usage{
 coid(
   network.or.subnet_mat1,
@@ -13,72 +13,68 @@ coid(
 )
 }
 \arguments{
-\item{network.or.subnet_mat1}{An igraph object or matrix. A tripartite network contains three groups (a,b,c) of nodes and two subnetworks (P including a- and b-groups of species, Q including b- and c-groups of species).If the network is weighted, "matrix" is recommended, otherwise unweighted result is returned. If matrices are provided, this should be the matrix representing subnetwork P that have links between a- and b-group species.
-Within this matrix, each row and column represents b-group species and a-group species respectively. For matrix, row names are required, otherwise row number is used.
-Elements of matrix are non-zero values if two species are linked, and 0 otherwise.}
+\item{network.or.subnet_mat1}{An Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
 
-\item{subnet_mat2}{The matrix representing subnetwork Q that have links between b- and c-group species.
-Within this matrix, each row and column represents b-group species and c-group species respectively.
-Elements of matrix are non-zero values if two species are linked, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
+\item{subnet_mat2}{A matrix representing one subnetwork.}
 
-\item{weighted}{Logical. If true, shannon diveristy of interaction strengths of connector nodes are used. Default to FALSE.}
+\item{weighted}{Logical. Default to FALSE. If TRUE, the degree of a connector node is replaced with Shannon diversity or sum of its interaction strengths.}
 
-\item{weight_type}{For weighted networks,the definition of weighted degree for a connector node, supporting "shannon" or "sum"}
+\item{weight_type}{For weighted==TRUE only, the definition of weighted degree for a connector node, supporting "shannon" or "sum".}
 
 \item{method}{Correlation method ("pearson", "kendall" or "spearman"). Default to "kendall".}
 }
 \value{
-Return a numeric value representing correlation of interaction degree: CoID.
-
-If \code{weighted} = FALSE, the results will show "CoID= ;" and If \code{weighted} = TRUE, the results will show "CoID_weight= ;"
+Return a numeric value representing correlation of interaction degree for connector nodes: CoID.
 }
 \description{
-Calculating correlation of degree of connector nodes ("CoID_~").
+Calculating correlation of degree of connector nodes.
 }
 \details{
+In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
+
 This function follows Sauve et al.(2016)) to calculate the correlation of interaction degree (or Shannon diversity of interaction strength ) of connector nodes. For the binary network, connector nodes' degree is calculated in each subnetwork.
-For the quantitative network, Shannon diversity of interaction strength for each connector node (i) is calculated as ??. V is the set of a or c nodes it interacts.
+For the quantitative network, Shannon diversity or sum of interaction strength for each connector node (i) is calculated.
 Three correlation methods are provided. Kendall correlation is recommended following Sauve et al.(2016).
-\strong{weighted}
 
-If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices.If a weighted network is provided, it will be transformed to a binary network.
-If the \code{weighted} = TRUE, the input network can only be two matrices. Correlation of Shannon diversity of interaction strengths for connector nodes are returned.
-
-\strong{network.or.subnet_mat1 and subnet_mat2}
-
-There are two types of inputs \code{network.or.subnet_mat1} that can be processed:
+Two types of inputs \code{network.or.subnet_mat1} can be processed:
 \itemize{
-\item Input is a network of type "igraph" alone.
-\item Must be entered as matrix with \code{subnet_mat2}.
+\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+\item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 }
 
 If the inputs are two matrices, please make sure the rows of
 \code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
-names to produce connector nodes. Otherwise, row numbers are assigned as row names.
+names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively.
+Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 }
 \examples{
 
-## generate a random tripartite network
+## generate a random binary tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
 coid(Net)
 
+## empirical network
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 coid(Net)
+set.seed(13)
+E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+coid(Net,weighted=T)
 
-##input as binary matrices,with row names.
+##input as binary matrices, with row names.
+set.seed(12)
 md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
 md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
 coid(md1,md2)
-coid(md1,md2,weighted=T)
 
 ##input as weighted matrices,with row numbers as row names.
+set.seed(12)
 mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
 mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
 coid(mdw1,mdw2)
 coid(mdw1,mdw2,weighted=T)
-
+coid(mdw1,mdw2,weighted=T, weight_type="sum")
 }
 \references{
 Sauve, A. M., ThC)bault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.

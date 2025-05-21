@@ -2,67 +2,43 @@
 % Please edit documentation in R/icmotif_count.R
 \name{icmotif_count}
 \alias{icmotif_count}
-\title{Calculating the number of 48 motifs}
+\title{Counts of interconnection motifs}
 \usage{
-icmotif_count(network.or.subnet_mat1, subnet_mat2 = NULL, ic_number = 4)
+icmotif_count(network.or.subnet_mat1, subnet_mat2 = NULL, weighted = FALSE)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
-Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.}
+\item{network.or.subnet_mat1}{Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.}
 
-\item{subnet_mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.
-Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
+\item{subnet_mat2}{The matrix representing one subnetwork.}
 
-\item{ic_number}{The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.}
+\item{weighted}{Logical. Default to FALSE. If TRUE, the counts of motifs are weighted by link strengths in each motif.}
 }
 \value{
-If \code{ic_number} = 4,
-return a numeric vector with the number of 48 motifs: M111, M112, M113,
-M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2, M122_3,
-M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3, M222_1,
-M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8, M321_1,
-M321_2, M321_3, M321_4, M321_5, M131, M132-1, M132-2, M132-3, M132-4,
-M132-5, M231-1, M231-2, M231-3, M231-4, M231-5, M141.
-
-However if \code{ic_nmeber} = 2,
-only return a numeric vector with the number of top 36 motifs: M111, M112,
-M113, M114, M211, M212, M213, M311, M312, M411, M121_1, M122_1, M122_2,
-M122_3, M123_1, M123_2, M123_3, M123_4, M123_5, M221_1, M221_2, M221_3,
-M222_1, M222_2, M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_8,
-M321_1, M321_2, M321_3, M321_4, M321_5
+return a numeric vector of the number of 48 interconnection motifs.  The motifs are named ???MABC-i???: M means ???motif???, ???A??? is the number of a-nodes, ???B??? is the number of b-nodes, ???C??? is the number of c-nodes and ???i??? is the serial number for the motifs with the same ???ABC???. See 'Multi_motif' for the forms.
 }
 \description{
-Calculating the number of 48 motifs from a tripartite interaction network.
+Counting the frequencies of interconnection motifs for a tripartite interaction network.
 }
 \details{
+In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
+An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each motif has maximumly 6 nodes, resulting in a total of 48 distinct motif forms.
+The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019), which uses mathematical operations directly on the bi-adjacency matrix.
+\strong{weighted}
+
+If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices. If a weighted network is provided, it will be transformed to a binary network.
+If the \code{weighted} = TRUE, the input network can only be two matrices. Weighted motifs are considered, then the counts are weighed by the link strength in each motif.
+
 \strong{network.or.subnet_mat1 and subnet_mat2}
 
-There are two types of \code{network.or.subnet_mat1} that can be processed:
+There are two types of inputs \code{network.or.subnet_mat1} that can be processed:
 \itemize{
-\item Input in a network of type "igraph" alone.
-\item Must be entered as data frame or matrix with \code{subnet_mat2}.
+\item Input is a network of type "igraph" alone.
+\item Must be entered as matrix with \code{subnet_mat2}.
 }
 
-If the type of inputting is data frame or matrix, please make sure the row of \code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.
-\itemize{
-\item Try to make the rows of both matrices have the same attributes. Or we default:
-
-\item When the two matrices can have different numbers of rows:
-\itemize{
-\item 1. If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.
-\item 2. If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.
-}
-
-\item When the two matrices can have the same numbers of rows:
-\itemize{
-\item No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).
-}
-
-\item The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!
-}
-About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}.
+If the inputs are two matrices, please make sure the rows of
+\code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
+names to produce connector nodes. Otherwise, row numbers are assigned as row names.
 }
 \examples{
 
@@ -70,32 +46,33 @@ About a network of type "igraph", It can be obtained from the connection matrice
 ## generate a random tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
+icmotif_count(Net)
 
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 icmotif_count(Net)
-icmotif_count(Net, ic_number=2)
+
 
 set.seed(12)
-MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
-icmotif_count(MAT[[3]],MAT[[4]])
+MAT <- build_net(11,22,21,0.2,output_matrices=TRUE)
+icmotif_count(MAT[["subnet_P"]],MAT[["subnet_Q"]])
 
-md1 <- matrix(sample(c(0,1),120,replace=TRUE),8,15)
-md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
+##input as binary matrices,with row names.
+md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
+md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
 icmotif_count(md1,md2)
 
-R <- rownames(MAT[[4]])[12]
-MR <- MAT[[4]][12,]
-MAT[[4]] <- MAT[[4]][-12,]
-MAT[[4]] <- rbind(MAT[[4]],MR)
-rownames(MAT[[4]])[22] <- R
 
-icmotif_count(MAT[[3]],MAT[[4]])
-
+##input as weighted matrices,with row numbers as row names.
+mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
+mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
+icmotif_count(mdw1,mdw2,weighted=T)
 
 }
 \references{
-Pilosof, S., Porter, M. A., Pascual, M., & Kéfi, S. (2017). The multilayer nature of ecological networks. Nature Ecology & Evolution, 1(4), 0101.
+Pilosof, S., Porter, M. A., Pascual, M., & KC)fi, S. (2017). The multilayer nature of ecological networks. Nature Ecology & Evolution, 1(4), 0101.
 
 Simmons, B. I., Sweering, M. J., Schillinger, M., Dicks, L. V., Sutherland, W. J., & Di Clemente, R. (2019). bmotif: A package for motif analyses of bipartite networks. Methods in Ecology and Evolution, 10(5), 695-701.
+
+#'
 }

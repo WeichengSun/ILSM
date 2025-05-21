@@ -1,4 +1,4 @@
-SavueR<-function(N,m,type=c("row","col")){
+SauveR<-function(N,m,type=c("row","col")){
    M<-emptyR(m)
    web <- as.matrix(M[[1]])
    if(type=="row"){

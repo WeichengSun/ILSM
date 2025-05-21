@@ -2,7 +2,7 @@
 % Please edit documentation in R/Multi_motif.R
 \name{Multi_motif}
 \alias{Multi_motif}
-\title{Defined tripartite motifs}
+\title{Interconnection motif forms}
 \usage{
 Multi_motif(
   type = c("M111", "M112", "M113", "M114", "M211", "M212", "M213", "M311", "M312",
@@ -14,15 +14,18 @@ Multi_motif(
 )
 }
 \arguments{
-\item{type}{Character. 49 values representing each and all types of tripartite motifs.}
+\item{ID}{Character. Default to "all". See details for the IDs representing different motifs.}
 }
 \value{
-If \code{type} is one of 48 motifs of definition, function returns a corresponding motif of "igraph".
+If \code{type} is one ID, it returns a corresponding motif "igraph" object.
 
-If \code{type} is "all", function returns a list containing 48 corresponding motifs of "igraph".
+If \code{type} is "all", it returns a list containing all 48 motifs of "igraph" objects.
 }
 \description{
-Acquiring each or all of 48 motifs of definition of tripartite network.
+The dictionary of interconnection motif forms without intra-guild interactions.
+}
+\details{
+#' An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each motif has maximumly 6 nodes, resulting in a total of 48 distinct motif forms.
 }
 \examples{
 

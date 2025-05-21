@@ -2,36 +2,36 @@
 % Please edit documentation in R/build_net.R
 \name{build_net}
 \alias{build_net}
-\title{Generating tripartite network}
+\title{Generating an example tripartite network randomly}
 \usage{
-build_net(lay_0, lay_1, lay_2, C_lay, asmatrices = FALSE)
+build_net(N_a, N_b, N_c, Co, output_matrices = FALSE)
 }
 \arguments{
-\item{lay_0}{The number of nodes in the first layer.}
+\item{N_a}{The number of nodes in the a-node group.}
 
-\item{lay_1}{The number of nodes in the second layer.}
+\item{N_b}{The number of nodes in the b-node group.}
 
-\item{lay_2}{The number of nodes in the third layer.}
+\item{N_c}{The number of nodes in the c-node group.}
 
-\item{C_lay}{The probability of each node interact with the other one. It ranges from 0 to 1.}
+\item{Co}{The probability of creating a link between any two nodes. It ranges from 0 to 1.}
 
-\item{asmatrices}{Logical. whether to output the overall adjacency matrix of the network and the corresponding interaction matrix of the respective subnetworks. Defaults to FALSE.}
+\item{output_matrices}{Logical. Whether to output the entire adjacency matrix of the network and subnetworks. Defaults to FALSE.}
 }
 \value{
-Return a tripatite network of direction. The network contains three groups of species and interactions within layers, and there is no link among each group of nodes within one layer.
+Return a random binary tripartite network.
 }
 \description{
-Generating a network of three layers. All layers of network contain \code{lay_0}, \code{lay_1} and \code{lay_2} nodes respectively.
+Generate a binary tripartite network with three groups of nodes (a-, b- and c-nodes) and two subnetworks (P and Q). Subnetwork P contains links between a- and b-nodes; Subnetwork Q contains links between b- and c-nodes;b-nodes (some of which are connector nodes) are shared nodes between two subnetworks.
 }
 \examples{
 
 set.seed(12)
-d <- build_net(11,15,16,0.2)
-plot(d)
+Net <- build_net(11,15,16,0.2)
+plot(Net)
 
 set.seed(12)
-N <- build_net(11,15,16,0.2,asmatrices=FALSE)
-N
+Net <- build_net(11,15,16,0.2,output_matrices=T)
+Net
 
 }
 \references{

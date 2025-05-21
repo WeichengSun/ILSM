@@ -1,33 +1,26 @@
-#' Null model of tripartite network
+#' Generates null models for tripartite network
 #'
-#' The null model could be generated according to different matrix scrambling algorithms for interconnection patterns in the tripartite network
+#' A wrapper function to generate different null models for binary and quantitative tripartite network
 #'
-#' @param network A tripartite network of 'igraph' class. The network contains three groups of species and interactions within subnetwork without interactions between each group of species.
-#' @param number A numeric value. The number of null model.  Default to NULL representing number 1.
-#' @param null_type Logical. Four matrix scrambling algorithms. If null_type = NULL, default to "all".
-#'
+#' @param trinet A tripartite network represented by an 'igraph' object.
+#' @param null_N The number of null models to be generated.  Default to 100.
+#' @param null_type  Character. Should be one of "sauve","sub_P","sub_Q" and "both_sub".See details.
+#' @param sub_method The method to shuffle subnetworks. Must be provided when null_type ="sub_P","sub_Q" or "both_sub" .  a character specifying the null model algorithm listed on the help page of vegan::commsim. If null_type = 'sauve', it will ignored.
+
 #' @details
+#' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 #'
 #' \strong{null_type}
-#'
 #' \itemize{
-#' \item For each of the four types of null models, there are corresponding algorithms. The first type, “subnetwork1”, involved scrambling the adjacency matrix of the first and second groups of the tripartite network.
-#' \item The second type, “subnetwork2”, focused on scrambling the adjacency matrix of the second and third groups.
-#' \item Comprehensively, the third type, “all”, blended the approaches of the first two to disarrange the entire network's adjacency matrix, achieving a thorough perturbation of the network's structure.
-#' \item The last type named “Savue” that disarranged inherent structure in terms of the groups of species connected by each interconnecting species of every subnetworks, thus exhibiting different interconnection patterns.
+#' \item “sub_P”, “sub_Q” and "both_sub" use the null model algorithms from \strong{vegan::commsim} to shuffle single subnetwork or both of them.
+#' \item “sauve” rearranges connector species without changing subnetworks, following sauve et al.(2016).
 #' }
-#'
-#' \strong{network}
-#'
-#' About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}
 #'
 #' @return
 #'
-#' Return a list contains one or more elements. Each element represent a null model of tripartite network.
+#' Return a list of null models of tripartite network.
 #'
 #' @references
-#' Vázquez, D. P., C. J. Melian, N. M. Williams, N. Blüthgen, B. R. Krasnov, and R. Poulin. 2007. Species abundance and asymmetric interaction strength in ecological networks. Oikos 116: 1120-1127.
-#'
 #' Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
 #'
 #' @importFrom igraph V
@@ -47,68 +40,86 @@
 #' Net <- PPH_Coltparkmeadow
 #'
 #' set.seed(123)
-#' null_model(Net)
+#' nullmodel_list<-null_model(Net,null_type="both_sub",sub_method="quasiswap")
 #' set.seed(123)
-#' null_model(Net,null_type="subnetwork1")
-#' set.seed(123)
-#' null_model(Net,null_type="Savue")
-#' set.seed(123)
-#' null_model(Net,number=2,null_type="Savue")
+#' nullmodel_list<-null_model(Net,null_type="sauve")
 
 
-null_model<-function(network, number=NULL, null_type=c("subnetwork1","subnetwork2","all","Savue")){
-   mat<-as.matrix(network[])
-   mat1<-mat[V(network)$level==0,V(network)$level==1]
-   mat2<-mat[V(network)$level==1,V(network)$level==2]
-   if(missing(null_type))
-      null_type<-"all"
-   if(missing(number))
-      number<-1
-   if(null_type=="subnetwork1"){
-      null_list<-vaznullR(number,mat1)
+null_model<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both_sub"), sub_method){
+   if(!null_type%in%c("sauve","sub_P","sub_Q","both_sub")|length(null_type)!=1){stop("Wrong input for null_type")}
+   if(null_type%in%c("sub_P","sub_Q","both_sub")&missing(sub_method)){stop("sub_method should be provided for subnetwork null models")}
+   mat<-as.matrix(trinet[])
+   matP<-mat[V(trinet)$level==0,V(trinet)$level==1]
+   matQ<-mat[V(trinet)$level==1,V(trinet)$level==2]
+   if(null_type=="sub_P"){
+      nm<-vegan::nullmodel(matP,sub_method)
+      null_list<-simulate(nm, nsim=null_N)
       MAT<-mat
-      null_network<-lapply(null_list, function(x){
-         MAT[V(network)$level==0,V(network)$level==1]<-x
-         Nnetwork<-graph_from_adjacency_matrix(MAT)
-         V(Nnetwork)$name<-V(network)$name
-         V(Nnetwork)$level<-V(network)$level
+      null_network<-apply(null_list,3, function(x){
+         MAT[V(trinet)$level==0,V(trinet)$level==1]<-x
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")#max to create an undirected graph
+         V(Nnetwork)$name<-V(trinet)$name
+         V(Nnetwork)$level<-V(trinet)$level
+         dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
+         dd[order(dd[dd[,2]==3,1]),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==3))
+         dd[order(dd[dd[,2]==2,1])+sum(dd[,2]==3),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==2))
+         dd[order(dd[dd[,2]==1,1])+sum(dd[,2]==3)+sum(dd[,2]==2),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==1))
+         Nnetwork$layout<-dd
          return(Nnetwork)
       })
    }
-   else if(null_type=="subnetwork2"){
-      null_list<-vaznullR(number,mat2)
+   else if(null_type=="sub_Q"){
+      nm<-vegan::nullmodel(matQ,sub_method)
+      null_list<-simulate(nm, nsim=null_N)
       MAT<-mat
-      null_network<-lapply(null_list, function(x){
+      null_network<-lapply(null_list,3, function(x){
          MAT[V(network)$level==1,V(network)$level==2]<-x
-         Nnetwork<-graph_from_adjacency_matrix(MAT)
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")
          V(Nnetwork)$name<-V(network)$name
          V(Nnetwork)$level<-V(network)$level
+         dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
+         dd[order(dd[dd[,2]==3,1]),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==3))
+         dd[order(dd[dd[,2]==2,1])+sum(dd[,2]==3),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==2))
+         dd[order(dd[dd[,2]==1,1])+sum(dd[,2]==3)+sum(dd[,2]==2),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==1))
+         Nnetwork$layout<-dd
          return(Nnetwork)
       })
    }
-   else if(null_type=="all"){
-      null_list1<-vaznullR(number,mat1)
-      null_list2<-vaznullR(number,mat2)
+   else if(null_type=="both_sub"){
+      nm_P<-vegan::nullmodel(matP,sub_method)
+      null_P_list<-simulate(nm_P, nsim=null_N)
+      nm_Q<-vegan::nullmodel(matQ,sub_method)
+      null_Q_list<-simulate(nm_Q, nsim=null_N)
       MAT<-mat
-      null_network<-lapply(1:number,function(x){
-         MAT[V(network)$level==0,V(network)$level==1]<-null_list1[[x]]
-         MAT[V(network)$level==1,V(network)$level==2]<-null_list2[[x]]
-         Nnetwork<-graph_from_adjacency_matrix(MAT)
-         V(Nnetwork)$name<-V(network)$name
-         V(Nnetwork)$level<-V(network)$level
+      null_network<-lapply(1:null_N,function(x){
+         MAT[V(trinet)$level==0,V(trinet)$level==1]<-null_P_list[,,x]
+         MAT[V(trinet)$level==1,V(trinet)$level==2]<-null_Q_list[,,x]
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")
+         V(Nnetwork)$name<-V(trinet)$name
+         V(Nnetwork)$level<-V(trinet)$level
+         dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
+         dd[order(dd[dd[,2]==3,1]),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==3))
+         dd[order(dd[dd[,2]==2,1])+sum(dd[,2]==3),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==2))
+         dd[order(dd[dd[,2]==1,1])+sum(dd[,2]==3)+sum(dd[,2]==2),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==1))
+         Nnetwork$layout<-dd
          return(Nnetwork)
       })
    }
-   else if(null_type=="Savue"){
-      null_list1<-SavueR(number,mat1,type="col")
-      null_list2<-SavueR(number,mat2,type="row")
+   else if(null_type=="sauve"){
+      null_list1<-SauveR(null_N,matP,type="col")
+      null_list2<-SauveR(null_N,matQ,type="row")
       MAT<-mat
-      null_network<-lapply(1:number,function(x){
-         MAT[V(network)$level==0,V(network)$level==1]<-null_list1[[x]]
-         MAT[V(network)$level==1,V(network)$level==2]<-null_list2[[x]]
-         Nnetwork<-graph_from_adjacency_matrix(MAT)
-         V(Nnetwork)$name<-V(network)$name
-         V(Nnetwork)$level<-V(network)$level
+      null_network<-lapply(1:null_N,function(x){
+         MAT[V(trinet)$level==0,V(trinet)$level==1]<-null_list1[[x]]
+         MAT[V(trinet)$level==1,V(trinet)$level==2]<-null_list2[[x]]
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")
+         V(Nnetwork)$name<-V(trinet)$name
+         V(Nnetwork)$level<-V(trinet)$level
+         dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
+         dd[order(dd[dd[,2]==3,1]),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==3))
+         dd[order(dd[dd[,2]==2,1])+sum(dd[,2]==3),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==2))
+         dd[order(dd[dd[,2]==1,1])+sum(dd[,2]==3)+sum(dd[,2]==2),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==1))
+         Nnetwork$layout<-dd
          return(Nnetwork)
       })
    }

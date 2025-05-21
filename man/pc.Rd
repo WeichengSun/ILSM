@@ -2,78 +2,71 @@
 % Please edit documentation in R/pc.R
 \name{pc}
 \alias{pc}
-\title{Participation ratio of interconnecting code}
+\title{Participation coefficient}
 \usage{
-pc(network.or.subnet_mat1, subnet_mat2 = NULL)
+pc(network.or.subnet_mat1, subnet_mat2 = NULL, weighted = FALSE)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
-Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if two groups of species are connected, and 0 otherwise.}
+\item{network.or.subnet_mat1}{Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.}
 
-\item{subnet_mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.
-Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
+\item{subnet_mat2}{The matrix representing one subnetwork.}
+
+\item{weighted}{Logical. Default to FALSE. If TRUE, weighted degree defined as the sum of interaction strengths attached to a connector node is used.}
 }
 \value{
-Print a "PCc= ;" and Return a numeric value representing difference in the degree of interconnecting nodes within two subnetworks of multialyer network.
+Return a numeric value representing participation coefficient for connector species.
 }
 \description{
-Counting participation ratio that the difference in the degree of interconnecting nodes within two subnetworks.
+Calculating participation coefficient for connector nodes.
 }
 \details{
-\strong{network.or.subnet_mat1 and subnet_mat2}
+In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 
-There are two types of \code{network.or.subnet_mat1} that can be processed:
+The pc function calculates the participation coefficient. For each connector node i, pc_{i} is calculated as two times the ratio between the lowest degree in both interaction subnetworks (dP and dQ) divided by the total degree of node i.
+Hence, the participation coefficient for all connector nodes (PCc) is represented by the average value of all pc_{i}.
+
+Two types of inputs \code{network.or.subnet_mat1} can be processed:
 \itemize{
-\item Input in a network of type "igraph" alone.
-\item Must be entered as data frame or matrix with \code{subnet_mat2}.
+\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+\item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 }
 
-If the type of inputting is data frame or matrix, please make sure the row of
-\code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the
-second group of species that both belong to two subnetworks and interact
-with other groups of species.
-\itemize{
-\item Try to make the rows of both matrices have the same attributes. Or we
-default.
-\item 1. If both matrices have row names, then the function counts all row
-names to produce two new matrices with the same row names.
-\item 2. If at most one matrix has row names, the function assigns new row
-names to both matrices on a row-to-row basis (any extra row names are
-assigned a new value) and then counts all row names to produce two new
-matrices with the same row names.
-\item The two matrices can have different numbers of rows, but read our
-default handling carefully to make sure the calculation is accurate when
-using this function!!!
-}
-
-About a network of type "igraph", It can be obtained from the connection
-matrices of subnetworks by the function \code{igraph_from_matrices}.
+If the inputs are two matrices, please make sure the rows of
+\code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
+names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively.
+Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 }
 \examples{
 
-## generate a random tripartite network
+## generate a random binary tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
+pc(Net)
 
+##empirical network
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 pc(Net)
+set.seed(13)
+E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+pc(Net,weighted=T)
 
-md1 <- matrix(sample(c(0,1),80,replace=TRUE),8,10)
-md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
+##input as binary matrices,with row names.
+md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
+md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
 pc(md1,md2)
 
-mdw1 <- matrix(sample(c(rep(0,60),runif(60,0,1))),12,10)
+##input as weighted matrices,with row numbers as row names.
+mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
 mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
 pc(mdw1,mdw2)
+pc(mdw1,mdw2,weighted=T)
 
 }
 \references{
 Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.
 
-Domínguez-García, V., & Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
+DomC-nguez-GarcC-a, V., & KC)fi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
 
 Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.
 }

@@ -1,106 +1,44 @@
-#' Measuring Interconnection Centrality of Tripartite Interaction Network
+#' Interconnection centrality for connector nodes in a tripartite network
 #'
-#' The Interconnection Centrality of nodes is revealed by several centrality
-#' measures that have now been applied to tripartite networks, such as Degree,
-#' Pagerank, Hub, Authority, Eigenvector, and Closeness Betweenness centrality.
+#' Calculating interconnection centrality (degree, betweenness and closeness) specified for connector nodes in a tripartite network.
 #'
-#' @param network.or.subnet_mat1 Either a tripartite network of
-#' 'igraph' class which contains three groups of species and interactions within
-#'  subnetwork without interactions between each group of species, or a numeric
-#'  matrix(or data.frame) representing interactions between two groups of
-#'  species.
-#'  Each row and column of matrix represents single species in the second and
-#'  first groups of the tripartite network respectively.
-#'  Elements of matrix are non-zero numbers if the two groups of species are
-#'  connected, and 0 otherwise.
+#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.
+#' @param subnet_mat2 The matrix representing one subnetwork.
+#' @param weighted Logical. If TRUE, link strengths of connector nodes are used. Default to FALSE.
+
+#' #' @details
+#'This function calculates interconnection degree, betweenness and closeness centrality for connector nodes.
+#'For binary networks, interconnection degree centrality of each connector species is defined as the product of its degree values from two subnetworks,
+#'interconnection betweenness centrality is defined by the number of shortest paths from a-nodes to c-nodes going through connector species,
+#'and interconnection closeness centrality is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes.
+#'For weighted networks, interaction strengths are used in the calculation of weighted degree, shorest path, and distance.
+#' \strong{network.or.subnet_mat1 and subnet_mat2}
 #'
-#' @param subnet_mat2 A numeric matrix(or data.frame) representing interactions
-#' between two groups of species.
-#'  Each row and column of matrix represents single species in the second and
-#'  third groups of the tripartite network respectively.
-#'  Elements of matrix are non-zero numbers if the two groups of species are
-#'  connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph",
-#'  \code{subnet_mat2} defaults to NULL.
+#' \strong{weighted}
 #'
-#' @param isDirected1 Logical. Whether the interaction between the two groups of
-#'  species in \code{mat1} is unidirectional.Default to TRUE, such as Predation
-#'  and Herbivory. Otherwise it is bidirectional, such as Mutualism.
-#' @param isDirected2 Logical. Whether the interaction between the two groups of
-#'  species in \code{mat2} is unidirectional.Default to TRUE, such as Predation
-#'  and Herbivory. Otherwise it is bidirectional, such as Mutualism.
-#' @param type Character. Including "degree", "pagerank", "hub", "authority",
-#' "eigenvector", "closeness", "betweenness", and "all".
-#'
-#' @details
+#' If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices.If a weighted network is provided, it will be transformed to a binary network.
+#' If the \code{weighted} = TRUE, the input network can only be two matrices.
 #'
 #' \strong{network.or.subnet_mat1 and subnet_mat2}
 #'
-#' There are two types of \code{network.or.subnet_mat1} that can be processed:
+#' There are two types of inputs \code{network.or.subnet_mat1} that can be processed:
 #' \itemize{
-#' \item Input in a network of type "igraph" alone.
-#' \item Must be entered as data frame or matrix with \code{subnet_mat2}.
+#' \item Input is a network of type "igraph" alone.
+#' \item Must be entered as matrix with \code{subnet_mat2}.
 #' }
 #'
-#' If the type of inputting is data frame or matrix, please make sure the row of
-#'  \code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the
-#'  second group of species that both belong to two subnetworks and interact
-#'  with other groups of species.
-#' \itemize{
-#' \item Try to make the rows of both matrices have the same attributes. Or we
-#' default:
-#'
-#' \item When the two matrices can have different numbers of rows:
-#' \itemize{
-#' \item 1. If both matrices have row names, then the function counts all row
-#' names to produce two new matrices with the same row names.
-#' \item 2. If at most one matrix has row names, the function assigns new row
-#' names to both matrices on a row-to-row basis (any extra row names are
-#' assigned a new value) and then counts all row names to produce two new
-#' matrices with the same row names.
-#' }
-#'
-#' \item When the two matrices can have the same numbers of rows:
-#' \itemize{
-#' \item No matter how the row names of the two matrices are arranged, as long
-#' as the row names are exactly the same; But we don't handle matrices with
-#' empty row names (the function will give an error).
-#' }
-#'
-#' \item The two matrices can have different numbers of rows, but read our
-#' default handling carefully to make sure the calculation is accurate when
-#' using this function!!!
-#' }
-#' About a network of type "igraph", It can be obtained from the connection
-#' matrices of subnetworks by the function \code{igraph_from_matrices}.
-#'
-#' \strong{type}
-#'
-#' \code{type} "degree", "pagerank", "hub", "authority", "eigenvector",
-#' "closeness" and "betweenness" correspond to Degree, PageRank, Hub, Authority,
-#'  Eigenvector, Closeness and Betweenness centrality.
-#' \code{type} "all" integrates the above centrality.
+#' If the inputs are two matrices, please make sure the rows of
+#'  \code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
+#' names to produce connector nodes. Otherwise, row numbers are assigned as row names.
 #'
 #' @return
 #'
-#' Return a data frame with the first row "node" for each node of network
-#' representing each species.
-#' \itemize{
-#' \item If \code{type} is either of "degree", "pagerank", "hub", "authority",
-#' "eigenvector", "closeness", "betweenness" the data frame has two columns, and
-#'  the second column corresponds to either of "Degree", "Pagerank_Centrality",
-#' "Hub_Centrality", "Authority_Centrality", "Eigenvector_Centrality",
-#' "Closeness_Centrality", "Betweenness_Centrality".
-#' \item If \code{type} is "all", the data frame has eight columns, and columns
-#'  form the second to the eighth correspond to "Degree", "Pagerank_Centrality",
-#' "Hub_Centrality", "Authority_Centrality", "Eigenvector_Centrality",
-#' "Closeness_Centrality", "Betweenness_Centrality".
-#' }
-#'
+#' Return a data frame with interconnection degree, betweenness and closeness.
 #' @references
 #' De Domenico, M., Nicosia, V., Arenas, A., & Latora, V. (2015). Structural
 #' reducibility of multilayer networks. Nature communications, 6(1), 6864.
 #'
-#' De Domenico, M., Solé-Ribalta, A., Omodei, E., Gómez, S., & Arenas, A.
+#' De Domenico, M., SolC)-Ribalta, A., Omodei, E., GC3mez, S., & Arenas, A.
 #'  (2013). Centrality in interconnected multilayer networks. arXiv preprint
 #'  arXiv:1311.2906.
 #'
@@ -133,77 +71,90 @@
 #' data(PPH_Coltparkmeadow)
 #' Net <- PPH_Coltparkmeadow
 #' node_icc(Net)
+#' set.seed(13)
+#' E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+#' node_icc(Net,weighted=T)
 #'
-#' MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
-#' tmat <- t(MAT[[3]])
-#' colnames(tmat) <- NULL
-#' node_icc(MAT[[3]],MAT[[4]])
-#' node_icc(tmat,MAT[[4]])
-#' node_icc(MAT[[3]],MAT[[4]],type="pagerank")
+#'##input as binary matrices,with row names.
+#' set.seed(12)
+#' md1 <- matrix(sample(c(0,1),5*8,replace=TRUE),5,8,dimnames = list(paste0("b",1:5),paste0("c",1:8)))
+#' md2 <- matrix(sample(c(0,1),20*30,replace=TRUE),20,30,dimnames = list(paste0("b",1:20),paste0("a",1:30)))
+#' node_icc(md1,md2)
+
 #'
-#' node_icc(MAT[[3]],MAT[[4]],isDirected2=FALSE)
+#'##input as weighted matrices,with row numbers as row names.
+#' set.seed(17)
+#' mdw1 <- matrix(sample(c(rep(0,20),runif(20,0,1))),5,8)
+#' mdw2 <- matrix(sample(c(rep(0,500),runif(100,0,1))),20,30)
+#' node_icc(mdw1,mdw2)
+#' node_icc(mdw1,mdw2,weighted=T)
 #'
-#'
-#'
-#'
-node_icc <- function(network.or.subnet_mat1,subnet_mat2=NULL,isDirected1=TRUE,
-                     isDirected2=TRUE,type=c("degree","pagerank","hub",
-                                             "authority","eigenvector",
-                                             "closeness","betweenness","all")){
+node_icc <- function(network.or.subnet_mat1,subnet_mat2=NULL,weighted=F){
    if(inherits(network.or.subnet_mat1,"igraph")==T){
       network <- network.or.subnet_mat1
    }
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T &&
            inherits(subnet_mat2,c("matrix","data.frame"))==T){
-      network <- igraph_from_matrices(network.or.subnet_mat1,subnet_mat2,
-                                      isDirected1,isDirected2)
+      network <- igraph_from_matrices(network.or.subnet_mat1,subnet_mat2,weighted=weighted)
    }
    else
       stop("please check the type of 'network.or.subnet_mat1'")
-   node<-V(network)$name
-   Directed<-isDirected1|isDirected2
-   if(missing(type))
-      type <- "all"
-   if (type == "degree")
-      return(data.frame(node=node, Degree=degree(network)))
-   if (type == "pagerank")
-      return(data.frame(node=node, Pagerank_Centrality =
-                           page_rank(network, directed = Directed)$vector))
-   if (type == "hub")
-      return(data.frame(node=node, Hub_Centrality =hub_score(network)$vector))
-   if (type == "authority")
-      return(data.frame(node=node, Authority_Centrality =
-                           authority_score(network)$vector))
-   if (type == "eigenvector")
-      return(data.frame(node=node, Eigenvector_Centrality =
-                           centr_eigen(network)$vector)
-             )
-   if (type == "closeness")
-      return(data.frame(node=node, Closeness_Centrality =
-                           closeness(network,mode = "all")))
-   if (type == "betweenness")
-      return(data.frame(node=node, Betweenness_Centrality =
-                           betweenness(network,directed = Directed))
-             )
 
-   if(type == "all"){
-      Degree <- degree(network)
-      PageRank_Centrality  <- page_rank(network,directed = Directed)$vector
-      Hub_Centrality  <- hub_score(network)$vector
-      Authority_Centrality  <- authority_score(network)$vector
-      Eigenvector_Centrality  <- centr_eigen(network)$vector
-      Closeness_Centrality  <- closeness(network,mode = "all")
-      Betweenness_Centrality  <- betweenness(network,directed = Directed)
-      Centrality  <- data.frame(node=node, Degree=Degree, Pagerank_Centrality =
-                                   PageRank_Centrality , Hub_Centrality =
-                                   Hub_Centrality , Authority_Centrality =
-                                   Authority_Centrality ,
-                                Eigenvector_Centrality =Eigenvector_Centrality ,
-                                Closeness_Centrality =Closeness_Centrality ,
-                                Betweenness_Centrality =Betweenness_Centrality )
-      rownames(Centrality )<-NULL
-      return(Centrality )
+   network0 <- adjust_net(network,weighted=T)
+   connector_node=V(network0)$name[V(network0)$level==1]
+   mat <- as.matrix(network[])
+
+   mat1 <- mat[V(network)$name[V(network)$level%in% (0:1)],V(network)$name[V(network)$level%in% (0:1)]]
+   net1 <- graph_from_adjacency_matrix(mat1,weighted = T,mode = "max")
+
+
+   mat2 <- mat[V(network)$name[V(network)$level%in%(1:2)],V(network)$name[V(network)$level %in% (1:2)]]
+   net2 <- graph_from_adjacency_matrix(mat2,weighted = T,mode = "max")
+
+   if(!weighted){
+      E(net1)$weight=1
+      E(net2)$weight=1
    }
-   else
-      stop("Error: type is not a valid input!")
+   net1_degree <- strength(net1)[connector_node]
+   net2_degree <- strength(net2)[connector_node]
+   net_degree <- net1_degree * net2_degree
+
+   if(!weighted){
+      E(network)$weight=1
+      }
+   #net_closeness
+   dist_res<-distances(network,v=connector_node,to=V(network)$name[V(network)$level%in% c(0,2)],mode="all")
+   dist_res<-as.data.frame(dist_res)
+   net_closeness<-1/apply(dist_res,1,function(x){sum(x[!is.na(x)&!is.infinite(x)])})##有INF列
+
+   #net_betweenness
+
+   #tmp<-lapply(V(network)$name[V(network)$level%in% c(0)],function(i){all_shortest_paths(network,from=i,to=V(network)$name[V(network)$level%in% c(2)])$vpaths})
+   #tmp<-unlist(tmp,recursive = F)
+   connector_ID=as.vector(V(network)[V(network)$name%in%connector_node])
+   b<-as.vector(V(network)[V(network)$level%in% c(1)])
+   a<-as.vector(V(network)[V(network)$level%in% c(0)])
+   c<-as.vector(V(network)[V(network)$level%in% c(2)])
+   tmp<-apply(expand.grid(a,c),1,function(p){do.call(rbind,all_shortest_paths(network,from=p[1],to=p[2])$vpaths)})
+   tmp<-tmp[!sapply(tmp,is.null)]
+
+   res<-sapply(tmp,function(x){
+      x<-x[,2:(ncol(x)-1),drop=F]
+      res0<-apply(x,1,function(y) connector_ID%in%y)
+      rowSums(res0)/nrow(x)
+
+   })
+   #tmp<-data.frame(do.call(rbind,tmp))
+   #names(tmp)<-c("a","b","c")
+
+   # res<-apply(expand.grid(a,c),1,function(p){
+   #               is_ac<-sapply(tmp,function(x){x[1]==p[1]&x[length(x)]==p[2]})
+   #               g_ac<-sum(is_ac)#nrow(tmp[tmp$a==p[1]&tmp$c==p[2],])
+   #               sapply(b,function(x){sapply(tmp[is_ac], function(y) {y[-c(1,length(y))]%in%x})/g_ac})
+   #            })
+
+   net_betweenness<-rowSums(res,na.rm=T)
+
+   Centrality  <- data.frame(node=connector_node, interconnection_degree=net_degree, interconnection_betweenness=net_betweenness,interconnection_closeness=net_closeness)
+   return(Centrality)
 }
