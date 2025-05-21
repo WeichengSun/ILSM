@@ -32,7 +32,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/motif_guideline.html">motif_guideline</a>
+      <a href="../articles/Interconnection_structure.html">An introduction to analyses on interconnection structures in tripartite interaction networks</a>
     </li>
   </ul></li>
 <li>
@@ -677,420 +677,106 @@ the elements are all zero.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">MAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">22</span>,<span class="fl">21</span>,<span class="fl">0.2</span>,asmatrices<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in build_net(11, 22, 21, 0.2, asmatrices = TRUE):</span> unused argument (asmatrices = TRUE)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">icmotif_role</span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>,<span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role1 role2 role3 role4 role5 role6 role7 role8 role9 role10 role11 role12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     6     3     0     0     6     3     0     2     1      0      4    110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     8    12     8     2     4     6     4     0     0      0      6     58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38    10    20    20    10     5    10    10     0     0      0      5    106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53     0     0     0     0     0     0     0     0     0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39    12    30    40    30     6    15    20     0     0      0     12    148</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13     5    10    10     5     0     0     0     0     0      0      2     60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4     12    18    12     3    12    18    12     4     6      0      6    135</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24     0     0     0     0     0     0     0     0     0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45    12    18    12     3    12    18    12     4     6      0     14    174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30     5    10    10     5     0     0     0     0     0      0     10     56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14     6     6     2     0     3     3     1     0     0      0      7     26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7     16    56   112   140     8    28    56     0     0      0      5     89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40    24    60    80    60    36    90   120    24    60      6     26    192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20    12    30    40    30     6    15    20     0     0      0     10     92</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50    32   112   224   280    48   168   336    32   112      8     32    301</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     6     3     0     0     6     3     0     2     1      0      2     87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     8    12     8     2     4     6     4     0     0      0     11     67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37    15    30    30    15    15    30    30     5    10      0     21    214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41    16    24    16     4    24    36    24    16    24      4     21    231</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     6     6     2     0     3     3     1     0     0      0     10    106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52    10    20    20    10     5    10    10     0     0      0     10     99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     9     9     3     0     9     9     3     3     3      0     10    125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role13 role14 role15 role16 role17 role18 role19 role20 role21 role22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     16      4      0     47    207     25      0     16      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     22     12      3     63    111     37      9     48      3      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     19     18      1    180    143     37     24     64      3      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     38     54      3    285    200     58     96    170     12     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      5      8      0    110    156      4     12     20      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      25     18      0    165    248     52     18     75      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     66     36      3    177    313    135     30    168      6     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30     34     28      6     67     58     47     27     90     15     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14     28      6      4     13     36     48      2     26      1     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      15     31      2    265    111     17     81     93     12      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40     60    102     14    357    245     73    157    246     47     27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     28     38      6    175    121     47     58    110     18     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50     75    186     19    837    285     59    453    433    105     46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     11      2      0     38    161     27      0     11      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     37     23      5     61     97     59     16     79      7     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     71     70      7    311    288    112     84    234     21     25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     81     49      7    253    392    132     35    187     14     28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     38     14      3     80    200     55      4     52      3     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     36     34      3    137    142     58     42    122      9     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     40     12      4    101    208     68      2     48      4     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role23 role24 role25 role26 role27 role28 role29 role30 role31 role32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18      0     22      6      5      1    164    169     28     22    110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43      1     71      6     13      0     58    110      0    179    240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38      0     96      5     12      0     86    230     10    262    324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39      0     62     10     20      1    118    278     15    270    224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0     33      0      2      0      0    140      0    110    122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4       0     55     10     11      1    240    234     15    153    214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45      0     33     22     21      3    306    276     21     95    154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      1     26      0     22      0      0    125      0     96    100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      1     50      7     10      0     26     36      0     80    216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7       0    140      5      6      0     89    174      0    768    342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40      3    170     68     34      5    530    277     23    650    499</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20      2     78     10     20      0     92    214      0    322    276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50      3    137     84     43      6    819    355     42    809    399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19      0     74      4      4      0    174    137      0     20    248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29      1     76     11     22      0     67    113      0    152    235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37      0     70     24     26      9    318    303     55    254    270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41      0     76     43     20     10    545    219     74    196    275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25      0     37      6     17      2     98    222      4     64    147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52      0     55     10     21      0     99    224      0    200    199</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48      0     57     16     18      2    176    169     37     76    184</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role33 role34 role35 role36 role37 role38 role39 role40 role41 role42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18      6     19      4      1      0      0      0      0     24      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     12     50      0      0     17      3      9      0     22     21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     18     50      0      0     61      1      3      0     19     42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     44     64      3      5     20      3      4      0     32     92</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0      5      0      0     11      0      0      0      0      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      30     50      5      3      6      0      0      0     40     33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     58    104     15      7      2      4      4      1    102     55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      0     80      0      0      4      0     14      0      0     60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      6     48      0      0     10      4      6      0     28      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      31     18      0      0    106      2      2      0     15     38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40    264    101      7     21    100     38     20      2    166    130</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     38     74      0      0     34      6     12      0     28     76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50    486    101     14     36     75     51     25      3    197    251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19      4     25      0      0     27      0      0      0     22      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     23     67      0      0     38      5     12      0     37     42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     84    102     25     28     13      6      8      4     92     88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41    103     89     38     22     16     13      8      4    167     44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     10     63      8      2      5      1      5      1     22     24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     34     81      0      0     10      3      6      0     36     72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     20     80      8      2     19      6      8      1     64     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role43 role44 role45 role46 role47 role48 role49 role50 role51 role52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     18      8      1      2      8      1      1      0      1     53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     29     58     12      0     13      0      0      0      1     25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     42     67      9      0     12      0      0      0      0     41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     23     41      9      0     16      2      0      0      5    106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0     26      0      0      0      0      0      0      1     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      46     45      6      4     18      2      1      0      1     54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     18     14     10      8     30      6      3      0      5    121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      0     18     16      0      0      0      0      0      6     72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14     20     44      6      0     10      0      0      0      1     29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      67    115      1      0      6      0      0      0      0     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40    207     99     17     58     96      3     10      0     11    189</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     29     58     14      0     20      0      0      0      2     65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50    149     63     17     72    113      8     12      0     12    200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     70     72      3      2      8      0      0      0      0     18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     27     63     15      0     22      0      0      0      6     96</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     55     34      8      9     30     11      3      2     13    178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     89     46     10     29     50      5     14      2     15    168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     14     16      8      0      9      4      0      0      6    113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     17     38     18      0     21      0      0      0      5     62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     43     38     10      6     28      4      2      0      2    101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role53 role54 role55 role56 role57 role58 role59 role60 role61 role62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     59      1      7     14      0      0      1      0     16      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43      5      3      6      7      2      0      0      0     47     40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     31      0      0     19      5      0      0      0     35     38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     64     21     22     30     22      4      2      0     50     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13     12      4      5      3      0      0      0      0     18     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      44      3      5     23      5      0      1      0     22     22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     61     10     29     59     17      5      8      0     33      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30     18     10     32     32     19     14      5      0     38      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      0      2      7      3      4      0      0      0     46     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      18      0      0      6      2      0      0      0     36     55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40     51     37     46     42     49     16      3      1    121     66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     28      8     11     24     14      2      2      0     50     33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50     93     58     51     63     76     22      4      2    103     37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     49      0      0     11      0      0      0      0     19     36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     21     10     29     24     18      6      3      1     70     27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     96     38     77     61     30     10      8      2     84     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     75     28    100     65     17     13      8      2     75     28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     42      5     43     44      5      7      1      0     44     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     37     13     28     38     14      7      5      0     37     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     56      2      8     38      4      0      2      1     54     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role63 role64 role65 role66 role67 role68 role69 role70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18      1      2      1      3      0      1      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43      1      1     18      3      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38      0      0     10      1      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39      3     14     10      3      2      2      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0      2      2      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4       1      1     10      1      1      1      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45      6     15      2      8      0      4      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      0     19      8      0      5      0      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      1      1     13      4      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7       0      0     11      1      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40     26     23     30     26      4      7      0      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20      2      5     15      4      2      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50     25     20     31     35      4      7      2      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19      0      0      3      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29      6     20     15      4      4      0      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37      7     34     15      7      0     15      2      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     24     30     15      6      1     17      2      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25      2     17      6      2      2      4      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52      5     14     13      5      5      0      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48      2      6     12      7      0      2      0      0</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'MAT' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">md1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,<span class="fl">88</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,<span class="fl">8</span>,<span class="fl">11</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">md2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,<span class="fl">120</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,<span class="fl">10</span>,<span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">icmotif_role</span><span class="op">(</span><span class="va">md1</span>,<span class="va">md2</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role1 role2 role3 role4 role5 role6 role7 role8 role9 role10 role11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     25    50    50    25    50   100   100    50   100     25     32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     24    24     8     0    84    84    28   168   168    210     26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     12    18    12     3    12    18    12     4     6      0     18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     56   196   392   490   168   588  1176   280   980    280     73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     16    24    16     4    24    36    24    16    24      4     33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     25    50    50    25    50   100   100    50   100     25     33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     25    50    50    25    50   100   100    50   100     25     37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     30    60    60    30    75   150   150   100   200     75     36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     36    90   120    90    90   225   300   120   300     90     65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     18     9     0     0    72    36     0   168    84    252     38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     48   120   160   120   168   420   560   336   840    420     79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     20    40    40    20    30    60    60    20    40      5     28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     30    75   100    75    60   150   200    60   150     30     53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     48   120   160   120   168   420   560   336   840    420     94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     32   112   224   280    48   168   336    32   112      8     56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     25    50    50    25    50   100   100    50   100     25     51</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9      0     0     0     0     0     0     0     0     0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10     0     0     0     0     0     0     0     0     0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role12 role13 role14 role15 role16 role17 role18 role19 role20 role21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     203    112     68     30    293    233    147     63    226     39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     248     94     36      8    174    520    164     10    148      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3      97     75     32     11     84    141    127     19    123     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     230     98    345     83    555    125     35    675    500    360</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     105    103     59     20     73    132    144     28    169     31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     149    101     70     31    199    145    115     54    198     51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     210    120    114     17    234    345    200    120    372     51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     104    101     80     32    108     79    106     69    200     51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     155    157    195     65    163    159    165    211    449    179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     142    182     28      5      0    300    360      0    142      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     135    141    159    118    185    108     90    140    305    178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     178     92     74     19    227    270    130     81    258     30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     132    150    143     61    141    114    162    144    378    142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     172    170    200    135    208    144    162    190    444    210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     126     98    232     80    238     46     42    390    406    306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     134    111     70     67    158    179    111     66    220     39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9       0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10      0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role22 role23 role24 role25 role26 role27 role28 role29 role30 role31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     111     17     93     58     87     35    386    530    213    208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2      20      0     36    102     28     40    940    348    398     64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3      51      3     41     12     70     12    128    366     33    117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4      93     46    110    246    100     96    584    301    398    470</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5      70      3     48     35    116     32    177    322     69     90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     103     14    114     82    106     25    300    476    148    250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7      54      0     72     62     98     43    288    486    276    220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     102     15    192    122    114     29    338    312     91    402</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     168     27    153    155    195     85    377    445    199    415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2      20      0     34    148     38     78    544    131    296     26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     200     98    227    327    189    113    585    305    180    427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4      55      9    111     44    113     20    202    650    166    260</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     186     34    178     96    167     58    236    427    146    518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     203    110    136    342    160    158    620    244    292    272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     140     58    175     66    209     51    128    462    125    703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     112     54    168     90    197     57    236    264    150    292</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9       0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10      0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role32 role33 role34 role35 role36 role37 role38 role39 role40 role41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     235    148    300    132     62     82     42     93     39    184</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     140    140    132    154     56      4     32      4     12    350</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     130     32    290     55     16      3      2     42     10     40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     116   1126    115    146    472    150    298    123    100    296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     174     65    362     91     56     27     20     73     20    127</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     326    184    334     82     48    103     72    112     26    240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     186    192    284    164    132     34     28     46     20    152</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     514    268    338     84     66    183    110    111     25    337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     403    429    449    191    273    175    173    185     76    403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     144    108    171    376     58      4     20      5     10    704</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     471    639    313    174    237    354    498    286    164    639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     401     98    355     64     62     92     39     76      9    148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     446    256    389    166    158    186    112    174     66    268</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     274    700    254    254    350    204    505    244    220    682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     290    262    338     91    217    261    100    303     70    112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     484    148    371    105     66    190    106    280     81    234</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9       0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10      0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role42 role43 role44 role45 role46 role47 role48 role49 role50 role51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     162    105    141     89     39    162     93     48     19     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2      48     72     14     10    156    108     44    150     30      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     126     16     83    109      3     50     45      3      3      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     454    153     70     63    315    354    123    300     60     31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     202     15     54    150     10    114    117     25     13     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     200     98    134    131     66    260     82     57      6     22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     300     62     74    101     51    164    114     42     29     21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     234    288    239    145    158    384     93     86     10     20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     605    174    131    217    162    417    279    148     64     45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2      28     64      9      9    245    144     80    273     91     31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     373    424    139    141    573    741    291    408     90     50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     300     73    176    204     25    187     76     19      7     12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     487    179    290    300     69    354    157     75     33     34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     312    204     61     91    510    544    288    516    144     66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     857    109    319    385     36    307    160     30     24     32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     228    158    260    330     57    356    216     78     31     36</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9       0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10      0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role52 role53 role54 role55 role56 role57 role58 role59 role60 role61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1     115     84     26     62     73      4     32     23      3     71</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     179    104      5     30    132     21      9     10      0     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3      64     34      7     29     69     14     14     13      0     17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4     181     94     95     65     79    128    106     11      8     79</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5     125     35     25    100     57     38     34     28      5     52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     107     45     29     84     64     13     41     21      9     59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7     158     88     47     73     81     52     37     36      0     62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8      87     24     27     79     63     39     37     13      8     53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1      97     67     91     89    100     90    102     67     16    112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2     125     50     16    127    138     18     15     82      0     38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     129     27     46    129     66     39    126     27     39     81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4      87    114     19     22    151     41     29     30      0     47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5      82     41     55     80    129     65     83     52     16    147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6     196     52     61    174    103     72    183     37     43    121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7      53     74     79     41    130    108    103     36     21    160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8     163     41     15    102     99     25     81     30     24    112</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9       0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10      0      0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           role62 role63 role64 role65 role66 role67 role68 role69 role70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1      17     14     39     87     30     21     38      6      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2       8     15     10     14     19      2     26      4      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3       8      2     22     21      1     16      8      2      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4      23     54     48     58     88     17    102     15      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5       8      9     89     47     15     33     42      9      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6      37     35     67     58     22     35     43      5      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7      13     12     55     52     20     25     56      8      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8      90     53     58    111     29     27     37      5      6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe1      36     30    120    148     72     80    131     32     12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe2       9     40     32     36     74     18    152     28     10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe3     129    113     48    239    145     96    177     30     13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe4      35     10     41     71     15     30     16      5      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe5      48     19    118    175     37     57     83     17      8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe6      37    104    104    137    181     58    264     47     17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe7      37      6    135    184     30     55     68     11      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe8      78     31    108    198     40     89     75     19     11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe9       0      0      0      0      0      0      0      0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mid_spe10      0      0      0      0      0      0      0      0      0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="fl">12</span><span class="op">]</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'MAT' not found</span>
 <span class="r-in"><span><span class="va">MR</span> <span class="op">&lt;-</span> <span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">12</span>,<span class="op">]</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'MAT' not found</span>
 <span class="r-in"><span><span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">-</span><span class="fl">12</span>,<span class="op">]</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'MAT' not found</span>
 <span class="r-in"><span><span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span>,<span class="va">MR</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'MAT' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="fl">22</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">R</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'R' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">icmotif_role</span><span class="op">(</span><span class="va">MAT</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>,<span class="va">MAT</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role1 role2 role3 role4 role5 role6 role7 role8 role9 role10 role11 role12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     6     3     0     0     6     3     0     2     1      0      4    110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     8    12     8     2     4     6     4     0     0      0      6     58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38    10    20    20    10     5    10    10     0     0      0      5    106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53     0     0     0     0     0     0     0     0     0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39    12    30    40    30     6    15    20     0     0      0     12    148</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13     5    10    10     5     0     0     0     0     0      0      2     60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4     12    18    12     3    12    18    12     4     6      0      6    135</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24     0     0     0     0     0     0     0     0     0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45    12    18    12     3    12    18    12     4     6      0     14    174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30     5    10    10     5     0     0     0     0     0      0     10     56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14     6     6     2     0     3     3     1     0     0      0      7     26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7     16    56   112   140     8    28    56     0     0      0      5     89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40    24    60    80    60    36    90   120    24    60      6     26    192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20    12    30    40    30     6    15    20     0     0      0     10     92</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50    32   112   224   280    48   168   336    32   112      8     32    301</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     6     3     0     0     6     3     0     2     1      0      2     87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     8    12     8     2     4     6     4     0     0      0     11     67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37    15    30    30    15    15    30    30     5    10      0     21    214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41    16    24    16     4    24    36    24    16    24      4     21    231</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     6     6     2     0     3     3     1     0     0      0     10    106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52    10    20    20    10     5    10    10     0     0      0     10     99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     9     9     3     0     9     9     3     3     3      0     10    125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role13 role14 role15 role16 role17 role18 role19 role20 role21 role22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     16      4      0     47    207     25      0     16      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     22     12      3     63    111     37      9     48      3      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     19     18      1    180    143     37     24     64      3      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     38     54      3    285    200     58     96    170     12     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      5      8      0    110    156      4     12     20      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      25     18      0    165    248     52     18     75      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     66     36      3    177    313    135     30    168      6     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30     34     28      6     67     58     47     27     90     15     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14     28      6      4     13     36     48      2     26      1     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      15     31      2    265    111     17     81     93     12      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40     60    102     14    357    245     73    157    246     47     27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     28     38      6    175    121     47     58    110     18     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50     75    186     19    837    285     59    453    433    105     46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     11      2      0     38    161     27      0     11      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     37     23      5     61     97     59     16     79      7     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     71     70      7    311    288    112     84    234     21     25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     81     49      7    253    392    132     35    187     14     28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     38     14      3     80    200     55      4     52      3     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     36     34      3    137    142     58     42    122      9     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     40     12      4    101    208     68      2     48      4     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role23 role24 role25 role26 role27 role28 role29 role30 role31 role32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18      0     22      6      5      1    164    169     28     22    110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43      1     71      6     13      0     58    110      0    179    240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38      0     96      5     12      0     86    230     10    262    324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39      0     62     10     20      1    118    278     15    270    224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0     33      0      2      0      0    140      0    110    122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4       0     55     10     11      1    240    234     15    153    214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45      0     33     22     21      3    306    276     21     95    154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      1     26      0     22      0      0    125      0     96    100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      1     50      7     10      0     26     36      0     80    216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7       0    140      5      6      0     89    174      0    768    342</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40      3    170     68     34      5    530    277     23    650    499</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20      2     78     10     20      0     92    214      0    322    276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50      3    137     84     43      6    819    355     42    809    399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19      0     74      4      4      0    174    137      0     20    248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29      1     76     11     22      0     67    113      0    152    235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37      0     70     24     26      9    318    303     55    254    270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41      0     76     43     20     10    545    219     74    196    275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25      0     37      6     17      2     98    222      4     64    147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52      0     55     10     21      0     99    224      0    200    199</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48      0     57     16     18      2    176    169     37     76    184</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role33 role34 role35 role36 role37 role38 role39 role40 role41 role42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18      6     19      4      1      0      0      0      0     24      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     12     50      0      0     17      3      9      0     22     21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     18     50      0      0     61      1      3      0     19     42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     44     64      3      5     20      3      4      0     32     92</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0      5      0      0     11      0      0      0      0      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      30     50      5      3      6      0      0      0     40     33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     58    104     15      7      2      4      4      1    102     55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      0     80      0      0      4      0     14      0      0     60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      6     48      0      0     10      4      6      0     28      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      31     18      0      0    106      2      2      0     15     38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40    264    101      7     21    100     38     20      2    166    130</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     38     74      0      0     34      6     12      0     28     76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50    486    101     14     36     75     51     25      3    197    251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19      4     25      0      0     27      0      0      0     22      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     23     67      0      0     38      5     12      0     37     42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     84    102     25     28     13      6      8      4     92     88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41    103     89     38     22     16     13      8      4    167     44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     10     63      8      2      5      1      5      1     22     24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     34     81      0      0     10      3      6      0     36     72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     20     80      8      2     19      6      8      1     64     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role43 role44 role45 role46 role47 role48 role49 role50 role51 role52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     18      8      1      2      8      1      1      0      1     53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43     29     58     12      0     13      0      0      0      1     25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     42     67      9      0     12      0      0      0      0     41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     23     41      9      0     16      2      0      0      5    106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0     26      0      0      0      0      0      0      1     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      46     45      6      4     18      2      1      0      1     54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     18     14     10      8     30      6      3      0      5    121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      0     18     16      0      0      0      0      0      6     72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14     20     44      6      0     10      0      0      0      1     29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      67    115      1      0      6      0      0      0      0     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40    207     99     17     58     96      3     10      0     11    189</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     29     58     14      0     20      0      0      0      2     65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50    149     63     17     72    113      8     12      0     12    200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     70     72      3      2      8      0      0      0      0     18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     27     63     15      0     22      0      0      0      6     96</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     55     34      8      9     30     11      3      2     13    178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     89     46     10     29     50      5     14      2     15    168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     14     16      8      0      9      4      0      0      6    113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     17     38     18      0     21      0      0      0      5     62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     43     38     10      6     28      4      2      0      2    101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role53 role54 role55 role56 role57 role58 role59 role60 role61 role62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18     59      1      7     14      0      0      1      0     16      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43      5      3      6      7      2      0      0      0     47     40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38     31      0      0     19      5      0      0      0     35     38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39     64     21     22     30     22      4      2      0     50     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13     12      4      5      3      0      0      0      0     18     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4      44      3      5     23      5      0      1      0     22     22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45     61     10     29     59     17      5      8      0     33      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30     18     10     32     32     19     14      5      0     38      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      0      2      7      3      4      0      0      0     46     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7      18      0      0      6      2      0      0      0     36     55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40     51     37     46     42     49     16      3      1    121     66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20     28      8     11     24     14      2      2      0     50     33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50     93     58     51     63     76     22      4      2    103     37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19     49      0      0     11      0      0      0      0     19     36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29     21     10     29     24     18      6      3      1     70     27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37     96     38     77     61     30     10      8      2     84     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     75     28    100     65     17     13      8      2     75     28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25     42      5     43     44      5      7      1      0     44     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52     37     13     28     38     14      7      5      0     37     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48     56      2      8     38      4      0      2      1     54     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     role63 role64 role65 role66 role67 role68 role69 role70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S18      1      2      1      3      0      1      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S43      1      1     18      3      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S38      0      0     10      1      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S53      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S39      3     14     10      3      2      2      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S13      0      2      2      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S4       1      1     10      1      1      1      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S24      0      0      0      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S45      6     15      2      8      0      4      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S30      0     19      8      0      5      0      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S14      1      1     13      4      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S7       0      0     11      1      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S40     26     23     30     26      4      7      0      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S20      2      5     15      4      2      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S50     25     20     31     35      4      7      2      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S19      0      0      3      0      0      0      0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S29      6     20     15      4      4      0      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S37      7     34     15      7      0     15      2      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S41     24     30     15      6      1     17      2      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S25      2     17      6      2      2      4      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S52      5     14     13      5      5      0      0      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> S48      2      6     12      7      0      2      0      0</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'MAT' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

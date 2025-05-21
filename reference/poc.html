@@ -32,7 +32,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/motif_guideline.html">motif_guideline</a>
+      <a href="../articles/Interconnection_structure.html">An introduction to analyses on interconnection structures in tripartite interaction networks</a>
     </li>
   </ul></li>
 <li>
@@ -71,44 +71,45 @@
 
 
 <dl><dt id="arg-network-or-subnet-mat-">network.or.subnet_mat1<a class="anchor" aria-label="anchor" href="#arg-network-or-subnet-mat-"></a></dt>
-<dd><p>Igraph or matrix. Both weighted or unweighted networks are accepted. A tripartite network of 'igraph' class which contains three groups (a,b,c) of species and two subnetworks (P including a and b groups of species, Q including b and c groups of species). If matrices are provided, this should be the matrix representing subnetwork P that have links between a- and b-group species.
-Within this matrix, each row and column represents b-group species and a-group species respectively. For matrix, row names are required, otherwise row number is used.
-Elements of matrix are non-zero values if two species are linked, and 0 otherwise.</p></dd>
+<dd><p>Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.</p></dd>
 
 
 <dt id="arg-subnet-mat-">subnet_mat2<a class="anchor" aria-label="anchor" href="#arg-subnet-mat-"></a></dt>
-<dd><p>The matrix representing subnetwork Q that have links between b- and c-group species.
-Within this matrix, each row and column represents b-group species and c-group species respectively.
-Elements of matrix are non-zero values if two species are linked, and 0 otherwise.If <code>network.or.subnet_mat1</code> is "igraph", <code>subnet_mat2</code> defaults to NULL.</p></dd>
+<dd><p>The matrix representing one subnetwork.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Print a "POC= ;" and Return a numeric value representing the proportion of connector species in shared group of species.</p>
+    <p>Return a value representing the proportion of connector species in shared set of species.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><strong>network.or.subnet_mat1 and subnet_mat2</strong></p>
-<p>There are two types of inputs <code>network.or.subnet_mat1</code> that can be processed:</p><ul><li><p>Input is a network of type "igraph" alone.</p></li>
-<li><p>Must be entered as matrix with <code>subnet_mat2</code>.</p></li>
+    <p>In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.</p>
+<p>Two types of inputs <code>network.or.subnet_mat1</code> can be processed:</p><ul><li><p>An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)</p></li>
+<li><p>Or a matrix representing subnetwork P, and must be input with <code>subnet_mat2</code> representing subnetwork Q.</p></li>
 </ul><p>If the inputs are two matrices, please make sure the rows of
 <code>network.or.subnet_mat1</code> and <code>subnet_mat2</code> both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
-names to produce connector nodes. Otherwise, row numbers are assigned as row names.</p>
+names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively.
+Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.</p>
     </div>
     <div id="references">
     <h2>References</h2>
     <p>Battiston, F., Nicosia, V. &amp; Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.</p>
-<p>Domínguez-García, V., &amp; Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.</p>
+<p>DomC-nguez-GarcC-a, V., &amp; KC)fi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.</p>
 <p>Guimera, R. &amp; Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## generate a random tripartite network</span></span></span>
+<span class="r-in"><span><span class="co">## generate a random binary tripartite network</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Net</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_net.html">build_net</a></span><span class="op">(</span><span class="fl">11</span>,<span class="fl">15</span>,<span class="fl">16</span>,<span class="fl">0.2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">poc</span><span class="op">(</span><span class="va">Net</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POC = 0.933333333333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9333333</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## empirical network</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">PPH_Coltparkmeadow</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Net</span> <span class="op">&lt;-</span> <span class="va">PPH_Coltparkmeadow</span></span></span>
 <span class="r-in"><span><span class="fu">poc</span><span class="op">(</span><span class="va">Net</span><span class="op">)</span></span></span>
