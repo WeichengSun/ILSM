@@ -1,20 +1,20 @@
-#' The proportion of hub connectors in the shared sets of nodes between subnetworks
+#' The proportion of hub connectors in the shared sets of nodes
 #'
 #' This function calculates the proportion of shared node hubs that are connectors (HC), i.e. the top x% of the nodes in the shared set of nodes with the highest degree that are connector nodes.
 #'
-#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.
-#' @param subnet_mat2 The matrix representing one subnetwork.
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
 #' @param hubs The top x% of the nodes in the shared set of nodes with the highest degree. default to 20%.
-#' @param weighted Logical. Default to FALSE. If TRUE, weighted degree defined as the sum of interaction strengths attached to a connector node is used.
+#' @param weighted Logical. Default to FALSE. If TRUE, weighted degree defined as the sum of link strengths attached to a connector node is used.
 
 #' @details
 #' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
-
+#'
 #' The function counts the proportion of connector nodes in connector node hubs (HC). The connector node hubs are the top x% of shared nodes with the highest degree (Dominguez-Garcia and Kefi 2024). The default x% is 20%. It always equals 1 if all b-nodes are connector nodes.
 #'
 #' Two types of inputs \code{network.or.subnet_mat1} can be processed:
 #' \itemize{
-#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes, 2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
 #' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
@@ -25,7 +25,7 @@
 #'
 #' @return
 #' Return a numeric value representing the proportion of connector nodes in node hubs.
-#' network.
+#'
 #'
 #' @importFrom igraph V
 #' @export
@@ -34,7 +34,7 @@
 #' Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for
 #' multiplex networks. Physical Review E, 89, 032804.
 #'
-#' DomC-nguez-GarcC-a, V., & KC)fi, S. (2024). The structure and robustness of
+#' Domínguez-García, V. and Kéfi, S. (2024). The structure and robustness of
 #' ecological networks with two interaction types. PLOS Computational Biology,
 #' 20(1), e1011770.
 #'
@@ -120,7 +120,7 @@ hc<-function(network.or.subnet_mat1, subnet_mat2 = NULL, hubs = 0.2 ,weighted = 
       HU <- round(length(link_degree) * hubs)
       hub <- sum(logi[link_degree[1:HU]])
       H_C <- hub / HU
-      message(paste(c("HC"), "=", seq = c(H_C)), "\n")
+      #message(paste(c("HC"), "=", seq = c(H_C)), "\n")
       return(H_C)
    }
    else{
@@ -132,7 +132,7 @@ hc<-function(network.or.subnet_mat1, subnet_mat2 = NULL, hubs = 0.2 ,weighted = 
       HU <- round(length(link_degree) * hubs)
       hub <- sum(logi[link_degree[1:HU]])
       H_C <- hub / HU
-      message(paste(c("HC_weighted"), "=", seq = c(H_C)), "\n")
+      #message(paste(c("HC_weighted"), "=", seq = c(H_C)), "\n")
       return(H_C)
    }
 }

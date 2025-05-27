@@ -4,7 +4,7 @@
 #'
 #' @param mat A square block interaction matrix representing a tripartite network including intra-guild and inter-guild interactions. See details.
 #' @details
-#' To calculate degree of diagonal dominance, the input is a block matrix to represent three groups of nodes (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
+#' To calculate degree of diagonal dominance, the input should be a block matrix (\eqn{M}) to represent three groups of nodes (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
 #' two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}}), and two inter-guild matrices of b- and c-nodes(\eqn{m_{bc},m_{cb}}).
 #' \deqn{
 #'   \left(
@@ -16,7 +16,7 @@
 #'   \right)
 #' }
 #' This function follows the definition by García-Callejas et al (2023). Diagonal dominance is a matrix property indicating diagonal elements are larger than the sum of non-diagonal elements.
-#' In a tripartite network with intra-guild interactions, García-Callejas et al. proposed a continuous diagonal dominance index by calculating the difference between the diagonal and the sum of non-diagonal elements for each node.
+#' In a tripartite network with intra-guild interactions, García-Callejas et al. propose a continuous diagonal dominance index by calculating the difference between the diagonal and the sum of non-diagonal elements for each node.
 #' The average degree of diagonal dominance (\eqn{d}) is calculated by averaging all the nodes' values.
 #'   \deqn{
 #'          d = \sum_{i \in S} \frac{(M_{ii} - \sum_{j \in S,j \neq i}M_{ij})}{S}
@@ -65,9 +65,9 @@
 #'     y2 = nrow(mat) + 0.5  )
 #'     abline(v = c(4.5,9.5), h = c(3.5,8.5), lwd = 3, col = "black")
 #'
-#' ddom(mat)
+#' ig_ddom(mat)
 
-ddom<-function(mat){
+ig_ddom<-function(mat){
 
 d <- diag(mat)
 nd <- rowSums(mat)

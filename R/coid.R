@@ -2,23 +2,22 @@
 #'
 #' Calculating correlation of degree of connector nodes.
 #'
-#' @param network.or.subnet_mat1 An Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
 #' @param subnet_mat2 A matrix representing one subnetwork.
-#'
-#' @param weighted Logical. Default to FALSE. If TRUE, the degree of a connector node is replaced with Shannon diversity or sum of its interaction strengths.
-#' @param weight_type For weighted==TRUE only, the definition of weighted degree for a connector node, supporting "shannon" or "sum".
+#' @param weighted Logical. Default to FALSE. If TRUE, the degree of a connector node is replaced with Shannon diversity or sum of its link strengths.
+#' @param weight_type For weighted=TRUE only, supporting "shannon" or "sum".
 #' @param method  Correlation method ("pearson", "kendall" or "spearman"). Default to "kendall".
 #' @details
 #' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 #'
-#' This function follows Sauve et al.(2016)) to calculate the correlation of interaction degree (or Shannon diversity of interaction strength ) of connector nodes. For the binary network, connector nodes' degree is calculated in each subnetwork.
-#' For the quantitative network, Shannon diversity or sum of interaction strength for each connector node (i) is calculated.
-#' Three correlation methods are provided. Kendall correlation is recommended following Sauve et al.(2016).
+#' This function follows Sauve et al.(2016) to calculate the correlation of interaction degree (or weighted degree ) of connector nodes. For the binary network, connector nodes' degree is calculated in each subnetwork.
+#' For the quantitative network, Shannon diversity or sum of link strength for each connector node is calculated.
+#' Three correlation methods are supported. Kendall correlation is recommended following Sauve et al.(2016).
 #'
 #'
 #' Two types of inputs \code{network.or.subnet_mat1} can be processed:
 #' \itemize{
-#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
 #' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
@@ -28,7 +27,7 @@
 #'  Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 #'
 #' @return
-#' Return a numeric value representing correlation of interaction degree for connector nodes: CoID.
+#' Return a numeric value representing correlation of interaction degree for connector nodes.
 #' @import igraph
 #' @export
 #'
@@ -36,7 +35,7 @@
 #'
 #' @references
 #'
-#' Sauve, A. M., ThC)bault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
+#' Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
 #'
 #'
 #' @examples
@@ -91,7 +90,7 @@ coid<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,weight_t
             matrow<-unique(c(rownames(mat1),rownames(mat2)))
             if(length(matrow)==0) stop("No connectors existed.")
             }
-            else {stop("Make sure matrices either have no row names or have full row names. No NA!")}
+            else {stop("Please make sure matrices either have no row names or have full row names. No NA!")}
 
          mat_1<-matrix(0,length(matrow),ncol(mat1))
          rownames(mat_1)<-matrow
@@ -117,7 +116,7 @@ coid<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,weight_t
          mat2[mat2>0]<-1
 
       general_cor<-cor(as.numeric(rowSums(mat1)),as.numeric(rowSums(mat2)), method=method )
-      message(paste0("CoID= ",seq=round(general_cor,8),";"),"\n")
+      #message(paste0("CoID= ",seq=round(general_cor,8),";"),"\n")
       return(general_cor)
       }
       else{
@@ -144,7 +143,7 @@ coid<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,weight_t
          }
       })
       general_weight_cor<-cor(general_weight1,general_weight2,method=method)
-      message(paste0("CoID_weighted= ",seq=round(general_weight_cor,8),";"),"\n")
+      #message(paste0("CoID_weighted= ",seq=round(general_weight_cor,8),";"),"\n")
       return(general_weight_cor)
    }
 }

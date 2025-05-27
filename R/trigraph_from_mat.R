@@ -35,8 +35,12 @@
 #' M <- igraph_from_matrices(tmat,MAT[[4]])
 #' M
 
-igraph_from_matrices<-function(mat1, mat2, weighted=F){
- if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
+trigraph_from_mat<-function(mat1, mat2, weighted=F){
+   if(!inherits(mat1,c("matrix"))|!inherits(mat1,c("matrix"))){
+    stop("Please input matrices.")
+   }
+
+   if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
     message("Warning! Row IDs were set as rownames for matching connector nodes since no rownames are provided for the matrices")
       rownames(mat1)<-paste0("b",seq=1:nrow(mat1))
       rownames(mat2)<-paste0("b",seq=1:nrow(mat2))
@@ -45,6 +49,7 @@ igraph_from_matrices<-function(mat1, mat2, weighted=F){
    if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
        {matrow<-unique(c(rownames(mat1),rownames(mat2)))}else
       {stop("Please make sure the two matrices have appropriate row names. NA is not accepted.")}
+
    if (length(intersect(rownames(mat1),rownames(mat2)))==0){stop("The two networks are not interconnected!")}
 
    # mat_1<-matrix(0,length(matrow),ncol(mat1))
@@ -75,7 +80,7 @@ igraph_from_matrices<-function(mat1, mat2, weighted=F){
    MAT[rownames(mat2),colnames(mat2)]<-mat2
    # if(!isDirected2)
    #    MAT[colnames(mat2),rownames(mat2)]<-t(mat2)
-   NET<-graph_from_adjacency_matrix(MAT,weighted=weighted,mode="undirected")
+   NET<-graph_from_adjacency_matrix(MAT,weighted=weighted,mode="max")
    V(NET)$name<-spe
    levell<-rep(1,length(spe))
    levell[spe%in%colnames(mat1)]<-0

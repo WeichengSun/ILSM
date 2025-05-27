@@ -1,14 +1,14 @@
 #' Generates null models for tripartite network
 #'
-#' A wrapper function to generate different null models for binary and quantitative tripartite network
+#' A wrapper function to generate different null models for binary and quantitative tripartite networks
 #'
-#' @param trinet A tripartite network represented by an 'igraph' object.
+#' @param trinet An 'igraph' object that represents a tripartite network.
 #' @param null_N The number of null models to be generated.  Default to 100.
 #' @param null_type  Character. Should be one of "sauve","sub_P","sub_Q" and "both_sub".See details.
-#' @param sub_method The method to shuffle subnetworks. Must be provided when null_type ="sub_P","sub_Q" or "both_sub" .  a character specifying the null model algorithm listed on the help page of vegan::commsim. If null_type = 'sauve', it will ignored.
+#' @param sub_method The method to shuffle subnetworks. Must be provided when null_type ="sub_P","sub_Q" or "both_sub" .  a character specifying the null model algorithm listed on the help page of vegan::commsim. If null_type = 'sauve', it will be ignored.
 
 #' @details
-#' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
+#' In this package, a tripartite network contains three groups of nodes (a-nodes, b-nodes, c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 #'
 #' \strong{null_type}
 #' \itemize{
@@ -18,7 +18,7 @@
 #'
 #' @return
 #'
-#' Return a list of null models of tripartite network.
+#' Return a list of null models of a tripartite network.
 #'
 #' @references
 #' Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
@@ -40,12 +40,12 @@
 #' Net <- PPH_Coltparkmeadow
 #'
 #' set.seed(123)
-#' nullmodel_list<-null_model(Net,null_type="both_sub",sub_method="quasiswap")
+#' tri_null_list<-tri_null(Net,null_type="both_sub",sub_method="quasiswap")
 #' set.seed(123)
-#' nullmodel_list<-null_model(Net,null_type="sauve")
+#' tri_null_list<-tri_null(Net,null_type="sauve")
 
 
-null_model<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both_sub"), sub_method){
+tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both_sub"), sub_method){
    if(!null_type%in%c("sauve","sub_P","sub_Q","both_sub")|length(null_type)!=1){stop("Wrong input for null_type")}
    if(null_type%in%c("sub_P","sub_Q","both_sub")&missing(sub_method)){stop("sub_method should be provided for subnetwork null models")}
    mat<-as.matrix(trinet[])

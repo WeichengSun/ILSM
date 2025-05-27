@@ -1,10 +1,10 @@
-#' Counts of interconnection motifs
+#' Count interconnection motifs
 #'
 #' Counting the frequencies of interconnection motifs for a tripartite interaction network.
 #'
-#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.
-#' @param subnet_mat2 The matrix representing one subnetwork.
-#' @param weighted Logical. Default to FALSE. If TRUE, the counts of motifs are weighted by link strengths in each motif.
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
+#' @param weighted Logical. Default to FALSE. If TRUE, the arithmetic mean of the subgraph weights is provided for each motif. See details
 
 #' @import igraph
 #'
@@ -12,27 +12,27 @@
 #'
 #' @details
 #' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
-#' An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each motif has maximumly 6 nodes, resulting in a total of 48 distinct motif forms.
-#' The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019), which uses mathematical operations directly on the bi-adjacency matrix.
-#' \strong{weighted}
+#' <br>An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each motif has maximumly 6 nodes, resulting in a total of 48 distinct motif forms.
+#' The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019), which uses mathematical operations directly on the bi-adjacency matrix. For interconnection motifs in tripartite networks with intra-guild interactions, please see **ig_icmotif_count** and **ig_icmotif_role**.
 #'
-#' If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices. If a weighted network is provided, it will be transformed to a binary network.
-#' If the \code{weighted} = TRUE, the input network can only be two matrices. Weighted motifs are considered, then the counts are weighed by the link strength in each motif.
-#'
-#' \strong{network.or.subnet_mat1 and subnet_mat2}
-#'
-#' There are two types of inputs \code{network.or.subnet_mat1} that can be processed:
+#' Two types of inputs \code{network.or.subnet_mat1} can be processed:
 #' \itemize{
-#' \item Input is a network of type "igraph" alone.
-#' \item Must be entered as matrix with \code{subnet_mat2}.
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
+#' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
 #' If the inputs are two matrices, please make sure the rows of
 #'  \code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
-#' names to produce connector nodes. Otherwise, row numbers are assigned as row names.
+#'  names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively.
+#'  Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
+#'
+#' \strong{Weighted networks}
+#' <br>For weighted tripartite networks, the mean weight of a given motif is provided by averaging the weights of all the cases of a particular motif. The weight of a motif case is the arithmetic mean of the weights of its links, following Mora et al. (2018) and Simmons et al. (2019).
+#'
+
 #'
 #' @return
-#'  return a numeric vector of the number of 48 interconnection motifs.  The motifs are named ???MABC-i???: M means ???motif???, ???A??? is the number of a-nodes, ???B??? is the number of b-nodes, ???C??? is the number of c-nodes and ???i??? is the serial number for the motifs with the same ???ABC???. See 'Multi_motif' for the forms.
+#'  Return a numeric vector of the number of 48 interconnection motifs. See 'Multi_motif' for the forms.
 #'
 #' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
 #' @srrstats {G1.3,G1.4} This standard belongs here.
@@ -50,421 +50,199 @@
 #' @references
 #' Pilosof, S., Porter, M. A., Pascual, M., & KC)fi, S. (2017). The multilayer nature of ecological networks. Nature Ecology & Evolution, 1(4), 0101.
 #'
+#' Mora, B.B., Cirtwill, A.R. and Stouffer, D.B. (2018). pymfinder: a tool for the motif analysis of binary and quantitative complex networks. bioRxiv, 364703.
+#'
 #' Simmons, B. I., Sweering, M. J., Schillinger, M., Dicks, L. V., Sutherland, W. J., & Di Clemente, R. (2019). bmotif: A package for motif analyses of bipartite networks. Methods in Ecology and Evolution, 10(5), 695-701.
 #'
-#'#'
 #' @examples
-#'
 #'
 #' ## generate a random tripartite network
 #' set.seed(12)
 #' Net <- build_net(11,15,16,0.2)
 #' icmotif_count(Net)
 #'
+#' ## empirical network
 #' data(PPH_Coltparkmeadow)
 #' Net <- PPH_Coltparkmeadow
 #' icmotif_count(Net)
+#' set.seed(13)
+#' E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+#' icmotif_count(Net, weighted=T)
 #'
 #'
+#' ##input as binary matrices, with row names.
 #' set.seed(12)
-#' MAT <- build_net(11,22,21,0.2,output_matrices=TRUE)
-#' icmotif_count(MAT[["subnet_P"]],MAT[["subnet_Q"]])
-#'
-#'##input as binary matrices,with row names.
 #' md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
 #' md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
 #' icmotif_count(md1,md2)
 #'
 #'
 #'##input as weighted matrices,with row numbers as row names.
+#' set.seed(12)
 #' mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
 #' mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
 #' icmotif_count(mdw1,mdw2,weighted=T)
 #'
-icmotif_count <-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted = FALSE){
-   if(weighted){
-      if(inherits(network.or.subnet_mat1,"igraph")==T){
-         network<-adjust_net(network.or.subnet_mat1)
-         PHP<-as.matrix(network[])
-         dimnames(PHP)<-NULL
-         PH<-PHP[(V(network)$level)==0,(V(network)$level)==1]
-         HP<-PHP[(V(network)$level)==1,(V(network)$level)==2]
-      }
-      else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T && inherits(subnet_mat2,c("matrix","data.frame"))==T){
-         mat1<-network.or.subnet_mat1
-         mat2<-subnet_mat2
-         if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
-            rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
-            rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
-            matrow<-unique(c(rownames(mat1),rownames(mat2)))
-         }
-         if(nrow(mat1)!=nrow(mat2))
-            message("re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
-         if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
-            matrow<-unique(c(rownames(mat1),rownames(mat2)))
-         else
-            stop("Make sure matrices either have no row names or have full row names. No NA!!!")
-         mat_1<-matrix(0,length(matrow),ncol(mat1))
-         rownames(mat_1)<-matrow
-         mat_1[rownames(mat1),]<-mat1
-         mat_2<-matrix(0,length(matrow),ncol(mat2))
-         rownames(mat_2)<-matrow
-         mat_2[rownames(mat2),]<-mat2
-         mat1<-mat_1
-         mat2<-mat_2
-         dimnames(mat1)<-NULL
-         dimnames(mat2)<-NULL
-         PH<-t(mat1)
-         HP<-mat2
-         logi<- colSums(PH) * rowSums(HP) != 0
-         #(apply(PH,2,sum)*apply(HP,1,sum))!=0
-         PH<-PH[,logi]
-         HP<-HP[logi,]
-      }
-      else
-         stop("Error: please check the tyep of network.or.subnet_mat1 and other parameters!!!")
-      L1<-ncol(PH)
-      if(L1 < 4L)
-         stop("Error: please input a large 'number of interconnecting species >=4' network data!!!")
-      Ob<-colSums(PH)
-      Rb<-rowSums(HP)
-      Ubb<-t(PH)%*%PH
-      Xbb<-t(PH)%*%(PH==0)
-      XT<-t(Xbb)
-      Vbb<-HP%*%t(HP)
-      Ybb<-HP%*%(t(HP)==0)
-      YT<-t(Ybb)
-      UVbb<-Ubb*Vbb
-      Two<-function(x){ ((sum(x))^2 - sum(x^2)) / 2 }
-      Three<-function(x){ s1 <- sum(x); s2 <- sum(x^2); s3 <- sum(x^3)
-      ((s1^3) - 3*s1*s2 + 2*s3) / 6}
-      Four<-function(x){ s1 <- sum(x); s2 <- sum(x^2); s3 <- sum(x^3);
-      s4 <- sum(x^4)
-      ((s1^4) - 6*(s1^2)*s2 + 3*(s2^2) + 8*s1*s3 - 6*s4)/ 24}
-      mat_tri<-function(mat){ sum( mat[upper.tri(mat)] ) }
-
-      PP<-PH%*%HP
-
-      M111 <- sum(PP) # sum(Ob*Rb)
-
-      M112 <- sum(Ob*apply(HP,1,Two)) #=sum(PH%*%apply(HP,1,Two))
-
-      M113 <- sum(Ob*apply(HP,1,Three))  #=sum(PH%*%apply(HP,1,Two_3))
-
-      M114 <- sum(Ob*apply(HP,1,Four)) #=sum(PH%*%apply(HP,1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
-
-      M211 <- sum(apply((PH),2,Two)*Rb) #=sum(apply((PH),2,Two)%*%HP)
-
-      M212 <- sum(apply((PH),2,Two)*apply(HP,1,Two))  #=sum(apply(PH,2,Two)%*%apply(HP,1,Two))
-
-      M213 <- sum(apply((PH),2,Two)*apply(HP,1,Three))  #=sum(apply(PH,2,Two)%*%apply(HP, 1,Two_3))
-
-      M311 <- sum(apply((PH),2,Three)*Rb)  #=sum(t(HP)%*%apply(t(PH),1,Two_3))
-
-      M312 <- sum(apply((PH),2,Three)*apply(HP,1,Two))  #=sum(apply(PH,2,Two_3)%*%apply(HP,1, Two))
-
-      M411 <- sum(apply((PH),2,Four)*Rb) #=sum(t(HP)%*%apply(t(PH),1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
-
-      M121 <- mat_tri(UVbb)   #(sum(UVbb)-M111)/2
-
-      M122_1 <- sum(Ubb*Ybb*YT)/2 #=sum(PH_add*HP_ratio*t(HP_ratio))/2
-
-      M122_2 <- sum(UVbb*Ybb) #=sum(PHP_add*HP_ratio)##
-
-      Two_Ubb <- (Ubb^2 - t(apply(PH,2,function(x){colSums((x*PH)^2)})))/2
-      Two_Vbb <- (Vbb^2 - t(apply(HP,1,function(x){colSums((x*t(HP))^2)})))/2
-
-      M122_3 <- mat_tri(Ubb*Two_Vbb)  #(sum(Ubb*Two(Vbb))-M112)/2
-
-      M123_1 <- sum(Ubb*YT*(Ybb^2 - t(apply(HP,1,function(x){colSums((x*t(HP==0))^2)})))/2)  #sum(Ubb*Two(Ybb)*YT)
-
-      M123_2 <- sum(UVbb*(YT^2-apply(HP,1,function(x){colSums((x*t(HP==0))^2)}))/2)  #sum(UVbb*Two(YT))
-
-      M123_3 <- sum(UVbb*Ybb*YT)/2
-
-      M123_4 <- sum(Ubb*Two_Vbb*Ybb) #sum(Ubb*Two(Vbb)*Ybb)
-
-      M123_5 <- mat_tri(Ubb*(Vbb^3-3*Vbb*t(apply(HP,1,function(x){colSums((x*t(HP))^2)}))+2*t(apply(HP,1,function(x){colSums((x*t(HP))^3)})))/6)  #(sum(Ubb*Three(Vbb))-M113)/2
-
-      M221_1 <- sum(Xbb*XT*Vbb)/2 #mat_tri(Xbb*XT*Vbb)
-
-      M221_2 <- sum(UVbb*Xbb)
-
-      M221_3 <- mat_tri(Two_Ubb *Vbb)  ###(sum(Two(Ubb)*Vbb)-M211)/2
-
-      M222_1 <- sum(Ubb*Xbb*Ybb*YT)
-
-      M222_2 <- sum(Two_Ubb*Ybb*YT)/2  ##sum(Two(Ubb)*Ybb*YT)/2
-
-      ###########################################
-
-
-      M222_3 <- sum(Xbb*XT*Ybb*Vbb)
-
-
-
-      M222_4 <- sum(UVbb*Xbb*Ybb)
-
-
-      M222_5 <- sum(Two_Ubb*Vbb*YT)    #sum(Two(Ubb)*Vbb*YT)
-
-
-      M222_6 <- sum(Xbb*XT*Two_Vbb)/2 # sum(Xbb*XT*Two(Vbb))/2
-
-
-      M222_7 <- sum(Ubb*Xbb*Two_Vbb) #sum(Ubb*Xbb*Two(Vbb))
-
-
-
-      M222_8 <- mat_tri(Two_Ubb * Two_Ubb) # (sum(Two(Ubb)*Two(Vbb))-M212)/2
-
-
-
-      M222_9 <- sum(UVbb*Xbb*YT)
-
-
-
-      M321_1 <- sum((Xbb^2 - t(apply(PH,2,function(x){colSums((x*(PH==0))^2)})))/2 *XT*Vbb)   # sum(Two(Xbb)*XT*Vbb)
-
-
-      M321_2 <- sum(UVbb*(XT^2-apply(PH,2,function(x){colSums((x*(PH==0))^2)}))/2)  # sum(UVbb*Two(XT))
-
-
-
-      M321_3 <- sum(UVbb*Xbb*XT)/2
-
-
-      M321_4 <- sum(Two_Ubb*XT*Vbb)   # sum(Two(Ubb)*XT*Vbb)
-
-
-
-      M321_5 <- mat_tri((Ubb^3-3*Ubb*t(apply(PH,2,function(x){colSums((x*PH)^2)}))+2*t(apply(PH,2,function(x){colSums((x*PH)^3)})))/6*Vbb) #(sum(Three(Ubb)*Vbb)-M311)/2
-
-
-      M131 <-
-         sum((PP^3 -
-                 3 * PP * t(apply(PH, 1, function(x){colSums((x * HP) ^ 2) })) +
-                 2 * t(apply(PH, 1, function(x) {colSums((x * HP) ^ 3)})))
-             / 6)
-
-      # apply(PH, 1, function(x){{
-      #    colSums((x*HP)^2)
-      # }})
-
-      M141 <-
-         sum((PP^4 +
-                 8 * PP * t(apply(PH, 1, function(x) {colSums((x * HP) ^ 3)})) -
-                 6 * PP^2 * t(apply(PH, 1, function(x) {colSums((x * HP) ^ 2)}))-
-                 3 * t(apply(PH, 1, function(x) {colSums((x * HP) ^ 4)}))+
-                 6 * t(apply(PH, 1, function(x) {apply((x * HP) ^ 2,2,Two)}))
-         ) / 24)
-
-
-      M1321<-M1322<-M1323<-M1324<-M1325<-M2311<-M2312<-M2313<-M2314<-M2315<-0
-      for(i in 1:L1){
-         for(j in 1:L1){
-            if(i!=j){
-               PH_F<-colSums(PH[,i]*PH[,j]*(PH[,-c(i,j)]))
-               PH_F_2T <- colSums((PH[,i]*PH[,j]*(PH[,-c(i,j)]))^2)
-               PH_F1<-colSums(PH[,i]*PH[,j]*(PH[,-c(i,j)]==0))
-               PH_F2<-colSums((PH[,i]==0)*(PH[,j]==0)*(PH[,-c(i,j)]))
-               PH_F3<-colSums((PH[,i]==0)*(PH[,j])*(PH[,-c(i,j)]))
-               HP_F<-colSums(HP[i,]*HP[j,]*t(HP[-c(i,j),]))
-               HP_F_2T <- colSums((HP[i,]*HP[j,]*t(HP[-c(i,j),]))^2)
-               HP_F1<-colSums(HP[i,]*HP[j,]*t(HP[-c(i,j),]==0))
-               HP_F2<-colSums((HP[i,]==0)*(HP[j,]==0)*t(HP[-c(i,j),]))
-               HP_F3<-colSums((HP[i,]==0)*(HP[j,])*t(HP[-c(i,j),]))
-               ########
-               M1321<-M1321+sum(PH_F*HP_F1*HP_F2)
-               M1322<-M1322+sum(PH_F*HP_F*HP_F2)
-               M1323<-M1323+sum(PH_F*HP_F1*HP_F3)
-               M1324<-M1324+sum(PH_F*HP_F*HP_F1)
-               M1325<-M1325+sum(PH_F*((HP_F^2-HP_F_2T)/2))
-               M2311<-M2311+sum(PH_F1*PH_F2*HP_F)
-               M2312<-M2312+sum(PH_F*PH_F2*HP_F)
-               M2313<-M2313+sum(PH_F1*PH_F3*HP_F)
-               M2314<-M2314+sum(PH_F*PH_F3*HP_F)
-               M2315<-M2315+sum(((PH_F^2-PH_F_2T)/2)*HP_F)
-            }
-         }
-      }
-      M1321<-M1321/2
-      M1322<-M1322/2
-      M1323<-M1323/2
-      M1324<-M1324/2
-      M1325<-M1325/6
-      M2311<-M2311/2
-      M2312<-M2312/2
-      M2313<-M2313/2
-      M2314<-M2314/2
-      M2315<-M2315/6
-   }
-   else
-      ###################################################################################
-   {
-
+icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL, weighted =FALSE){
    if(inherits(network.or.subnet_mat1,"igraph")==T){
       network<-adjust_net(network.or.subnet_mat1)
-      PHP<-as.matrix(network[])
-      PHP[PHP>0]<-1
-      dimnames(PHP)<-NULL
-      PH<-PHP[(V(network)$level)==0,(V(network)$level)==1]
-      HP<-PHP[(V(network)$level)==1,(V(network)$level)==2]
+      PQ <- as.matrix(network[])
+      dimnames(PQ)<-NULL
+      P <- PQ[(V(network)$level)==0,(V(network)$level)==1]
+      Q <- PQ[(V(network)$level)==1,(V(network)$level)==2]
    }
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T && inherits(subnet_mat2,c("matrix","data.frame"))==T){
       mat1<-network.or.subnet_mat1
-      mat1[mat1>0]<-1
       mat2<-subnet_mat2
-      mat2[mat2>0]<-1
       if(is.null(rownames(mat1)) | is.null(rownames(mat2))){
          rownames(mat1)<-paste0("mid_spe",seq=1:nrow(mat1))
          rownames(mat2)<-paste0("mid_spe",seq=1:nrow(mat2))
          matrow<-unique(c(rownames(mat1),rownames(mat2)))
       }
-      if(nrow(mat1)!=nrow(mat2))
-         message("re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
+     #if(nrow(mat1)!=nrow(mat2))
+     #   message("re-check whether the row name of network.or.subnet_mat1 is corresponding to the row name of subnet_mat2!!!")
       if(!is.null(rownames(mat1)) & !is.null(rownames(mat2)) & sum(is.na(rownames(mat1)))==0 & sum(is.na(rownames(mat2)))==0)
          matrow<-unique(c(rownames(mat1),rownames(mat2)))
       else
-         stop("Make sure matrices either have no row names or have full row names. No NA!!!")
+         stop("Make sure matrices either have no row names or have full row names. No NA!")
       mat_1<-matrix(0,length(matrow),ncol(mat1))
       rownames(mat_1)<-matrow
       mat_1[rownames(mat1),]<-mat1
-      mat_1[mat_1>0]<-1
       mat_2<-matrix(0,length(matrow),ncol(mat2))
       rownames(mat_2)<-matrow
       mat_2[rownames(mat2),]<-mat2
-      mat_2[mat_2>0]<-1
-      mat1<-mat_1
-      mat2<-mat_2
-      dimnames(mat1)<-NULL
-      dimnames(mat2)<-NULL
-      PH<-t(mat1)
-      HP<-mat2
-      logi<-(apply(PH,2,sum)*apply(HP,1,sum))!=0
-      PH<-PH[,logi]
-      HP<-HP[logi,]
+
+      P <- t(mat_1); Q <- mat_2
+      dimnames(P)<-NULL; dimnames(Q)<-NULL
+
+      logi<-(apply(P,2,sum)*apply(Q,1,sum))!=0
+      P <- P[,logi]
+      Q <- Q[logi,]
    }
    else
-      stop("Error: please check the tyep of network.or.subnet_mat1 and other parameters!!!")
-   L1<-ncol(PH)
+      stop("Please check the data type of network.or.subnet_mat1 and other parameters.")
+
+   L1<-ncol(P)
    if(L1 < 4L)
-      stop("Error: please input a large 'number of interconnecting species >=4' network data!!!")
-   Ob<-colSums(PH)
-   Rb<-rowSums(HP)
-   Ubb<-t(PH)%*%PH
-   Xbb<-t(PH)%*%(1-PH)
-   XT<-t(Xbb)
-   Vbb<-HP%*%t(HP)
-   Ybb<-HP%*%(1-t(HP))
-   YT<-t(Ybb)
-   UVbb<-Ubb*Vbb
+      stop("Please input a network with the number of 'connector node' >=4.")
+
+   PW <- P;  QW <- Q
+
+   P <- (P!=0)*1; Q <- (Q!=0)*1
+   Ob <- colSums(P)
+   Rb <- rowSums(Q)
+   Ubb <- t(P)%*%P
+   Xbb <- t(P)%*%(1-P)
+   XT <- t(Xbb)
+   Vbb <- Q%*%t(Q)
+   Ybb <- Q%*%(1-t(Q))
+   YT <- t(Ybb)
+   UVbb <- Ubb*Vbb
    Two<-function(a){ return(a*(a-1)/2) }
    Three<-function(a){ return(a*(a-1)*(a-2)/6)}
    Four<-function(a){ return(a*(a-1)*(a-2)*(a-3)/24)}
 
-   PP<-PH%*%HP
+   PQ <- P%*%Q
 
-   M111 <- sum(Ob*Rb) #=sum(PP)
+   M111 <- sum(Ob*Rb) #=sum(PQ)
 
-   M112 <- sum(Ob*Two(Rb)) #=sum(PH%*%apply(HP,1,Two))
+   M112 <- sum(Ob*Two(Rb))
 
-   M113 <- sum(Ob*Three(Rb))  #=sum(PH%*%apply(HP,1,Two_3))
+   M113 <- sum(Ob*Three(Rb))
 
-   M114 <- sum(Ob*Four(Rb)) #=sum(PH%*%apply(HP,1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
+   M114 <- sum(Ob*Four(Rb))
 
-   M211 <- sum(Two(Ob)*Rb) #=sum(apply((PH),2,Two)%*%HP)
+   M211 <- sum(Two(Ob)*Rb)
 
-   M212 <- sum(Two(Ob)*Two(Rb))  #=sum(apply(PH,2,Two)%*%apply(HP,1,Two))
+   M212 <- sum(Two(Ob)*Two(Rb))
 
-   M213 <- sum(Two(Ob)*Three(Rb))  #=sum(apply(PH,2,Two)%*%apply(HP, 1,Two_3))
+   M213 <- sum(Two(Ob)*Three(Rb))
 
-   M311 <- sum(Three(Ob)*Rb)  #=sum(t(HP)%*%apply(t(PH),1,Two_3))
+   M311 <- sum(Three(Ob)*Rb)
 
-   M312 <- sum(Three(Ob)*Two(Rb))  #=sum(apply(PH,2,Two_3)%*%apply(HP,1, Two))
+   M312 <- sum(Three(Ob)*Two(Rb))
 
-   M411 <- sum(Four(Ob)*Rb) #=sum(t(HP)%*%apply(t(PH),1,function(s){sum(s)*(sum(s)-1)*(sum(s)-2)*(sum(s)-3)/24}))
+   M411 <- sum(Four(Ob)*Rb)
 
-   M121 <- (sum(UVbb)-M111)/2 #=sum(PP*(PP-1)/2)##
+   M121 <- (sum(UVbb)-M111)/2
 
-   M122_1 <- sum(Ubb*Ybb*YT)/2 #=sum(PH_add*HP_ratio*t(HP_ratio))/2
+   M122_1 <- sum(Ubb*Ybb*YT)/2
 
-   M122_2 <- sum(UVbb*Ybb) #=sum(PHP_add*HP_ratio)##
+   M122_2 <- sum(UVbb*Ybb)
 
-   M122_3 <- (sum(Ubb*Two(Vbb))-M112)/2 # M<-PHP_add*(HP_add-1); =sum(M[lower.tri(M)])/2
+   M122_3 <- (sum(Ubb*Two(Vbb))-M112)/2
 
-   M123_1 <- sum(Ubb*Two(Ybb)*YT) #=sum(PH_add*(HP_ratio*(HP_ratio-1)/2)*t(HP_ratio))
+   M123_1 <- sum(Ubb*Two(Ybb)*YT)
 
-   M123_2 <- sum(UVbb*Two(YT)) #=sum(PHP_add*(HP_ratio*(HP_ratio-1)/2))##
+   M123_2 <- sum(UVbb*Two(YT))
 
-   M123_3 <- sum(UVbb*Ybb*YT)/2 #=sum(PHP_add*HP_ratio*t(HP_ratio))/2##
+   M123_3 <- sum(UVbb*Ybb*YT)/2
 
-   M123_4 <- sum(Ubb*Two(Vbb)*Ybb) #=sum(PHP_add*((HP_add-1)/2)*HP_ratio)##
+   M123_4 <- sum(Ubb*Two(Vbb)*Ybb)
 
-   M123_5 <- (sum(Ubb*Three(Vbb))-M113)/2 #  M<-PHP_add*((HP_add-1)*(HP_add-2)/6); =sum(M[lower.tri(M)])
+   M123_5 <- (sum(Ubb*Three(Vbb))-M113)/2
 
-   M221_1 <- sum(Xbb*XT*Vbb)/2 #=sum(HP_add*PH_ratio*t(PH_ratio))/2
+   M221_1 <- sum(Xbb*XT*Vbb)/2
 
-   M221_2 <- sum(UVbb*Xbb) #=sum(PHP_add*(PH_ratio))##
+   M221_2 <- sum(UVbb*Xbb)
 
-   M221_3 <- (sum(Two(Ubb)*Vbb)-M211)/2 #M<-PHP_add*(PH_add-1); =sum(M[lower.tri(M)])/2
+   M221_3 <- (sum(Two(Ubb)*Vbb)-M211)/2
 
-   M222_1 <- sum(Ubb*Xbb*Ybb*YT) #=sum(PH_add*PH_ratio*HP_ratio*t(HP_ratio))
+   M222_1 <- sum(Ubb*Xbb*Ybb*YT)
 
-   M222_2 <- sum(Two(Ubb)*Ybb*YT)/2 #=sum(PH_add*(PH_add-1)*HP_ratio*t(HP_ratio))/4
+   M222_2 <- sum(Two(Ubb)*Ybb*YT)/2
 
-   M222_3 <- sum(Xbb*XT*Ybb*Vbb) #=sum(PH_ratio*t(PH_ratio)*HP_add*HP_ratio)
+   M222_3 <- sum(Xbb*XT*Ybb*Vbb)
 
-   M222_4 <- sum(UVbb*Xbb*Ybb) #=sum(PHP_add*PH_ratio*HP_ratio)##
+   M222_4 <- sum(UVbb*Xbb*Ybb)
 
-   M222_5 <- sum(Two(Ubb)*Vbb*YT) #=sum((PHP_add*(PH_add-1)/2)*HP_ratio)##
+   M222_5 <- sum(Two(Ubb)*Vbb*YT)
 
-   M222_6 <- sum(Xbb*XT*Two(Vbb))/2 #=sum(PH_ratio*t(PH_ratio)*HP_add*(HP_add-1))/4
+   M222_6 <- sum(Xbb*XT*Two(Vbb))/2
 
-   M222_7 <- sum(Ubb*Xbb*Two(Vbb)) #=sum(PHP_add*PH_ratio*(HP_add-1)/2)##
+   M222_7 <- sum(Ubb*Xbb*Two(Vbb))
 
-   M222_8 <- (sum(Two(Ubb)*Two(Vbb))-M212)/2 #M<-PHP_add*(PH_add-1)*(HP_add-1)/4; =sum(M[lower.tri(M)])
+   M222_8 <- (sum(Two(Ubb)*Two(Vbb))-M212)/2
 
-   M222_9 <- sum(UVbb*Xbb*YT) #=sum(PHP_add*PH_ratio*t(HP_ratio))##
+   M222_9 <- sum(UVbb*Xbb*YT)
 
-   M321_1 <- sum(Two(Xbb)*XT*Vbb) #=sum((PH_ratio*(PH_ratio-1)/2)*t(PH_ratio)*HP_add)
+   M321_1 <- sum(Two(Xbb)*XT*Vbb)
 
-   M321_2 <- sum(UVbb*Two(XT)) #=sum((PH_ratio*(PH_ratio-1)/2)*PHP_add)##
+   M321_2 <- sum(UVbb*Two(XT))
 
-   M321_3 <- sum(UVbb*Xbb*XT)/2 #=sum(PHP_add*PH_ratio*t(PH_ratio))/2##
+   M321_3 <- sum(UVbb*Xbb*XT)/2
 
-   M321_4 <- sum(Two(Ubb)*XT*Vbb) #=sum((PHP_add*(PH_add-1)/2)*PH_ratio)##
+   M321_4 <- sum(Two(Ubb)*XT*Vbb)
 
-   M321_5 <- (sum(Three(Ubb)*Vbb)-M311)/2 #M<-(PHP_add*(PH_add-1)*(PH_add-2)/6); =sum(M[lower.tri(M)])
+   M321_5 <- (sum(Three(Ubb)*Vbb)-M311)/2
 
+   M131 <- sum(Three(PQ))
 
-   M131 <- sum(Three(PP))
-
-   M141 <- sum(Four(PP))
+   M141 <- sum(Four(PQ))
 
    M1321<-M1322<-M1323<-M1324<-M1325<-M2311<-M2312<-M2313<-M2314<-M2315<-0
    for(i in 1:L1){
       for(j in 1:L1){
          if(i!=j){
-            PH_F<-colSums(PH[,i]*PH[,j]*(PH[,-c(i,j)]))
-            PH_F1<-colSums(PH[,i]*PH[,j]*(1-PH[,-c(i,j)]))
-            PH_F2<-colSums((1-PH[,i])*(1-PH[,j])*(PH[,-c(i,j)]))
-            PH_F3<-colSums((1-PH[,i])*(PH[,j])*(PH[,-c(i,j)]))
-            HP_F<-colSums(HP[i,]*HP[j,]*t(HP[-c(i,j),]))
-            HP_F1<-colSums(HP[i,]*HP[j,]*t(1-HP[-c(i,j),]))
-            HP_F2<-colSums((1-HP[i,])*(1-HP[j,])*t(HP[-c(i,j),]))
-            HP_F3<-colSums((1-HP[i,])*(HP[j,])*t(HP[-c(i,j),]))
-            ########
-            M1321<-M1321+sum(PH_F*HP_F1*HP_F2)
-            M1322<-M1322+sum(PH_F*HP_F*HP_F2)
-            M1323<-M1323+sum(PH_F*HP_F1*HP_F3)
-            M1324<-M1324+sum(PH_F*HP_F*HP_F1)
-            M1325<-M1325+sum(PH_F*HP_F*(HP_F-1)/2)
-            M2311<-M2311+sum(PH_F1*PH_F2*HP_F)
-            M2312<-M2312+sum(PH_F*PH_F2*HP_F)
-            M2313<-M2313+sum(PH_F1*PH_F3*HP_F)
-            M2314<-M2314+sum(PH_F*PH_F3*HP_F)
-            M2315<-M2315+sum((PH_F*(PH_F-1)/2)*HP_F)
+            P_F <- colSums(P[,i]*P[,j]*P[,-c(i,j)])
+            P_F1 <- colSums(P[,i]*P[,j]*(1-P[,-c(i,j)]))
+            P_F2 <- colSums((1-P[,i])*(1-P[,j])*P[,-c(i,j)])
+            P_F3 <- colSums((1-P[,i])*P[,j]*P[,-c(i,j)])
+            Q_F <- colSums(Q[i,]*Q[j,]*t(Q[-c(i,j),]))
+            Q_F1 <- colSums(Q[i,]*Q[j,]*t(1-Q[-c(i,j),]))
+            Q_F2 <- colSums((1-Q[i,])*(1-Q[j,])*t(Q[-c(i,j),]))
+            Q_F3 <- colSums((1-Q[i,])*Q[j,]*t(Q[-c(i,j),]))
+
+            M1321<-M1321+sum(P_F*Q_F1*Q_F2)
+            M1322<-M1322+sum(P_F*Q_F*Q_F2)
+            M1323<-M1323+sum(P_F*Q_F1*Q_F3)
+            M1324<-M1324+sum(P_F*Q_F*Q_F1)
+            M1325<-M1325+sum(P_F*Q_F*(Q_F-1)/2)
+            M2311<-M2311+sum(P_F1*P_F2*Q_F)
+            M2312<-M2312+sum(P_F*P_F2*Q_F)
+            M2313<-M2313+sum(P_F1*P_F3*Q_F)
+            M2314<-M2314+sum(P_F*P_F3*Q_F)
+            M2315<-M2315+sum((P_F*(P_F-1)/2)*Q_F)
          }
       }
    }
@@ -478,18 +256,199 @@ icmotif_count <-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted = FA
    M2313<-M2313/2
    M2314<-M2314/2
    M2315<-M2315/6
-   }
    motif<-c(M111, M112, M113, M114, M211, M212, M213, M311, M312, M411,
             M121, M122_1, M122_2, M122_3, M123_1, M123_2, M123_3,
             M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2,
             M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_9, M321_1,
             M321_2, M321_3, M321_4, M321_5, M131, M1321, M1322,
             M1323, M1324, M1325, M2311, M2312, M2313, M2314, M2315, M141)
-   names(motif)<-c("M111", "M112","M113", "M114", "M211", "M212", "M213", "M311", "M312", "M411",
-     "M121", "M122-1", "M122-2", "M122-3", "M123-1", "M123-2", "M123-3",
-     "M123-4", "M123-5", "M221-1", "M221-2", "M221-3", "M222-1", "M222-2",
-     "M222-3", "M222-4", "M222-5", "M222-6", "M222-7", "M222-8", "M222-9", "M321-1",
-     "M321-2", "M321-3", "M321-4", "M321-5", "M131", "M132-1", "M132-2",
-     "M132-3", "M132-4", "M132-5", "M231-1", "M231-2", "M231-3", "M231-4", "M231-5", "M141")
-   return(motif)
+
+   motif_names<-c("M111", "M112","M113", "M114", "M211", "M212", "M213", "M311", "M312", "M411",
+                  "M121", "M122-1", "M122-2", "M122-3", "M123-1", "M123-2", "M123-3",
+                  "M123-4", "M123-5", "M221-1", "M221-2", "M221-3", "M222-1", "M222-2",
+                  "M222-3", "M222-4", "M222-5", "M222-6", "M222-7", "M222-8", "M222-9", "M321-1",
+                  "M321-2", "M321-3", "M321-4", "M321-5", "M131", "M132-1", "M132-2",
+                  "M132-3", "M132-4", "M132-5", "M231-1", "M231-2", "M231-3", "M231-4", "M231-5", "M141")
+    if(weighted){
+
+      ObW <- colSums(PW)
+      RbW <- rowSums(QW)
+
+      B_A2 <- apply(PW,2,function(x){ (sum(x!=0)-1)*sum(x) })
+      B_A3 <- apply(PW,2,function(x){ n <- sum(x!=0); (n-1)*(n-2)*sum(x)/2 })
+      B_A4 <- apply(PW,2,function(x){ n <- sum(x!=0); (n-1)*(n-2)*(n-3)*sum(x)/6 })
+
+      B_C2 <- apply(QW,1,function(x){ (sum(x!=0)-1)*sum(x) })
+      B_C3 <- apply(QW,1,function(x){ n <- sum(x!=0); (n-1)*(n-2)*sum(x)/2 })
+      B_C4 <- apply(QW,1,function(x){ n <- sum(x!=0); (n-1)*(n-2)*(n-3)*sum(x)/6 })
+
+
+      M111 <- sum(ObW * Rb + RbW * Ob)
+
+      M112 <- sum(ObW * Two(Rb) + B_C2 * Ob)
+
+      M113 <- sum(ObW * Three(Rb) + B_C3 * Ob)
+
+      M114 <- sum(ObW * Four(Rb) + B_C4 * Ob)
+
+      M211 <- sum(B_A2 * Rb + RbW * Two(Ob))
+
+      M212 <- sum(B_A2 * Two(Rb) + B_C2 * Two(Ob))
+
+      M213 <- sum(B_A2 * Three(Rb) + B_C3 * Two(Ob))
+
+      M311 <- sum(B_A3 * Rb + RbW * Three(Ob))
+
+      M312 <- sum(B_A3 * Two(Rb) + B_C2 * Three(Ob))
+
+      M411 <- sum(B_A4 * Rb + RbW * Four(Ob))
+
+      All_add <- function(a,b){ return((a!=0)*(b!=0)*(a+b)) }
+
+      A_2BW <- t(apply(PW,2,function(x){apply(PW,2,function(y){ sum(All_add(x,y)) })}))
+      C_2BW <- t(apply(QW,1,function(x){apply(QW,1,function(y){ sum(All_add(x,y)) })}))
+
+      B_AW <- t(apply(PW,2,function(x){apply(PW,2,function(y){ sum((x!=0)*(y==0)*(x+y)) })}))
+      B_ATW <- t(apply(PW,2,function(x){apply(PW,2,function(y){ sum((x==0)*(y!=0)*(x+y)) })}))
+      B_CW <- t(apply(QW,1,function(x){apply(QW,1,function(y){ sum((x!=0)*(y==0)*(x+y)) })}))
+      B_CTW <- t(apply(QW,1,function(x){apply(QW,1,function(y){ sum((x==0)*(y!=0)*(x+y)) })}))
+
+      M121 <- (sum(A_2BW*Vbb + C_2BW*Ubb) - 2*M111)/2
+
+      M122_1 <- sum(A_2BW*Ybb*YT + (B_CW *YT + B_CTW *Ybb) *Ubb)/2
+
+      M122_2 <- sum(A_2BW*Vbb*YT + (C_2BW *YT + B_CTW *Vbb) *Ubb)
+
+      M122_3 <- (sum(A_2BW*Vbb*(Vbb-1)/2 + C_2BW *(Vbb-1) *Ubb) - 2*M112)/2
+
+      M123_1 <- sum(A_2BW*Ybb*(Ybb-1)*YT/2 + (B_CW *(Ybb-1)*YT + B_CTW *Ybb*(Ybb-1)/2) *Ubb)
+
+      M123_2 <- sum(A_2BW*Vbb*YT*(YT-1)/2 + (C_2BW *YT*(YT-1)/2 + B_CTW *(YT-1)*Vbb) *Ubb)
+
+      M123_3 <- sum(A_2BW*Vbb*Ybb*YT + (C_2BW *Ybb*YT + B_CW * Vbb * YT + B_CTW *Vbb * Ybb) *Ubb)/2
+
+      M123_4 <- sum(A_2BW*Vbb*(Vbb-1)*Ybb/2 + (C_2BW *(Vbb-1)*Ybb + B_CW * Vbb * (Vbb-1)/2) *Ubb)
+
+      M123_5 <- (sum(A_2BW*Vbb*(Vbb-1)*(Vbb-2)/6 + (C_2BW *(Vbb-1)*(Vbb-2)/2 ) *Ubb) -2 * M113)/2
+
+      M221_1 <- sum((B_AW *XT + B_ATW *Xbb) *Vbb + C_2BW*Xbb*XT  )/2
+
+      M221_2 <- sum((B_AW *Ubb + A_2BW *Xbb) *Vbb + C_2BW*Xbb*Ubb )
+
+      M221_3 <- (sum(A_2BW*(Ubb-1)*Vbb + C_2BW *Ubb*(Ubb-1)/2) - 2*M211)/2
+
+      M222_1 <- sum((B_AW * Ubb + A_2BW * Xbb) *Ybb*YT +(B_CW*YT+B_CTW*Ybb) *Xbb*Ubb)
+
+      M222_2 <- sum(A_2BW *(Ubb-1) *Ybb*YT +(B_CW*YT+B_CTW*Ybb) *Ubb*(Ubb-1)/2)/2
+
+      M222_3 <- sum((B_AW * XT + B_ATW * Xbb) *Ybb*Vbb +(B_CW*Vbb + C_2BW*Ybb) *Xbb*XT)
+
+      M222_4 <- sum((B_AW * Ubb + A_2BW * Xbb) *Ybb*Vbb +(B_CW*Vbb + C_2BW*Ybb) *Xbb*Ubb)
+
+      M222_5 <- sum((A_2BW * (Ubb-1)*Vbb*YT +(C_2BW*YT + B_CTW* Vbb) *Ubb*(Ubb-1)/2))
+
+      M222_6 <- sum((B_AW * XT + B_ATW * Xbb) * Vbb*(Vbb-1)/2 + C_2BW* (Vbb-1) *Xbb*XT)/2
+
+      M222_7 <- sum((B_AW * Ubb + A_2BW * Xbb) *Vbb*(Vbb-1)/2 + C_2BW*(Vbb-1) *Xbb*Ubb)
+
+      M222_8 <- (sum(A_2BW *(Ubb-1) *Vbb*(Vbb-1)/2 + C_2BW*(Vbb-1) *Ubb*(Ubb-1)/2) -2*M212)/2
+
+      M222_9 <- sum((B_AW * Ubb + A_2BW * Xbb) *Vbb*YT +(C_2BW*YT + B_CTW*Vbb) *Xbb*Ubb)
+
+      M321_1 <- sum((B_AW *(Xbb-1)*XT + B_ATW *Xbb*(Xbb-1)/2) *Vbb + C_2BW *Xbb*(Xbb-1)*XT/2)
+
+      M321_2 <- sum((A_2BW *XT*(XT-1)/2 + B_ATW *(XT-1)*Ubb) *Vbb + C_2BW *Ubb*XT*(XT-1)/2)
+
+      M321_3 <- sum((B_AW *Ubb*XT + A_2BW * Xbb*XT + B_ATW *Xbb*Ubb) *Vbb + C_2BW *Xbb*Ubb*XT)/2
+
+      M321_4 <- sum((A_2BW *(Ubb-1)*XT + B_ATW *Ubb*(Ubb-1)/2) *Vbb + C_2BW *Ubb*(Ubb-1)*XT/2)
+
+      M321_5 <- (sum((A_2BW *(Ubb-1)*(Ubb-2)/2) *Vbb + C_2BW *Ubb*(Ubb-1)*(Ubb-2)/6) -2*M311)/2
+
+
+      PQW <- t(apply(PW, 1, function(x){apply(QW,2, function(y){sum(All_add(x,y))})}))
+
+      M131 <- sum(PQW*(PQ)*(PQ-2)/2)
+
+      M141 <- sum(PQW*(PQ-1)*(PQ-2)*(PQ-3)/6)
+
+      M1321<-M1322<-M1323<-M1324<-M1325<-M2311<-M2312<-M2313<-M2314<-M2315<-0
+
+      P0 <- (PW==0)*1; Q0 <- (Q==0)*1
+
+      for(i in 1:L1){
+         for(j in 1:L1){
+            if(i!=j){
+               P_F <- P[,i]*P[,j]*P[,-c(i,j)]
+               P_F1 <- P[,i]*P[,j]*P0[,-c(i,j)]
+               P_F2<- P0[,i]*P0[,j]*P[,-c(i,j)]
+               P_F3 <- P0[,i]*P[,j]*P[,-c(i,j)]
+               Q_F <- Q[i,]*Q[j,]*t(Q[-c(i,j),])
+               Q_F1 <- Q[i,]*Q[j,]*t(Q0[-c(i,j),])
+               Q_F2 <- Q0[i,]*Q0[j,]*t(Q[-c(i,j),])
+               Q_F3 <- Q0[i,]*Q[j,]*t(Q[-c(i,j),])
+
+               P_FCS <- colSums(P_F)
+               P_F1CS <- colSums(P_F1)
+               P_F2CS<- colSums(P_F2)
+               P_F3CS <- colSums(P_F3)
+               Q_FCS <- colSums(Q_F)
+               Q_F1CS <- colSums(Q_F1)
+               Q_F2CS <- colSums(Q_F2)
+               Q_F3CS <- colSums(Q_F3)
+
+               PW_ijk <- PW[,i]+PW[,j]+PW[,-c(i,j)]
+               QW_ijk <- QW[i,]+QW[j,]+t(QW[-c(i,j),])
+
+               PW_F <- colSums(PW_ijk*P_F)
+               PW_F1 <- colSums(PW_ijk*P_F1)
+               PW_F2 <- colSums(PW_ijk*P_F2)
+               PW_F3 <- colSums(PW_ijk*P_F3)
+               QW_F <- colSums(QW_ijk*Q_F)
+               QW_F1 <- colSums(QW_ijk*Q_F1)
+               QW_F2 <- colSums(QW_ijk*Q_F2)
+               QW_F3 <- colSums(QW_ijk*Q_F3)
+
+               M1321<-M1321+sum(PW_F*Q_F1CS*Q_F2CS + (QW_F1*Q_F2CS +QW_F2*Q_F1CS)*P_FCS)
+               M1322<-M1322+sum(PW_F*Q_FCS*Q_F2CS + (QW_F*Q_F2CS +QW_F2*Q_FCS)*P_FCS)
+               M1323<-M1323+sum(PW_F*Q_F1CS*Q_F3CS + (QW_F1*Q_F3CS +QW_F3*Q_F1CS)*P_FCS)
+               M1324<-M1324+sum(PW_F*Q_FCS*Q_F1CS + (QW_F*Q_F1CS +QW_F1*Q_FCS)*P_FCS)
+               M1325<-M1325+sum(PW_F*Q_FCS*(Q_FCS-1)/2 + QW_F*(Q_FCS-1)*P_FCS)
+               M2311<-M2311+sum((PW_F1*P_F2CS+PW_F2*P_F1CS)*Q_FCS + QW_F*P_F1CS*P_F2CS)
+               M2312<-M2312+sum((PW_F*P_F2CS+PW_F2*P_FCS)*Q_FCS + QW_F*P_FCS*P_F2CS)
+               M2313<-M2313+sum((PW_F1*P_F3CS+PW_F3*P_F1CS)*Q_FCS + QW_F*P_F1CS*P_F3CS)
+               M2314<-M2314+sum((PW_F*P_F3CS+PW_F3*P_FCS)*Q_FCS + QW_F*P_FCS*P_F3CS)
+               M2315<-M2315+sum(PW_F*(P_FCS-1)*Q_FCS + QW_F*P_FCS*(P_FCS-1)/2)
+            }
+         }
+      }
+      M1321<-M1321/2
+      M1322<-M1322/2
+      M1323<-M1323/2
+      M1324<-M1324/2
+      M1325<-M1325/6
+      M2311<-M2311/2
+      M2312<-M2312/2
+      M2313<-M2313/2
+      M2314<-M2314/2
+      M2315<-M2315/6
+
+      edge_php <- c(2,3,4,5,3,4,5,4,5,5,4,4,5,6,5,6,6,7,8,4,5,6,5,6,5,6,7,6,7,8,6,5,6,6,7,8,6,6,7,7,8,9,6,7,7,8,9,8)
+
+      motif_weighted<-c(M111, M112, M113, M114, M211, M212, M213, M311, M312, M411,
+                        M121, M122_1, M122_2, M122_3, M123_1, M123_2, M123_3,
+                        M123_4, M123_5, M221_1, M221_2, M221_3, M222_1, M222_2,
+                        M222_3, M222_4, M222_5, M222_6, M222_7, M222_8, M222_9, M321_1,
+                        M321_2, M321_3, M321_4, M321_5, M131, M1321, M1322,
+                        M1323, M1324, M1325, M2311, M2312, M2313, M2314, M2315, M141)
+      mean_weighted <- motif_weighted/(motif*edge_php)
+
+      mean_weighted <- replace(mean_weighted,which(is.nan(mean_weighted)),NA)
+
+      return(data.frame(motif_name=motif_names,count=motif,mean_weight=mean_weighted ))
+   }
+   else{
+      return(data.frame(motif_name=motif_names,count=motif))
+   }
+
 }

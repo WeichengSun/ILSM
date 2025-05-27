@@ -2,97 +2,74 @@
 % Please edit documentation in R/icmotif_role.R
 \name{icmotif_role}
 \alias{icmotif_role}
-\title{Analyzing role of interconnecting node in motifs}
+\title{Count the roles of connector nodes defined by interconnection motifs}
 \usage{
-icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL, ic_number = 4)
+icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL, weighted = F)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Either a tripartite network of 'igraph' class which contains three groups of species and interactions within subnetwork without interactions between each group of species, or a numeric matrix(or data.frame) representing interactions between two groups of species.
-Each row and column of matrix represents single species in the second and first groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise.}
+\item{network.or.subnet_mat1}{An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
 
-\item{subnet_mat2}{A numeric matrix(or data.frame) representing interactions between two groups of species.
-Each row and column of matrix represents single species in the second and third groups of the tripartite network respectively.
-Elements of matrix are non-zero numbers if the two groups of species are connected, and 0 otherwise. If \code{network.or.subnet_mat1} is "igraph", \code{subnet_mat2} defaults to NULL.}
+\item{subnet_mat2}{A matrix representing one subnetwork.}
 
-\item{ic_number}{The max number of interconnection code in each motif. Defaults to 4 because of containing all motifs, also can input 2 to calculate the top 36 for rapid computing speed.}
+\item{weighted}{Logical. Default to FALSE. If TRUE, a weighted measure is provided. See details.}
 }
 \value{
-If \code{ic_number} = 4,
-return a matrix of 70 columns representing the roles of interconnecting
-species in the motifs. Columns names are Role1, Role2, Role3 ... Role70.
-
-Wherever, the \code{ic_number} = 2,
-return a matrix of 50 columns representing the roles of interconnecting
-species in the top 30 motifs. Columns names are Role1, Role2,
-Role3 ... Role50.
-
-Each row of matrix corresponds to a interconnecting species in the second
-group of network. If a interconnecting species is linked to both the first
-and third group species, the elements in this row are not all zero, otherwise
-the elements are all zero.
+For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrence.
 }
 \description{
-Counting the number of 70 roles about interconnecting species in tripartite network motifs.
+Count the roles of connector nodes defined by interconnection motifs in a tripartite network.
 }
 \details{
-\strong{network.or.subnet_mat1 and subnet_mat2}
+In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
+\if{html}{\out{<br>}}An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each motif has maximumly 6 nodes, resulting in a total of 48 distinct motif forms.
+The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019), which uses mathematical operations directly on the bi-adjacency matrix. For interconnection motifs in tripartite networks with intra-guild interactions, please see \strong{ig_icmotif_count} and \strong{ig_icmotif_role}.
 
-There are two types of \code{network.or.subnet_mat1} that can be processed:
+Two types of inputs \code{network.or.subnet_mat1} can be processed:
 \itemize{
-\item Input in a network of type "igraph" alone.
-\item Must be entered as data frame or matrix with \code{subnet_mat2}.
+\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
+\item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 }
 
-If the type of inputting is data frame or matrix, please make sure the row of \code{network.or.subnet_mat1} and \code{subnet_mat2} correspond with the second group of species that both belong to two subnetworks and interact with other groups of species.
-\itemize{
-\item Try to make the rows of both matrices have the same attributes. Or we default:
+If the inputs are two matrices, please make sure the rows of
+\code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
+names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively.
+Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 
-\item When the two matrices can have different numbers of rows:
-\itemize{
-\item 1. If both matrices have row names, then the function counts all row names to produce two new matrices with the same row names.
-\item 2. If at most one matrix has row names, the function assigns new row names to both matrices on a row-to-row basis (any extra row names are assigned a new value) and then counts all row names to produce two new matrices with the same row names.
-}
-
-\item When the two matrices can have the same numbers of rows:
-\itemize{
-\item No matter how the row names of the two matrices are arranged, as long as the row names are exactly the same; But we don't handle matrices with empty row names (the function will give an error).
-}
-
-\item The two matrices can have different numbers of rows, but read our default handling carefully to make sure the calculation is accurate when using this function!!!
-}
-About a network of type "igraph", It can be obtained from the connection matrices of subnetworks by the function \code{igraph_from_matrices}.
+\strong{Weighted networks}
+\if{html}{\out{<br>}}For weighted tripartite networks, the mean weight of the motif occurrence (i.e., a subgraph isomorphic to a particular motif) is provided for a given node with a given role, following Mora et al. (2018) and Simmons et al. (2019).
 }
 \examples{
 
 ## generate a random tripartite network
 set.seed(12)
 Net <- build_net(11,15,16,0.2)
+icmotif_role(Net)
 
+## empirical network
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 icmotif_role(Net)
-icmotif_role(Net, ic_number=2)
+set.seed(13)
+E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+icmotif_role(Net, weighted=T)
 
+
+##input as binary matrices, with row names.
 set.seed(12)
-MAT <- build_net(11,22,21,0.2,asmatrices=TRUE)
-
-icmotif_role(MAT[[3]],MAT[[4]])
-
-md1 <- matrix(sample(c(0,1),88,replace=TRUE),8,11)
-md2 <- matrix(sample(c(0,1),120,replace=TRUE),10,12)
+md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
+md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
 icmotif_role(md1,md2)
 
-R <- rownames(MAT[[4]])[12]
-MR <- MAT[[4]][12,]
-MAT[[4]] <- MAT[[4]][-12,]
-MAT[[4]] <- rbind(MAT[[4]],MR)
-rownames(MAT[[4]])[22] <- R
 
-icmotif_role(MAT[[3]],MAT[[4]])
-
+##input as weighted matrices,with row numbers as row names.
+set.seed(12)
+mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
+mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
+icmotif_role(mdw1,mdw2,weighted=T)
 
 }
 \references{
+#' Mora, B.B., Cirtwill, A.R. and Stouffer, D.B. (2018). pymfinder: a tool for the motif analysis of binary and quantitative complex networks. bioRxiv, 364703.
+
 Simmons, B. I., Sweering, M. J., Schillinger, M., Dicks, L. V., Sutherland, W. J., & Di Clemente, R. (2019). bmotif: A package for motif analyses of bipartite networks. Methods in Ecology and Evolution, 10(5), 695-701.
 }

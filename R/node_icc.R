@@ -2,54 +2,37 @@
 #'
 #' Calculating interconnection centrality (degree, betweenness and closeness) specified for connector nodes in a tripartite network.
 #'
-#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.
-#' @param subnet_mat2 The matrix representing one subnetwork.
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
 #' @param weighted Logical. If TRUE, link strengths of connector nodes are used. Default to FALSE.
 
-#' #' @details
-#'This function calculates interconnection degree, betweenness and closeness centrality for connector nodes.
-#'For binary networks, interconnection degree centrality of each connector species is defined as the product of its degree values from two subnetworks,
-#'interconnection betweenness centrality is defined by the number of shortest paths from a-nodes to c-nodes going through connector species,
-#'and interconnection closeness centrality is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes.
-#'For weighted networks, interaction strengths are used in the calculation of weighted degree, shorest path, and distance.
-#' \strong{network.or.subnet_mat1 and subnet_mat2}
-#'
-#' \strong{weighted}
-#'
-#' If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices.If a weighted network is provided, it will be transformed to a binary network.
-#' If the \code{weighted} = TRUE, the input network can only be two matrices.
-#'
-#' \strong{network.or.subnet_mat1 and subnet_mat2}
-#'
-#' There are two types of inputs \code{network.or.subnet_mat1} that can be processed:
+#' @details
+#' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes) and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
+#' This function calculates interconnection degree, betweenness and closeness centrality for connector nodes.
 #' \itemize{
-#' \item Input is a network of type "igraph" alone.
-#' \item Must be entered as matrix with \code{subnet_mat2}.
+#' \item For binary networks, **interconnection degree** of each connector species is defined as the product of its degree values from two subnetworks.
+#' \item **Interconnection betweenness** is defined by the number of shortest paths from a-nodes to c-nodes going through connector species, \eqn{\sum_{i≠j,i \in a,j \in c)}\frac{g_{ivj}}{g_{ij}}},
+#' where \eqn{g_{ij}} is the total number of shortest paths between node 𝑖 from a-nodes and 𝑗 from c-nodes while \eqn{g_{ivj}} is the number of those shortest paths which pass through connector species 𝑣.
+#' \item **Interconnection closeness** is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes, \eqn{1/(\sum_{v \neq i, i \in a \cup c} d_{vi})},
+#' where \eqn{d_{vi}} is the distance between connector species v and species i from a-nodes and c-nodes.
+#' For weighted networks, interaction strengths are used in the calculation of weighted degree, shorest path, and distance.
+#' }
+#' \strong{network.or.subnet_mat1 and subnet_mat2}
+#'
+#' Two types of inputs \code{network.or.subnet_mat1} can be processed:
+#' \itemize{
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
+#' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
 #' If the inputs are two matrices, please make sure the rows of
-#'  \code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
+#' \code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
 #' names to produce connector nodes. Otherwise, row numbers are assigned as row names.
 #'
 #' @return
-#'
-#' Return a data frame with interconnection degree, betweenness and closeness.
+#' Return a data frame with interconnection degree, betweenness and closeness for connector nodes.
 #' @references
-#' De Domenico, M., Nicosia, V., Arenas, A., & Latora, V. (2015). Structural
-#' reducibility of multilayer networks. Nature communications, 6(1), 6864.
 #'
-#' De Domenico, M., SolC)-Ribalta, A., Omodei, E., GC3mez, S., & Arenas, A.
-#'  (2013). Centrality in interconnected multilayer networks. arXiv preprint
-#'  arXiv:1311.2906.
-#'
-#' De Domenico, M. (2022). Multilayer Networks: Analysis and Visualization.
-#' Introduction to muxViz with R. Cham: Springer.
-#'
-#' Page, L., Brin, S., Motwani, R., & Winograd, T. (1999). The pagerank citation
-#'  ranking: Bringing order to the web.
-#'
-#' Magnani, M., Micenkova, B., & Rossi, L. (2013). Combinatorial analysis of
-#' multiple networks. arXiv preprint arXiv:1303.4986.
 #'
 #'
 #' @importFrom igraph V
@@ -95,7 +78,7 @@ node_icc <- function(network.or.subnet_mat1,subnet_mat2=NULL,weighted=F){
    }
    else if(inherits(network.or.subnet_mat1,c("matrix","data.frame"))==T &&
            inherits(subnet_mat2,c("matrix","data.frame"))==T){
-      network <- igraph_from_matrices(network.or.subnet_mat1,subnet_mat2,weighted=weighted)
+      network <- trigraph_from_mat(network.or.subnet_mat1,subnet_mat2,weighted=weighted)
    }
    else
       stop("please check the type of 'network.or.subnet_mat1'")

@@ -13,18 +13,18 @@ coid(
 )
 }
 \arguments{
-\item{network.or.subnet_mat1}{An Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
+\item{network.or.subnet_mat1}{An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
 
 \item{subnet_mat2}{A matrix representing one subnetwork.}
 
-\item{weighted}{Logical. Default to FALSE. If TRUE, the degree of a connector node is replaced with Shannon diversity or sum of its interaction strengths.}
+\item{weighted}{Logical. Default to FALSE. If TRUE, the degree of a connector node is replaced with Shannon diversity or sum of its link strengths.}
 
-\item{weight_type}{For weighted==TRUE only, the definition of weighted degree for a connector node, supporting "shannon" or "sum".}
+\item{weight_type}{For weighted=TRUE only, supporting "shannon" or "sum".}
 
 \item{method}{Correlation method ("pearson", "kendall" or "spearman"). Default to "kendall".}
 }
 \value{
-Return a numeric value representing correlation of interaction degree for connector nodes: CoID.
+Return a numeric value representing correlation of interaction degree for connector nodes.
 }
 \description{
 Calculating correlation of degree of connector nodes.
@@ -32,13 +32,13 @@ Calculating correlation of degree of connector nodes.
 \details{
 In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 
-This function follows Sauve et al.(2016)) to calculate the correlation of interaction degree (or Shannon diversity of interaction strength ) of connector nodes. For the binary network, connector nodes' degree is calculated in each subnetwork.
-For the quantitative network, Shannon diversity or sum of interaction strength for each connector node (i) is calculated.
-Three correlation methods are provided. Kendall correlation is recommended following Sauve et al.(2016).
+This function follows Sauve et al.(2016) to calculate the correlation of interaction degree (or weighted degree ) of connector nodes. For the binary network, connector nodes' degree is calculated in each subnetwork.
+For the quantitative network, Shannon diversity or sum of link strength for each connector node is calculated.
+Three correlation methods are supported. Kendall correlation is recommended following Sauve et al.(2016).
 
 Two types of inputs \code{network.or.subnet_mat1} can be processed:
 \itemize{
-\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
 \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 }
 
@@ -77,5 +77,5 @@ coid(mdw1,mdw2,weighted=T)
 coid(mdw1,mdw2,weighted=T, weight_type="sum")
 }
 \references{
-Sauve, A. M., ThC)bault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
+Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
 }

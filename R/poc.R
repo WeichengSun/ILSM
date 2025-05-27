@@ -2,21 +2,21 @@
 #'
 #' Calculating the proportion of connector nodes in the shared set of nodes.
 #'
-#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. 
-#' @param subnet_mat2 The matrix representing one subnetwork. 
-#' 
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
+#'
 #' @details
 #' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 #'
 #' Two types of inputs \code{network.or.subnet_mat1} can be processed:
 #' \itemize{
-#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes).
 #' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
 #' If the inputs are two matrices, please make sure the rows of
 #'  \code{network.or.subnet_mat1} and \code{subnet_mat2} both represent the groups of connector species,i.e, the b-group species. If both matrices have row names, then the function matches row
-#'  names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively. 
+#'  names to produce connector nodes. Otherwise, row numbers are assigned to row names and matched. Within the two matrices (P and Q), columns represents a-group nodes and c-group nodes respectively.
 #'  Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 #'
 #'
@@ -29,7 +29,7 @@
 #'
 #' Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.
 #'
-#' DomC-nguez-GarcC-a, V., & KC)fi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
+#' Domínguez-García, V. and Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
 #'
 #' Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.
 #'
@@ -50,7 +50,7 @@
 #' md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
 #' md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
 #' poc(md1,md2)
-#' 
+#'
 #'##input as weighted matrices,with row numbers as row names.
 #' mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
 #' mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
@@ -65,7 +65,7 @@ poc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
       mat2<-mat[V(network)$level==1,V(network)$level==2]
       logi<-rowSums(mat1)*rowSums(mat2)!=0
       C<-sum(logi)/nrow(mat1)
-      message(paste(c("POC"),"=",seq=c(C)),"\n")
+      #message(paste(c("POC"),"=",seq=c(C)),"\n")
       return(C)
    }
    else if(inherits(network.or.subnet_mat1,c("matrix"))){
@@ -89,7 +89,7 @@ poc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
          mat2[mat2>0]<-1
          logi<-rowSums(mat1)*rowSums(mat2)!=0
          C<-sum(logi)/nrow(mat1)
-         message(paste(c("POC"),"=",seq=c(C)),"\n")
+         #message(paste(c("POC"),"=",seq=c(C)),"\n")
          return(C)
       }
       else

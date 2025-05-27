@@ -2,19 +2,19 @@
 #'
 #' Calculating participation coefficient for connector nodes.
 #'
-#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.
-#' @param subnet_mat2 The matrix representing one subnetwork.
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
 #' @param weighted Logical. Default to FALSE. If TRUE, weighted degree defined as the sum of interaction strengths attached to a connector node is used.
 
 #' @details
 #' In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
 #'
-#'The pc function calculates the participation coefficient. For each connector node i, pc_{i} is calculated as two times the ratio between the lowest degree in both interaction subnetworks (dP and dQ) divided by the total degree of node i.
-#'Hence, the participation coefficient for all connector nodes (PCc) is represented by the average value of all pc_{i}.
+#' The **pc** function calculates the participation coefficient following Domínguez-García and Kéfi (2024). For each connector node *i*, \eqn{pc_{i}} is calculated as two times the ratio between the lowest degree in both interaction subnetworks divided by the total degree of the node (\eqn{2\frac{d_{lowest}}{d_{total}}}).
+#' Hence, the participation coefficient for all connector nodes (\eqn{PC_{c}}) is represented by the average value of all \eqn{pc_{i}}.
 #'
 #' Two types of inputs \code{network.or.subnet_mat1} can be processed:
 #' \itemize{
-#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
 #' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
@@ -32,7 +32,7 @@
 #'
 #' Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.
 #'
-#' DomC-nguez-GarcC-a, V., & KC)fi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
+#' Domínguez-García, V. and Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
 #'
 #' Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.
 #'
@@ -60,8 +60,8 @@
 #'##input as weighted matrices,with row numbers as row names.
 #' mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
 #' mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
-#'pc(mdw1,mdw2)
-#'pc(mdw1,mdw2,weighted=T)
+#' pc(mdw1,mdw2)
+#' pc(mdw1,mdw2,weighted=T)
 #'
 pc <- function(network.or.subnet_mat1, subnet_mat2 = NULL,weighted=FALSE) {
    if(inherits(network.or.subnet_mat1,"igraph")==T){
@@ -109,7 +109,7 @@ pc <- function(network.or.subnet_mat1, subnet_mat2 = NULL,weighted=FALSE) {
       degree_mat <- rbind(rowSums(m1), rowSums(m2))
       PR_C <-
          mean(2 * apply(degree_mat, 2, min) / apply(degree_mat, 2, sum))
-      message(paste(c("PCc"), "=", seq = c(PR_C)), "\n")
+      #message(paste(c("PCc"), "=", seq = c(PR_C)), "\n")
       return(PR_C)
    }else{
       logi <- rowSums(mat1) * rowSums(mat2) != 0
@@ -118,7 +118,7 @@ pc <- function(network.or.subnet_mat1, subnet_mat2 = NULL,weighted=FALSE) {
       degree_mat <- rbind(rowSums(m1), rowSums(m2))
       PR_C <-
          mean(2 * apply(degree_mat, 2, min) / apply(degree_mat, 2, sum))
-      message(paste(c("PCc_weighted"), "=", seq = c(PR_C)), "\n")
+      #message(paste(c("PCc_weighted"), "=", seq = c(PR_C)), "\n")
       return(PR_C)
    }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cois.R
 \name{cois}
 \alias{cois}
-\title{Correlation of Interaction Similarity for connector species}
+\title{Correlation of Interaction Similarity for connector nodes}
 \usage{
 cois(
   network.or.subnet_mat1,
@@ -12,9 +12,9 @@ cois(
 )
 }
 \arguments{
-\item{network.or.subnet_mat1}{Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.}
+\item{network.or.subnet_mat1}{An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
 
-\item{subnet_mat2}{The matrix representing one subnetwork.}
+\item{subnet_mat2}{A matrix representing one subnetwork.}
 
 \item{weighted}{Logical. Default to FALSE. See details.}
 
@@ -24,7 +24,7 @@ cois(
 Return a numeric value representing correlation of interaction similarity for connector species.
 }
 \description{
-Calculating correlation of interaction similarity for connector species.
+Calculating correlation of interaction similarity for connector nodes.
 }
 \details{
 In this package, a tripartite network contains three groups of nodes (a-nodes,b-nodes,c-nodes)  and two subnetworks (P includes the links between a-nodes and b-nodes, Q includes the links between b-nodes and c-nodes). Connector nodes belong to b-nodes.
@@ -34,12 +34,9 @@ by the total number of interaction partners involved (i.e. the maximum number of
 similarities of all pairs of connector nodes in each subnetwork were measured using the generalised Jaccard coefficient.
 Three correlation methods are provided. Kendall correlation is recommended following Sauve et al.(2016).
 
-If the \code{weighted} = FALSE, the input network can be an "igraph" object or two matrices.
-If the \code{weighted} = TRUE, only matrices are accepted.
-
 Two types of inputs \code{network.or.subnet_mat1} can be processed:
 \itemize{
-\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
 \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 }
 
@@ -75,5 +72,5 @@ cois(mdw1,mdw2,weighted=T)
 
 }
 \references{
-Sauve, A. M., ThC)bault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
+Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
 }

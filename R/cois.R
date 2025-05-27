@@ -1,9 +1,9 @@
-#' Correlation of Interaction Similarity for connector species
+#' Correlation of Interaction Similarity for connector nodes
 #'
-#' Calculating correlation of interaction similarity for connector species.
+#' Calculating correlation of interaction similarity for connector nodes.
 #'
-#' @param network.or.subnet_mat1 Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.
-#' @param subnet_mat2 The matrix representing one subnetwork.
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
 #' @param weighted Logical. Default to FALSE. See details.
 #' @param method  Correlation method ("pearson", "kendall" or "spearman"). Default to "kendall".
 #' @details
@@ -16,7 +16,7 @@
 #'
 #' Two types of inputs \code{network.or.subnet_mat1} can be processed:
 #' \itemize{
-#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+#' \item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes). If the input is a weighted network, the edge should have a 'weight' attribute.
 #' \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 #' }
 #'
@@ -31,7 +31,7 @@
 #' @export
 #' @references
 #'
-#' Sauve, A. M., ThC)bault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
+#' Sauve, A. M., Thébault, E., Pocock, M. J., & Fontaine, C. (2016). How plants connect pollination and herbivory networks and their contribution to community stability. Ecology, 97(4), 908-917.
 #'
 #'
 #' @srrstats {G1.5} This standard belongs here.
@@ -87,7 +87,7 @@ cois<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,method="
          matrow<-unique(c(rownames(mat1),rownames(mat2)))
          if(length(matrow)==0) stop("No connectors existed.")
       }
-      else {stop("Make sure matrices either have no row names or have full row names. No NA!")}
+      else {stop("Please make sure matrices either have no row names or have full row names. No NA!")}
 
       mat_1<-matrix(0,length(matrow),ncol(mat1))
       rownames(mat_1)<-matrow
@@ -125,7 +125,7 @@ cois<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,method="
       jaccard_vector1[is.na(jaccard_vector1)]<-0
       jaccard_vector2[is.na(jaccard_vector2)]<-0
       similar_cor<-cor(jaccard_vector1,jaccard_vector2,method=method)
-      message(paste0("CoIS= ",seq=similar_cor,";"),"\n")
+      #message(paste0("CoIS= ",seq=similar_cor,";"),"\n")
       return(similar_cor)
    } else{
 
@@ -144,7 +144,7 @@ cois<-function(network.or.subnet_mat1, subnet_mat2=NULL, weighted=FALSE,method="
          }
       }
       similar_weight_cor<-cor(jaccard_weight1,jaccard_weight2,method=method)
-      message(paste0("CoIS_weighted= ",seq=similar_weight_cor,";"),"\n")
+      #message(paste0("CoIS_weighted= ",seq=similar_weight_cor,";"),"\n")
       return(similar_weight_cor)
    }
 }

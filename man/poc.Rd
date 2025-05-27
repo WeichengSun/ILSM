@@ -7,9 +7,9 @@
 poc(network.or.subnet_mat1, subnet_mat2 = NULL)
 }
 \arguments{
-\item{network.or.subnet_mat1}{Igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork.}
+\item{network.or.subnet_mat1}{An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
 
-\item{subnet_mat2}{The matrix representing one subnetwork.}
+\item{subnet_mat2}{A matrix representing one subnetwork.}
 }
 \value{
 Return a value representing the proportion of connector species in shared set of species.
@@ -22,7 +22,7 @@ In this package, a tripartite network contains three groups of nodes (a-nodes,b-
 
 Two types of inputs \code{network.or.subnet_mat1} can be processed:
 \itemize{
-\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes)
+\item An "igraph" object with node attribute 'level' (0 for a-nodes, 1 for b-nodes,2 for c-nodes).
 \item Or a matrix representing subnetwork P, and must be input with \code{subnet_mat2} representing subnetwork Q.
 }
 
@@ -58,7 +58,7 @@ poc(mdw1,mdw2)
 \references{
 Battiston, F., Nicosia, V. & Latora, V. (2014) Structural measures for multiplex networks. Physical Review E, 89, 032804.
 
-DomC-nguez-GarcC-a, V., & KC)fi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
+Domínguez-García, V. and Kéfi, S. (2024). The structure and robustness of ecological networks with two interaction types. PLOS Computational Biology, 20(1), e1011770.
 
 Guimera, R. & Amaral, L.A.N. (2005) Cartography of complex networks: modules and universal roles. Journal of Statistical Mechanics: Theory and Experiment, 2005, P02001.
 }

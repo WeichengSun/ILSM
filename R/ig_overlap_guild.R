@@ -1,4 +1,4 @@
-#' intra-guild and inter_guild interaction overlap
+#' Intra-guild and inter_guild interaction overlap
 #'
 #' Calculating species-level intra-guild and inter_guild interaction overlap for a tripartite network with intra-guild interactions.
 #'
@@ -6,7 +6,7 @@
 #' @param guilds A character vector matching rows of \code{mat} to indicate the guilds using ('a','b' and 'c'). See details.
 #' @param method The distance method. Same with \emph{vegan::vegdist}. Default to "horn"
 #' @details
-#' The input is a block matrix to represent interactions among three groups of species (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
+#' The input is a block matrix (\eqn{M}) to represent interactions among three groups of species (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
 #' two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}} with symmetric links), and two inter-guild matrices of b- and c-nodes(\eqn{m_{bc},m_{cb}} with symmetric links). Connector species belong to b-nodes.
 #'
 #' \deqn{
@@ -73,7 +73,7 @@
 #' myguilds=c(rep("a",4),rep("b",5),rep("c",3))
 #' overlap_guild(mat,guilds=myguilds)
 
-overlap_guild<-function(mat,guilds,method="horn"){
+ig_overlap_guild<-function(mat,guilds,method="horn"){
 
 if (!identical(c("a","b","c"),unique(guilds))|length(guilds)!=nrow(mat)){
   Stop("guilds should be a vector including 'a', 'b', 'c'")
