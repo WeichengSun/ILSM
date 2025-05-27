@@ -1,3 +1,86 @@
+#' Count the roles of connector nodes defined by interconnection motifs for tripartite networks with intra-guild interactions
+#'
+#' Counting the roles of connector nodes defined by interconnection motifs for a tripartite interaction network with intra-guild interactions.
+#'
+#' @param network.or.subnet_mat1 An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.
+#' @param subnet_mat2 A matrix representing one subnetwork.
+#' @param weighted Logical. Default to FALSE. If TRUE, a weighted measure is provided. See details.
+#' @import igraph
+#'
+#' @export
+#'
+#' @details
+#' This function is designed for tripartite networks with intra-guild interactions. The input network should be nput as a block matrix (\eqn{M}) to represent three groups of nodes (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
+#' two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}}), and two inter-guild matrices of b- and c-nodes(\eqn{m_{bc},m_{cb}}).
+#' \deqn{
+#'   \left(
+#'     \begin{array}{ccc}
+#'       m_{aa} & m_{ab} & 0        \\
+#'       m_{ba} & m_{bb} & m_{bc}   \\
+#'        0     & m_{cb} & m_{cc}
+#'     \end{array}
+#'   \right)
+#' }
+#'
+#' \strong{Interconnection motifs in tripartite networks with intra-guild interactions}
+#' <br>An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each guild has two nodes at most, resulting in a total of 107 distinct motif forms.
+#' The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019). For interconnection motifs in tripartite networks without intra-guild interactions, please see **icmotif_count** and **icmotif_role**.
+#'
+#' \strong{Weighted networks}
+#' <br>For weighted tripartite networks, the mean weight of the motif occurrence (i.e., a motif occurrence isomorphic to a particular motif form) is provided for a given node with a given role, following Mora et al. (2018) and Simmons et al. (2019).
+#'
+#'
+#' @return
+#' For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exist.
+#'
+#' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
+#' @srrstats {G1.3,G1.4} This standard belongs here.
+#' @srrstats {G2.1} It can input single- or multi- data.
+#' @srrstats {G2.1a} Because the input data flexibility of \code{network.or.subnet_mat1} and \code{subnet_mat2}, it provide explicit secondary documentation.
+#' @srrstats {G2.4,G2.4a} This standard belongs here.
+#' @srrstats {G2.7} It accepts two types of \code{network.or.subnet_mat1}.
+#' @srrstats {G2.13} It checks the possibility of ('NA') data.
+#' @srrstats {G2.14,G2.14a} For the missing ('NA') data, it provide the error on missing data.
+#' @srrstats {G2.15} This function never assume non-missingness, and never pass data with potential missing values to any base routines with default `na.rm = FALSE`-type parameters.
+#' @srrstats {G3.0} All numeric equality comparisons ensure that they are made between integers
+#' @srrstats {G5.0} The software contains standard data sets with known properties, such as \code{data: PPH_Coltparkmeadow}.
+#' @srrstats {G5.2,G5.2a} Here the message produced within R code by 'stop()'.
+#'
+#' @references
+#' Pilosof, S., Porter, M. A., Pascual, M., & KC)fi, S. (2017). The multilayer nature of ecological networks. Nature Ecology & Evolution, 1(4), 0101.
+#'
+#' Mora, B.B., Cirtwill, A.R. and Stouffer, D.B. (2018). pymfinder: a tool for the motif analysis of binary and quantitative complex networks. bioRxiv, 364703.
+#'
+#' Simmons, B. I., Sweering, M. J., Schillinger, M., Dicks, L. V., Sutherland, W. J., & Di Clemente, R. (2019). bmotif: A package for motif analyses of bipartite networks. Methods in Ecology and Evolution, 10(5), 695-701.
+#'
+#' @examples
+#'
+#' ## generate a random tripartite network
+#' set.seed(12)
+#' Net <- build_net(11,15,16,0.2)
+#' ig_icmotif_role(Net)
+#'
+#' ## empirical network
+#' data(PPH_Coltparkmeadow)
+#' Net <- PPH_Coltparkmeadow
+#' icmotif_count(Net)
+#' set.seed(13)
+#' E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
+#' ig_icmotif_role(Net, weighted=T)
+#'
+#'
+#' ##input as binary matrices, with row names.
+#' set.seed(12)
+#' md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
+#' md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
+#' ig_icmotif_role(md1,md2)
+#'
+#'
+#'##input as weighted matrices,with row numbers as row names.
+#' set.seed(12)
+#' mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
+#' mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
+#' ig_icmotif_role(mdw1,mdw2,weighted=T)
 Intra_guild_role <-
    function(subnet_mat1, subnet_mat2,
             AA= NULL, BB= NULL, CC= NULL,

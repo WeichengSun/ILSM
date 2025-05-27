@@ -14,7 +14,7 @@ icmotif_count(network.or.subnet_mat1, subnet_mat2 = NULL, weighted = FALSE)
 \item{weighted}{Logical. Default to FALSE. If TRUE, the arithmetic mean of the subgraph weights is provided for each motif. See details}
 }
 \value{
-Return a numeric vector of the number of 48 interconnection motifs. See 'Multi_motif' for the forms.
+Return a data.fame of the frequencies (and mean weight) of 48 interconnection motifs. See 'Multi_motif' for the forms.
 }
 \description{
 Counting the frequencies of interconnection motifs for a tripartite interaction network.
@@ -36,7 +36,7 @@ names to produce connector nodes. Otherwise, row numbers are assigned to row nam
 Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 
 \strong{Weighted networks}
-\if{html}{\out{<br>}}For weighted tripartite networks, the mean weight of a given motif is provided by averaging the weights of all subgraphs isomorphic to the motif. The weight of a subgraph is the arithmetic mean of the weights of its links, following Mora et al. (2018) and Simmons et al. (2019).
+\if{html}{\out{<br>}}For weighted tripartite networks, the mean weight of a given motif is provided by averaging the weights of all the cases of a particular motif. The weight of a motif case is the arithmetic mean of the weights of its links, following Mora et al. (2018) and Simmons et al. (2019).
 }
 \examples{
 

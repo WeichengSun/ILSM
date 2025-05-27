@@ -14,7 +14,7 @@ icmotif_role(network.or.subnet_mat1, subnet_mat2 = NULL, weighted = F)
 \item{weighted}{Logical. Default to FALSE. If TRUE, a weighted measure is provided. See details.}
 }
 \value{
-For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrence.
+For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exist.
 }
 \description{
 Count the roles of connector nodes defined by interconnection motifs in a tripartite network.
@@ -36,7 +36,7 @@ names to produce connector nodes. Otherwise, row numbers are assigned to row nam
 Elements in matrices are non-zero values if two nodes are linked with or without weights, and 0 otherwise.
 
 \strong{Weighted networks}
-\if{html}{\out{<br>}}For weighted tripartite networks, the mean weight of the motif occurrence (i.e., a subgraph isomorphic to a particular motif) is provided for a given node with a given role, following Mora et al. (2018) and Simmons et al. (2019).
+\if{html}{\out{<br>}}For weighted tripartite networks, the mean weight of the motif occurrence (i.e., a motif occurrence isomorphic to a particular motif form) is provided for a given node with a given role, following Mora et al. (2018) and Simmons et al. (2019).
 }
 \examples{
 

@@ -32,7 +32,7 @@
 
 #'
 #' @return
-#'  Return a numeric vector of the number of 48 interconnection motifs. See 'Multi_motif' for the forms.
+#'  Return a data.fame of the frequencies (and mean weight) of 48 interconnection motifs. See 'Multi_motif' for the forms.
 #'
 #' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
 #' @srrstats {G1.3,G1.4} This standard belongs here.

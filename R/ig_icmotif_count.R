@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @details
-#' This function is designed for tripartite networks with intra-guild interactions. The network should be nput as a block matrix (\eqn{M}) to represent three groups of nodes (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
+#' This function is designed for tripartite networks with intra-guild interactions. The input network should be nput as a block matrix (\eqn{M}) to represent three groups of nodes (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
 #' two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}}), and two inter-guild matrices of b- and c-nodes(\eqn{m_{bc},m_{cb}}).
 #' \deqn{
 #'   \left(
@@ -27,11 +27,11 @@
 #' The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019). For interconnection motifs in tripartite networks without intra-guild interactions, please see **icmotif_count** and **icmotif_role**.
 #'
 #' \strong{Weighted networks}
-#' <br>For weighted tripartite networks, the mean weight of a given motif is provided by averaging the weights of all subgraphs isomorphic to the motif. The weight of a subgraph is the arithmetic mean of the weights of its links, following Mora et al. (2018) and Simmons et al. (2019).
+#' <br>For weighted tripartite networks, the mean weight of a given motif is provided by averaging the weights of all motif occurrences isomorphic to the motif. The weight of a motif occurrence is the arithmetic mean of the weights of its links, following Mora et al. (2018) and Simmons et al. (2019).
 #'
 #'
 #' @return
-#'  Return a numeric vector of the number of 48 interconnection motifs. See 'Multi_motif' for the forms.
+#'  Return a data.fame of the frequencies (and mean weight) of 107 interconnection motifs.
 #'
 #' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.
 #' @srrstats {G1.3,G1.4} This standard belongs here.
@@ -360,6 +360,18 @@ ig_icmotif_count<-function(subnet_mat1, subnet_mat2,
                M222_7_1,M222_7_2,M222_7_3,M222_7_4,M222_7_5,M222_7_6,M222_7_7,M222_7_8,
                M222_8_1,M222_8_2,M222_8_3,M222_8_4,M222_8_5,M222_8_6,M222_8_7,M222_8_8,
                M222_9_1,M222_9_2,M222_9_3,M222_9_4,M222_9_5,M222_9_6,M222_9_7,M222_9_8)
+
+      motif_names<-c("M111","M112-1","M112-2","M211-1","M211-2","M212-1","M212-2","M212-3","M212-4","M121-1","M121-2","M122-1-1","M122-1-2","M122-1-3","M122-1-4",
+                     "M122-2-1","M122-2-2","M122-2-3","M122-2-4","M122-3-1","M122-3-2","M122-3-3","M122-3-4","M221-1-1","M221-1-2","M221-1-3","M221-1-4",
+                     "M221-2-1","M221-2-2","M221-2-3","M221-2-4","M221-3-1","M221-3-2","M221-3-3","M221-3-4","M222-1-1","M222-1-2",'M222-1-3',"M222-1-4",
+                     "M222-1-5","M222-1-6","M222-1-7","M222-1-8","M222-2-1","M222-2-2","M222-2-3","M222-2-4","M222-2-5","M222-2-6","M222-2-7","M222-2-8",
+                     "M222-3-1","M222-3-2","M222-3-3","M222-3-4","M222-3-5","M222-3-6","M222-3-7","M222-3-8",
+                     "M222-4-1","M222-4-2","M222-4-3","M222-4-4","M222-4-5","M222-4-6","M222-4-7","M222-4-8",
+                     "M222-5-1","M222-5-2","M222-5-3","M222-5-4","M222-5-5","M222-5-6","M222-5-7","M222-5-8",
+                     "M222-6-1","M222-6-2","M222-6-3","M222-6-4","M222-6-5","M222-6-6","M222-6-7","M222-6-8",
+                     "M222-7-1","M222-7-2","M222-7-3","M222-7-4","M222-7-5","M222-7-6","M222-7-7","M222-7-8",
+                     "M222-8-1","M222-8-2","M222-8-3","M222-8-4","M222-8-5","M222-8-6","M222-8-7","M222-8-8",
+                     "M222-9-1","M222-9-2","M222-9-3","M222-9-4","M222-9-5","M222-9-6","M222-9-7","M222-9-8")
       if(weighted){
 
          All_add <- function(a,b){ return((a!=0)*(b!=0)*(a+b)) }
@@ -579,31 +591,10 @@ ig_icmotif_count<-function(subnet_mat1, subnet_mat2,
 
          mean_weighted <- replace(mean_weighted,which(is.nan(mean_weighted)),NA)
 
-         names(mean_weighted)<-c("M111","M112-1","M112-2","M211-1","M211-2","M212-1","M212-2","M212-3","M212-4","M121-1","M121-2","M122-1-1","M122-1-2","M122-1-3","M122-1-4",
-                                 "M122-2-1","M122-2-2","M122-2-3","M122-2-4","M122-3-1","M122-3-2","M122-3-3","M122-3-4","M221-1-1","M221-1-2","M221-1-3","M221-1-4",
-                                 "M221-2-1","M221-2-2","M221-2-3","M221-2-4","M221-3-1","M221-3-2","M221-3-3","M221-3-4","M222-1-1","M222-1-2",'M222-1-3',"M222-1-4",
-                                 "M222-1-5","M222-1-6","M222-1-7","M222-1-8","M222-2-1","M222-2-2","M222-2-3","M222-2-4","M222-2-5","M222-2-6","M222-2-7","M222-2-8",
-                                 "M222-3-1","M222-3-2","M222-3-3","M222-3-4","M222-3-5","M222-3-6","M222-3-7","M222-3-8",
-                                 "M222-4-1","M222-4-2","M222-4-3","M222-4-4","M222-4-5","M222-4-6","M222-4-7","M222-4-8",
-                                 "M222-5-1","M222-5-2","M222-5-3","M222-5-4","M222-5-5","M222-5-6","M222-5-7","M222-5-8",
-                                 "M222-6-1","M222-6-2","M222-6-3","M222-6-4","M222-6-5","M222-6-6","M222-6-7","M222-6-8",
-                                 "M222-7-1","M222-7-2","M222-7-3","M222-7-4","M222-7-5","M222-7-6","M222-7-7","M222-7-8",
-                                 "M222-8-1","M222-8-2","M222-8-3","M222-8-4","M222-8-5","M222-8-6","M222-8-7","M222-8-8",
-                                 "M222-9-1","M222-9-2","M222-9-3","M222-9-4","M222-9-5","M222-9-6","M222-9-7","M222-9-8")
-         return(mean_weighted)
+
+         return(data.frame(motif_name=motif_names,count=intra_guild_motif,mean_weight=mean_weighted ))
       }
       else{
-         names(intra_guild_motif)<-c("M111","M112-1","M112-2","M211-1","M211-2","M212-1","M212-2","M212-3","M212-4","M121-1","M121-2","M122-1-1","M122-1-2","M122-1-3","M122-1-4",
-                                     "M122-2-1","M122-2-2","M122-2-3","M122-2-4","M122-3-1","M122-3-2","M122-3-3","M122-3-4","M221-1-1","M221-1-2","M221-1-3","M221-1-4",
-                                     "M221-2-1","M221-2-2","M221-2-3","M221-2-4","M221-3-1","M221-3-2","M221-3-3","M221-3-4","M222-1-1","M222-1-2",'M222-1-3',"M222-1-4",
-                                     "M222-1-5","M222-1-6","M222-1-7","M222-1-8","M222-2-1","M222-2-2","M222-2-3","M222-2-4","M222-2-5","M222-2-6","M222-2-7","M222-2-8",
-                                     "M222-3-1","M222-3-2","M222-3-3","M222-3-4","M222-3-5","M222-3-6","M222-3-7","M222-3-8",
-                                     "M222-4-1","M222-4-2","M222-4-3","M222-4-4","M222-4-5","M222-4-6","M222-4-7","M222-4-8",
-                                     "M222-5-1","M222-5-2","M222-5-3","M222-5-4","M222-5-5","M222-5-6","M222-5-7","M222-5-8",
-                                     "M222-6-1","M222-6-2","M222-6-3","M222-6-4","M222-6-5","M222-6-6","M222-6-7","M222-6-8",
-                                     "M222-7-1","M222-7-2","M222-7-3","M222-7-4","M222-7-5","M222-7-6","M222-7-7","M222-7-8",
-                                     "M222-8-1","M222-8-2","M222-8-3","M222-8-4","M222-8-5","M222-8-6","M222-8-7","M222-8-8",
-                                     "M222-9-1","M222-9-2","M222-9-3","M222-9-4","M222-9-5","M222-9-6","M222-9-7","M222-9-8")
-         return(intra_guild_motif)
+         return(data.frame(motif_name=motif_names,count=intra_guild_motif))
       }
    }
