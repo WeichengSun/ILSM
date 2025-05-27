@@ -212,18 +212,17 @@ library(ggplot2)
 library(gghalves)
 library(ggpubr)
 data(PPH_Network)
-
+#interconnection pattern
 PPH_IP <-
    t(as.data.frame(lapply(PPH_Network, function(x) {
-      c(coid(x), cois(x), pc(x), pc(x), hc(x))
+      c(poc(x),coid(x), cois(x), pc(x),  hc(x))
    })))
 rownames(PPH_IP) <- paste0("net", seq = 1:18)
 PPH_IP[is.na(PPH_IP)] <- 0
 PPH_IP_dist <- rdist(PPH_IP, metric = "correlation")
 PPH_IP_dist <- PPH_IP_dist / max(PPH_IP_dist)
-PPH_IP_dist_beta <-
-   betadisper(PPH_IP_dist, group = rep("net", 18), type = "centroid")$distances
-
+PPH_IP_dist_beta <-betadisper(PPH_IP_dist, group = rep("net", 18), type = "centroid")$distances
+#interconnection motif
 PPH_motif <-
    t(as.data.frame(lapply(PPH_Network, function(x) {
       icmotif_count(x)
@@ -231,8 +230,7 @@ PPH_motif <-
 rownames(PPH_motif) <- paste0("net", seq = 1:18)
 PPH_motif_dist <- rdist(PPH_motif, metric = "correlation")
 PPH_motif_dist <- PPH_motif_dist / max(PPH_motif_dist)
-PPH_motif_dist_beta <-
-   betadisper(PPH_motif_dist, group = rep("net", 18), type = "centroid")$distances
+PPH_motif_dist_beta <-betadisper(PPH_motif_dist, group = rep("net", 18), type = "centroid")$distances
 
 PPH_macro.vs.meso <-
    data.frame(
@@ -240,13 +238,11 @@ PPH_macro.vs.meso <-
       dist_cen = c(PPH_IP_dist_beta, PPH_motif_dist_beta)
    )
 PPH_macro.vs.meso$type <- factor(PPH_macro.vs.meso$type)
-
-
-pph_wilcox <-
-   wilcox.test(PPH_macro.vs.meso[1:18, 2], PPH_macro.vs.meso[19:36, 2], paired = T)
+#Wilcoxon test 
+pph_wilcox <-wilcox.test(PPH_macro.vs.meso[1:18, 2], PPH_macro.vs.meso[19:36, 2], paired = T)
 pph_wilcox$statistic
 pph_wilcox$p.value
-
+#plot
 ggplot(PPH_macro.vs.meso,aes(type,dist_cen))+
    geom_half_boxplot(aes(fill=type),
                 outlier.shape = NA,nudge =0, width = .6,errorbar.draw = F)+
@@ -266,7 +262,9 @@ ggplot(PPH_macro.vs.meso,aes(type,dist_cen))+
 Micro-scale interconnection centrality vs interconnection motif role
 ```{r echo = TRUE, eval = FALSE}
 
+#interconnection motif role
 PPH_MOTIF_ROLE_list<-lapply(PPH_Network, function(x){icmotif_role(x)})
+#interconnection centrality
 PPH_IC_list<-lapply(PPH_Network, function(x){node_icc(x)})
 
 re_adjust<-function(role,cen){
@@ -287,27 +285,24 @@ for(i in 1:18){
 }
 groups <- factor(group,levels = paste0("net",1:18))
 
-
 PPH_IC_dist <- rdist(PPH_IC, metric = "correlation")
 PPH_IC_dist <- PPH_IC_dist / max(PPH_IC_dist)
-PPH_IC_dist_beta <-
-   betadisper(PPH_IC_dist, groups, type = "centroid")$distances
+PPH_IC_dist_beta <-betadisper(PPH_IC_dist, groups, type = "centroid")$distances
 
 PPH_MOTIF_ROLE_dist <- rdist(PPH_MOTIF_ROLE, metric = "correlation")
 PPH_MOTIF_ROLE_dist <- PPH_MOTIF_ROLE_dist / max(PPH_MOTIF_ROLE_dist)
-PPH_MOTIF_ROLE_dist_beta <-
-   betadisper(PPH_MOTIF_ROLE_dist, groups, type = "centroid")$distances
+PPH_MOTIF_ROLE_dist_beta <-betadisper(PPH_MOTIF_ROLE_dist, groups, type = "centroid")$distances
 
 PPH_micro.vs.meso <-
    data.frame(type = c(rep(c("micro", "meso"), each = length(group))),
               dist_cen = c(PPH_IC_dist_beta, PPH_MOTIF_ROLE_dist_beta))
 PPH_micro.vs.meso$type <- factor(PPH_micro.vs.meso$type,levels = c("micro","meso"))
 
-
+#Wilcoxon test 
 pph_wilcox <- wilcox.test(PPH_micro.vs.meso[1:184, 2], PPH_micro.vs.meso[185:368, 2], paired = T)
 pph_wilcox$statistic
 pph_wilcox$p.value
-
+#plotting
 ggplot(PPH_micro.vs.meso,aes(type,dist_cen))+
    geom_half_boxplot(aes(fill=factor(type)),outlier.shape = NA, width = .6,errorbar.draw = F)+
    theme_test()+
@@ -328,7 +323,7 @@ ggplot(PPH_micro.vs.meso,aes(type,dist_cen))+
 <br>Macro-scale interconnection patterns vs interconnection motifs
 ```{r echo = TRUE, eval = FALSE}
 data(PHP_Network)
-
+#interconnection pattern
 PHP_IP <-
    t(as.data.frame(lapply(PHP_Network, function(x) {
       c(coid(x), cois(x), pc(x), pc(x), hc(x))
@@ -337,11 +332,10 @@ rownames(PHP_IP) <- paste0("net", seq = 1:31)
 PHP_IP[is.na(PHP_IP)] <- 0
 PHP_IP_dist <- rdist(PHP_IP, metric = "correlation")
 PHP_IP_dist <- PHP_IP_dist / max(PHP_IP_dist)
-PHP_IP_dist_beta <-
-   betadisper(PHP_IP_dist, group = rep("net", 31), type = "centroid")$distances
+PHP_IP_dist_beta <-betadisper(PHP_IP_dist, group = rep("net", 31), type = "centroid")$distances
 
 adjust_net(PHP_Network[[1]])
-
+#interconnection motif
 PHP_MOTIF <-
    t(as.data.frame(lapply(PHP_Network, function(x) {
       icmotif_count(x)
@@ -349,8 +343,7 @@ PHP_MOTIF <-
 rownames(PHP_MOTIF) <- paste0("net", seq = 1:31)
 PHP_MOTIF_dist <- rdist(PHP_MOTIF, metric = "correlation")
 PHP_MOTIF_dist <- PHP_MOTIF_dist / max(PHP_MOTIF_dist)
-PHP_MOTIF_dist_beta <-
-   betadisper(PHP_MOTIF_dist, group = rep("net", 31), type = "centroid")$distances
+PHP_MOTIF_dist_beta <-betadisper(PHP_MOTIF_dist, group = rep("net", 31), type = "centroid")$distances
 
 PHP_macro.vs.meso <-
    data.frame(
@@ -359,12 +352,12 @@ PHP_macro.vs.meso <-
    )
 PHP_macro.vs.meso$type <- factor(PHP_macro.vs.meso$type)
 
-
+#Wilcoxon test 
 php_wilcox <-
    wilcox.test(PHP_macro.vs.meso[1:31, 2], PHP_macro.vs.meso[32:62, 2], paired = T)
 php_wilcox$statistic
 php_wilcox$p.value
-
+#plotting
 ggplot(PHP_macro.vs.meso,aes(type,dist_cen))+
    geom_half_boxplot(aes(fill=type),
                 outlier.shape = NA,nudge =0, width = .6,errorbar.draw = F)+
@@ -381,8 +374,9 @@ ggplot(PHP_macro.vs.meso,aes(type,dist_cen))+
 ```
 Micro-scale interconnection centrality vs interconnection motif role
 ```{r echo = TRUE, eval = FALSE}
-
+#interconnection motif role
 PHP_MOTIF_ROLE_list<-lapply(PHP_Network, function(x){icmotif_role(x)})
+#interconnection centrality
 PHP_IC_list<-lapply(PHP_Network, function(x){node_icc(x)})
 
 re_adjust<-function(role,cen){
@@ -406,24 +400,22 @@ groups <- factor(group,levels = paste0("net",1:31))
 
 PHP_IC_dist <- rdist(PHP_IC, metric = "correlation")
 PHP_IC_dist <- PHP_IC_dist / max(PHP_IC_dist)
-PHP_IC_dist_beta <-
-   betadisper(PHP_IC_dist, groups, type = "centroid")$distances
+PHP_IC_dist_beta <-betadisper(PHP_IC_dist, groups, type = "centroid")$distances
 
 PHP_MOTIF_ROLE_dist <- rdist(PHP_MOTIF_ROLE, metric = "correlation")
 PHP_MOTIF_ROLE_dist <- PHP_MOTIF_ROLE_dist / max(PHP_MOTIF_ROLE_dist)
-PHP_MOTIF_ROLE_dist_beta <-
-   betadisper(PHP_MOTIF_ROLE_dist, groups, type = "centroid")$distances
+PHP_MOTIF_ROLE_dist_beta <-betadisper(PHP_MOTIF_ROLE_dist, groups, type = "centroid")$distances
 
 PHP_micro.vs.meso <-
    data.frame(type = c(rep(c("micro", "meso"), each = length(group))),
               dist_cen = c(PHP_IC_dist_beta, PHP_MOTIF_ROLE_dist_beta))
 PHP_micro.vs.meso$type <- factor(PHP_micro.vs.meso$type,levels = c("micro","meso"))
 
-
+#Wilcoxon test 
 PHP_wilcox <- wilcox.test(PHP_micro.vs.meso[1:927, 2], PHP_micro.vs.meso[928:1854, 2], paired = T)
 PHP_wilcox$statistic
 PHP_wilcox$p.value
-
+#plotting 
 ggplot(PHP_micro.vs.meso,aes(type,dist_cen))+
    geom_half_boxplot(aes(fill=factor(type)),outlier.shape = NA, width = .6,errorbar.draw = F)+
    theme_test()+
