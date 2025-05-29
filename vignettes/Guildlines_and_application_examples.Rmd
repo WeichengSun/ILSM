@@ -338,7 +338,7 @@ library(vegan)
 library(ggplot2)
 library(gghalves)
 library(ggpubr)
-data(PPH_Network)
+load("./data/PPH_Network.rda")
 #interconnection pattern
 PPH_IP <-
    t(as.data.frame(lapply(PPH_Network, function(x) {
@@ -449,7 +449,7 @@ ggplot(PPH_micro.vs.meso,aes(type,dist_cen))+
 **PHP network data**
 <br>Macro-scale interconnection patterns vs interconnection motifs
 ```{r echo = TRUE, eval = FALSE}
-data(PHP_Network)
+load("./data/PHP_Network.rda")
 #interconnection pattern
 PHP_IP <-
    t(as.data.frame(lapply(PHP_Network, function(x) {
