@@ -104,7 +104,7 @@ node_icc <- function(network.or.subnet_mat1,subnet_mat2=NULL,weighted=F){
 
    if(!weighted){
       E(network)$weight=1
-      }
+   }
    #net_closeness
    dist_res<-distances(network,v=connector_node,to=V(network)$name[V(network)$level%in% c(0,2)],mode="all")
    dist_res<-as.data.frame(dist_res)
@@ -118,7 +118,7 @@ node_icc <- function(network.or.subnet_mat1,subnet_mat2=NULL,weighted=F){
    b<-as.vector(V(network)[V(network)$level%in% c(1)])
    a<-as.vector(V(network)[V(network)$level%in% c(0)])
    c<-as.vector(V(network)[V(network)$level%in% c(2)])
-   tmp<-apply(expand.grid(a,c),1,function(p){do.call(rbind,all_shortest_paths(network,from=p[1],to=p[2])$vpaths)})
+   tmp<-apply(expand.grid(a,c),1,function(p){do.call(rbind,suppressWarnings(all_shortest_paths(network,from=p[1],to=p[2], mode = "all"))$vpaths)})
    tmp<-tmp[!sapply(tmp,is.null)]
 
    res<-sapply(tmp,function(x){

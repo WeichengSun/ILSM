@@ -5,16 +5,6 @@
 
 <!-- badges: start -->
 <!--[![CRAN_Status](http://www.r-pkg.org/badges/version/ILSM)](https://cran.r-project.org/package=ILSM) -->
-
-[![R-CMD-check](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WeichengSun/ILSM/actions/workflows/R-CMD-check.yaml)
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Codecov test
-coverage](https://codecov.io/gh/WeichengSun/ILSM/graph/badge.svg)](https://app.codecov.io/gh/WeichengSun/ILSM)
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-Stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html##Stable)
-
 <!-- badges: end -->
 
 ILSM is designed to analyze interconnection structures, including
@@ -183,6 +173,8 @@ calculations of weighted degree, shortest paths, and distances.
 node_icc(PPH_Coltparkmeadow)
 node_icc(PPH_Coltparkmeadow,weighted=T)
 ```
+
+<img src="./man/figure/worked_example.png" width="70%" style="display: block; margin: auto;" />
 
 ## Extensional analysis
 

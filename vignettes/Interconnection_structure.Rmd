@@ -555,6 +555,10 @@ ggplot(PHP_micro.vs.meso,aes(type,dist_cen))+
                                          axis.text.y = element_text(size = 10))
 ```
 
+```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
+knitr::include_graphics("./man/figure/marco_vs_micro_vs_meso.png")
+```
+
 ## Comparison of interconnection motifs between PHP and PPH networks
 As an example of application, we also compared the profiles of interconnection motifs between PHP and PPH networks using nonmetric multidimensional scaling (NMDS). NMDS is a robust technique for indirect gradient analysis based on a distance or dissimilarity matrix for ecological data. We performed NMDS analysis with the metaMDS function using Bray-Curtis dissimilarities and tested statistical differences with 'adonis2' and 'anosim' in the R package *vegan* (version: 2.6-4). The result shows their profiles of interconnection motifs are significantly different between PHP and PPH networks (Fig. 5), suggesting that interconnection motifs can characterize how different bipartite networks are interconnected in different types of tripartite interaction networks.
 ```{r echo=T,eval = F }
