@@ -35,7 +35,7 @@ devtools::install_github("WeichengSun/ILSM")
 For clarification, in the following context we refer to a tripartite network as a two-subnetwork interaction network (Fig. 1a). It is composed of three sets of nodes (a-nodes, b-nodes, and c-nodes) and two subnetworks: the P subnetwork, which contains links between a-nodes and b-nodes, and the Q subnetwork, which contains links between b-nodes and c-nodes. The b-nodes serve as the shared set of nodes. Connector nodes are defined as the common nodes of both subnetworks within the b-nodes (Fig. 1a). No intra-guild interactions are considered unless specified.
 
 ```{r echo=F,eval = T,out.width = "70%",fig.align = 'center' }
-knitr::include_graphics("./man/figure/trinet_and_example.png")
+knitr::include_graphics("../man/figure/trinet_and_example.png")
 ```
 Fig.1. The visualization of an example tripartite interaction network (a, with three groups of species and two interaction subnetworks) and interconnection structures for connector species (b-c, two macro-scale interconnection patterns; d, meso-scale interconnection motif; e, micro-scale interconnection centrality). In panel a, the connector species have links from both subnetworks.
 
@@ -53,8 +53,8 @@ library(ILSM);library(igraph)
 #Load the 'igraph' data 
 data(PPH_Coltparkmeadow)
 #Or read two matrices and transform them to an 'igraph'. .
-P_mat<-as.matrix(read.csv("./data/PP.csv",row.names = 1,check.names=FALSE))
-Q_mat<-as.matrix(read.csv("./data/HP.csv",row.names = 1,check.names=FALSE))
+P_mat<-as.matrix(read.csv("../data/PP.csv",row.names = 1,check.names=FALSE))
+Q_mat<-as.matrix(read.csv("../data/HP.csv",row.names = 1,check.names=FALSE))
 PPH_Coltparkmeadow<-trigraph_from_mat(P_mat,Q_mat,weighted = F)
 
 #Generating random weights to showcase weighted metrics
@@ -102,7 +102,7 @@ par(mr)
 The 48 interconnection motifs are named "MABC-i": M means "motif',"A" is the number of a-nodes, "B" is the number of b-nodes, "C" is the number of c-nodes and "i" is the serial number for the motifs with the same "ABC". The interconnection motifs are ordered by the number of connector nodes (from 1 to 4). The numbers from 1 to 70 in connector nodes represent the unique roles defined by motifs. 
 
 ```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
-knitr::include_graphics("./man/figure/motif_ILSM.png")
+knitr::include_graphics("../man/figure/motif_ILSM.png")
 ```
 Fig. 2. The 48 forms of interconnection motifs with 3-6 nodes and no intra-guild interactions. Blue and grey nodes from one subnetwork, and grey and orange nodes from the other subnetwork. Grey nodes are connector nodes. 
 
@@ -241,7 +241,7 @@ Heatmap((log(PPH_role_heatmap + 1)),
 ```
 
 ```{r echo=F,eval = T,out.width = "70%",fig.align = 'center' }
-knitr::include_graphics("./man/figure/worked_example.png")
+knitr::include_graphics("../man/figure/worked_example.png")
 ```
 
 ## Extensional analysis
@@ -275,7 +275,7 @@ null_zp(cois_obs,cois_null)
 Although most empirical tripartite interaction networks currently lack intra-guild interactions, these interactions are increasingly studied (Garcia-Callejas et al. 2023) and play a crucial role in community dynamics. Therefore, we also defined interconnection motif forms that include intra-guild interactions to support potential meso-scale analyses in tripartite networks. Because incorporating intra-guild links greatly increases the number of possible motif forms, we restricted each guild to contain only two nodes, resulting in 107 interconnection motifs.
 
 ```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
-knitr::include_graphics("./man/figure/intra_guild_icmotif.png")
+knitr::include_graphics("../man/figure/intra_guild_icmotif.png")
 ```
 Fig. 3. The 107 forms of interconnection motifs with intra-guild interactions. Each guild contains only two nodes at most. Blue and grey nodes from one subnetwork, and grey and orange nodes from the other subnetwork. Grey nodes are connector nodes. 
 
@@ -558,7 +558,7 @@ ggplot(PHP_micro.vs.meso,aes(type,dist_cen))+
 ```
 
 ```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
-knitr::include_graphics("./man/figure/marco_vs_micro_vs_meso.png")
+knitr::include_graphics("../man/figure/marco_vs_micro_vs_meso.png")
 ```
 
 ## Comparison of interconnection motifs between PHP and PPH networks
@@ -609,7 +609,7 @@ ggplot(The_structure_motif_sample,aes(NMDS1,NMDS2,color=name))+
 ```
 
 ```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
-knitr::include_graphics("./man/figure/PPHvsPHP.png")
+knitr::include_graphics("../man/figure/PPHvsPHP.png")
 ```
 
 
