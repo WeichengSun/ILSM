@@ -1,9 +1,11 @@
 ---
-output: github_document
+title: "Interconnection_structure"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interconnection_structure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
