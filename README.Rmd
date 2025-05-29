@@ -118,6 +118,10 @@ node_icc(PPH_Coltparkmeadow)
 node_icc(PPH_Coltparkmeadow,weighted=T)
 ```
 
+```{r echo=F,eval = T,out.width = "70%",fig.align = 'center' }
+knitr::include_graphics("./man/figure/worked_example.png")
+```
+
 ## Extensional analysis
 ### Null models
 Null models are commonly used to test the non-randomness of topology in ecological networks. The **tri_null** provides two types of null models. The first type shuffles shared nodes following Sauve et al. (2016) without altering the subnetwork structures. The second type shuffles links in one or both subnetworks using algorithms from the R package *vegan* (version 2.6-4), applied independently to one or both subnetworks.

@@ -119,6 +119,129 @@ node_icc(PPH_Coltparkmeadow)
 node_icc(PPH_Coltparkmeadow,weighted=T)
 ```
 
+Plotting results of interconnection patterns, centralities and motifs.
+```{r echo = T,eval = F}
+library(ILSM)
+library(fmsb)
+library(reshape2)
+library(ggbreak)
+library(gg.gap)
+library(ComplexHeatmap)
+
+data(PPH_Coltparkmeadow)
+PPH_net_rader<-data.frame(row.names = c("Max","Min","PPH"),
+                      CoID=c(1,0,coid(PPH_Coltparkmeadow)),
+                      CoIS=c(1,0,cois(PPH_Coltparkmeadow)),
+                      POC=c(1,0,poc(PPH_Coltparkmeadow)),
+                      PCc=c(1,0,pc(PPH_Coltparkmeadow)),
+                      HC=c(1,0,hc(PPH_Coltparkmeadow)))
+radarchart(PPH_net_rader,
+           # Customize the polygon
+           pcol = c("#00AFBB"), pfcol = scales::alpha(c("#00AFBB"),0.5), plwd = 1.2, plty = 1,
+           # Customize the grid
+           cglcol = "grey", cglty = 1, cglwd =0.8,
+           # Customize the axis
+           axistype=1, caxislabels = c(0, 0.25, 0.5, 0.75, 1.00),
+           axislabcol = "black",
+           calcex=0.6,
+           # Variable labels
+           vlcex = 0.7, vlabels = colnames(PPH_net_rader),title = "Interconnection pattern")
+
+
+PPH_node_centrality<-node_icc(PPH_Coltparkmeadow)
+PPH_node_centrality <- PPH_node_centrality[,c(2:4)]
+rownames(PPH_node_centrality)<- c("Cerastium fontanum", "Holcus lanatus","Leucanthemum vulgare","Ranunculus acris","Ranunculus repens","Trifolium pratense","Trifolium repens","Veronica chamaedrys")
+
+PPH_node_centrality_bar <- melt(as.matrix(PPH_node_centrality))
+PPH_node_centrality_bar[,1] <-factor(PPH_node_centrality_bar[,1],levels = c("Ranunculus acris","Ranunculus repens","Leucanthemum vulgare", "Holcus lanatus","Trifolium repens","Cerastium fontanum","Veronica chamaedrys","Trifolium pratense"))      
+
+colnames(PPH_node_centrality_bar)[1:2] <- c("species","centrality")
+
+ggplot(PPH_node_centrality_bar)+
+  geom_bar(aes( species,value,fill= species),stat="identity",  #position = 'stack',
+           width = 0.6)+
+  facet_wrap(vars(centrality), nrow = 2,scales = "free")+
+  labs(x="",y="Cnetrality",title = "Interconnection centrality")+
+  scale_fill_manual(values=c("#BC3C29","#0072B5","#E18727","#20854E","#7876B1","#26343B","#9E9E9E","#FFDC91"))+
+  theme_test()+
+  theme(
+    strip.text = element_text(size = 10 ,margin = margin(t =1.4, b = 1.4, l = 1.2, r = 1.2)),
+    legend.position = c( .80 , .25 ),
+    plot.title = element_text(hjust = 0.5,face = "bold" ),
+    legend.byrow= T,
+    legend.title =element_blank(),
+    legend.text = element_text(size = 9,margin = margin(t =1.6, b = 1.8, l = 1.2, r = 1.2)), 
+    legend.key.size = unit(.8, "lines"),
+    legend.box.spacing = unit(8, "cm"),
+    # legend.position = "top",
+    legend.margin = margin(-0.1, 0, -0.2, -0.7, "cm"),
+    plot.margin = margin(0.1, 0.1, -0.1, 0.1, "cm"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size= 7.5,colour = "black"),
+    axis.text.x = element_blank(),
+    axis.ticks.x= element_blank())
+
+
+PPH_motif_bar<-data.frame(motif_id=1:48,frequency = icmotif_count(PPH_Coltparkmeadow))
+PPH_motif_bar$motif_id<-factor(PPH_motif_bar$motif_id)
+
+ggplot(PPH_motif_bar,aes(motif_id,frequency))+
+   geom_bar(stat="identity",show.legend=F)+
+   scale_y_break(breaks=c(300000,1200000),ticklabels=seq(1200000,1300000,50000),scales=0.2,expand =F)+
+   scale_y_break(breaks=c(55000,130000),ticklabels=seq(130000,300000,60000),scales=0.4,expand =F)+
+   scale_y_break(breaks=c(12000,16000),ticklabels=seq(16000,55000,15000),scales=0.5,expand =F)+
+   scale_y_break(breaks=c(650,1000),ticklabels=seq(1000,12000,3000),scales=0.5,expand =F)+
+      labs(x="",y="Frequency",title = "Interconnection motif")+
+   theme_test()+
+   theme(legend.position="none") + theme(axis.title = element_text(),
+                                         axis.text = element_text( colour = "black"),
+                                         axis.text.x = element_text(size =7 ,colour = "black"),
+                                         axis.text.y = element_text(vjust = 0.15,colour = "black"),
+                                         plot.title = element_text(hjust = 0.5,face = "bold" ))
+
+
+
+
+PPH_role <- icmotif_role(PPH_Coltparkmeadow)
+PPH_role_heatmap<-PPH_role[rowSums(PPH_role)!=0,]
+
+rownames(PPH_role_heatmap)<-c( "C. fontanum","H. lanatus","L. vulgare","R. acris","R. repens","T. pratense","T. repens","V. chamaedrys" )
+colnames(PPH_role_heatmap)<-gsub("role","",colnames(PPH_role_heatmap))
+
+
+Heatmap((log(PPH_role_heatmap + 1)),
+        cluster_rows = T,
+        cluster_columns = F,
+        row_dend_side = c("right"),
+        col = circlize::colorRamp2(c(0, 5, 10, 14), c("#80aecf", "#cbe8c3", "#eca058", "red")),
+        rect_gp = gpar(col = "white", lwd = 1),
+        show_heatmap_legend = T,
+        heatmap_legend_param = list(
+          legend_direction = "vertical",
+          title = "ln(Frequency)",
+          title_gp = gpar(fontsize = 7, fontface =
+                            "bold"),
+          title_position = "leftcenter-rot",
+          legend_height = unit(5, "cm"),
+          labels_gp = gpar(fontsize = 6)
+        ),
+        column_title = "Interconnection role",
+        column_title_side = "top",
+        column_title_gp = gpar(fontface = "bold"),
+        row_names_side = "left",
+        row_names_rot = 45,
+        column_names_rot = 45,
+        column_names_gp = gpar(fontsize = 6),
+        row_names_gp = gpar(fontsize = 7),
+        column_names_centered = F,
+        row_names_centered = T
+)
+```
+
+```{r echo=F,eval = T,out.width = "70%",fig.align = 'center' }
+knitr::include_graphics("./man/figure/worked_example.png")
+```
+
 ## Extensional analysis
 ### Null models
 Null models are commonly used to test the non-randomness of topology in ecological networks. The **tri_null** provides two types of null models. The first type shuffles shared nodes following Sauve et al. (2016) without altering the subnetwork structures. The second type shuffles links in one or both subnetworks using algorithms from the R package *vegan* (version 2.6-4), applied independently to one or both subnetworks.
@@ -434,12 +557,53 @@ ggplot(PHP_micro.vs.meso,aes(type,dist_cen))+
 
 ## Comparison of interconnection motifs between PHP and PPH networks
 As an example of application, we also compared the profiles of interconnection motifs between PHP and PPH networks using nonmetric multidimensional scaling (NMDS). NMDS is a robust technique for indirect gradient analysis based on a distance or dissimilarity matrix for ecological data. We performed NMDS analysis with the metaMDS function using Bray-Curtis dissimilarities and tested statistical differences with 'adonis2' and 'anosim' in the R package *vegan* (version: 2.6-4). The result shows their profiles of interconnection motifs are significantly different between PHP and PPH networks (Fig. 5), suggesting that interconnection motifs can characterize how different bipartite networks are interconnected in different types of tripartite interaction networks.
-```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
+```{r echo=T,eval = F }
+library(ILSM)
+library(dplyr)
+library(vegan)
+library(ggalt)
+
+data(PPH_Network)
+data(PHP_Network)
+The_structure_motif <-
+   rbind(
+      lapply(PHP_Network, function(z) {
+         ILSM::icmotif_count(z)
+      }) %>% data.frame() %>% t(),
+      lapply(PPH_Network, function(z) {
+         ILSM::icmotif_count(z)
+      }) %>% data.frame() %>% t()
+   )
+
+rownames(The_structure_motif)<-c(paste0("PHP",seq=1:31),paste0("PPH",seq=1:18))
+
+The_structure_motif_nmds<-The_structure_motif%>%vegdist(method = "bray")%>%metaMDS(k=2)
+
+The_structure_motif_sample<-The_structure_motif_nmds$points%>%data.frame()
+The_structure_motif_sample$name<-c(rep("PHP",31),rep("PPH",18))
+colnames(The_structure_motif_sample)[1:2]<-c("NMDS1","NMDS2")
+
+The_structure_motif_nmds$stress
+
+ggplot(The_structure_motif_sample,aes(NMDS1,NMDS2,color=name))+
+   geom_point(size=1)+
+   theme_test()+
+   theme(#panel.border=element_rect(linewidth = 1),
+         axis.title = element_text(size = 9),axis.text = element_text(size = 9),legend.key.size = unit(4,"mm"),
+         legend.text = element_text(size=6,face = "bold"),legend.position.inside = c( .94 , .86 ))+
+   geom_encircle(aes(NMDS1,NMDS2,group = name,fill=name),size=0.2,expand=0,spread=0,alpha =0.2,s_shape=1)+
+   annotate("text", label = "paste(bold(Adonis),\": \" ,italic(R)^2, \" = 0.085*** \" )",
+            x = -3.2, y = -1.7, size = 3, colour = "black",parse=T)+
+   annotate("text", label = "paste(bold(Anosim) , \": \",italic(R), \" = 0.173** \"  )",
+            x = -3.25, y = -1.45, size = 3, colour = "black",parse=T)+
+   annotate("text", label = "paste(bold(Stress) , \" = 0.043\")",
+            x = -3.66, y = -1.15, size = 3, colour = "black",parse=T)+
+   scale_fill_discrete(name="")+scale_color_discrete(name="")
 
 ```
 
 ```{r echo=F,eval = T,out.width = "80%",fig.align = 'center' }
-
+knitr::include_graphics("./man/figure/PPHvsPHP.png")
 ```
 
 
