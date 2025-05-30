@@ -68,11 +68,9 @@
 #' ig_ddom(mat)
 
 ig_ddom<-function(mat){
-
 d <- diag(mat)
 nd <- rowSums(mat)
 nd <- nd - d
-
 #node-level diagonal dominance
 diag.dom<-abs(d) - abs(nd)
 if(!is.null(rownames(mat))){
