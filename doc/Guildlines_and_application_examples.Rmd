@@ -256,7 +256,14 @@ library(ggplot2)
 set.seed(12)
 coid_obs<-coid(PPH_Coltparkmeadow)
 cois_obs<-cois(PPH_Coltparkmeadow)
-null_net<-tri_null(PPH_Coltparkmeadow,100, null_type = "sauve")# try "sub_both", "sub_
+null_net<-vector("list",length=1000)
+#The simulated networks sometimes have too less connector nodes to calculate some metrics such as coid, cois. It is recommended to set a threshold (here is 4 at least)
+while (i<1000) {
+  tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "sauve")# try "sub_both", "sub_
+  if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes
+     null_net[[i]]<-tmp;
+     i<-i+1
+  }}
 coid_null<-sapply(null_net,coid)
 cois_null<-sapply(null_net,cois)
 # calculate the Z value and P value.
@@ -338,10 +345,9 @@ library(vegan)
 library(ggplot2)
 library(gghalves)
 library(ggpubr)
-data(PPH_Network)
+load("./data/PPH_Network.rda")
 #interconnection pattern
-PPH_IP <-
-   t(as.data.frame(lapply(PPH_Network, function(x) {
+PPH_IP <-t(as.data.frame(lapply(PPH_Network, function(x) {
       c(poc(x),coid(x), cois(x), pc(x),  hc(x))
    })))
 rownames(PPH_IP) <- paste0("net", seq = 1:18)
@@ -449,7 +455,7 @@ ggplot(PPH_micro.vs.meso,aes(type,dist_cen))+
 **PHP network data**
 <br>Macro-scale interconnection patterns vs interconnection motifs
 ```{r echo = TRUE, eval = FALSE}
-data(PHP_Network)
+load("./data/PHP_Network.rda")
 #interconnection pattern
 PHP_IP <-
    t(as.data.frame(lapply(PHP_Network, function(x) {

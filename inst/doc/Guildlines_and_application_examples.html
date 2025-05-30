@@ -633,20 +633,27 @@ both subnetworks.</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>coid_obs<span class="ot">&lt;-</span><span class="fu">coid</span>(PPH_Coltparkmeadow)</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>cois_obs<span class="ot">&lt;-</span><span class="fu">cois</span>(PPH_Coltparkmeadow)</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>null_net<span class="ot">&lt;-</span><span class="fu">tri_null</span>(PPH_Coltparkmeadow,<span class="dv">100</span>, <span class="at">null_type =</span> <span class="st">&quot;sauve&quot;</span>)<span class="co"># try &quot;sub_both&quot;, &quot;sub_</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>coid_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,coid)</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>cois_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,cois)</span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co"># calculate the Z value and P value.</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>null_zp<span class="ot">&lt;-</span><span class="cf">function</span>(original_value,nullvalues){</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>   z<span class="ot">=</span>(original_value<span class="sc">-</span><span class="fu">mean</span>(nullvalues,<span class="at">na.rm=</span>T))<span class="sc">/</span><span class="fu">sd</span>(nullvalues,<span class="at">na.rm=</span>T)</span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>   pless <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&gt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>   pmore <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&lt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>   p<span class="ot">&lt;-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pmin</span>(pless, pmore)</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>   p<span class="ot">=</span><span class="fu">pmin</span>(<span class="dv">1</span>, (p <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span>(<span class="fu">length</span>(nullvalues) <span class="sc">+</span> <span class="dv">1</span>))</span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>   <span class="fu">c</span>(<span class="at">z=</span>z,<span class="at">p=</span>p)</span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>}</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="fu">null_zp</span>(coid_obs,coid_null)</span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="fu">null_zp</span>(cois_obs,cois_null)</span></code></pre></div>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>null_net<span class="ot">&lt;-</span><span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>,<span class="at">length=</span><span class="dv">1000</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#The simulated networks sometimes have too less connector nodes to calculate some metrics such as coid, cois. It is recommended to set a threshold (here is 4 at least)</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="cf">while</span> (i<span class="sc">&lt;</span><span class="dv">1000</span>) {</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  tmp<span class="ot">&lt;-</span><span class="fu">tri_null</span>(PPH_Coltparkmeadow,<span class="dv">1</span>, <span class="at">null_type =</span> <span class="st">&quot;sauve&quot;</span>)<span class="co"># try &quot;sub_both&quot;, &quot;sub_</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">poc</span>(tmp)[<span class="dv">2</span>]<span class="sc">&gt;=</span><span class="dv">4</span>){<span class="co"># ensuring the simulated networks have at least four connector nodes</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>     null_net[[i]]<span class="ot">&lt;-</span>tmp;</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>     i<span class="ot">&lt;-</span>i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  }}</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>coid_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,coid)</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>cois_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,cois)</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co"># calculate the Z value and P value.</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>null_zp<span class="ot">&lt;-</span><span class="cf">function</span>(original_value,nullvalues){</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>   z<span class="ot">=</span>(original_value<span class="sc">-</span><span class="fu">mean</span>(nullvalues,<span class="at">na.rm=</span>T))<span class="sc">/</span><span class="fu">sd</span>(nullvalues,<span class="at">na.rm=</span>T)</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>   pless <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&gt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>   pmore <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&lt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>   p<span class="ot">&lt;-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pmin</span>(pless, pmore)</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>   p<span class="ot">=</span><span class="fu">pmin</span>(<span class="dv">1</span>, (p <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span>(<span class="fu">length</span>(nullvalues) <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>   <span class="fu">c</span>(<span class="at">z=</span>z,<span class="at">p=</span>p)</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>}</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="fu">null_zp</span>(coid_obs,coid_null)</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="fu">null_zp</span>(cois_obs,cois_null)</span></code></pre></div>
 </div>
 <div id="for-tripartite-networks-with-intra-guild-interactions" class="section level3">
 <h3>For tripartite networks with intra-guild interactions</h3>
@@ -764,53 +771,52 @@ vs interconnection motifs</p>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">library</span>(gghalves)</span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="fu">data</span>(PPH_Network)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;./data/PPH_Network.rda&quot;</span>)</span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#interconnection pattern</span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>PPH_IP <span class="ot">&lt;-</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>   <span class="fu">t</span>(<span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(PPH_Network, <span class="cf">function</span>(x) {</span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fu">poc</span>(x),<span class="fu">coid</span>(x), <span class="fu">cois</span>(x), <span class="fu">pc</span>(x),  <span class="fu">hc</span>(x))</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>   })))</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="fu">rownames</span>(PPH_IP) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;net&quot;</span>, <span class="at">seq =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>PPH_IP[<span class="fu">is.na</span>(PPH_IP)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>PPH_IP_dist <span class="ot">&lt;-</span> <span class="fu">rdist</span>(PPH_IP, <span class="at">metric =</span> <span class="st">&quot;correlation&quot;</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>PPH_IP_dist <span class="ot">&lt;-</span> PPH_IP_dist <span class="sc">/</span> <span class="fu">max</span>(PPH_IP_dist)</span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>PPH_IP_dist_beta <span class="ot">&lt;-</span><span class="fu">betadisper</span>(PPH_IP_dist, <span class="at">group =</span> <span class="fu">rep</span>(<span class="st">&quot;net&quot;</span>, <span class="dv">18</span>), <span class="at">type =</span> <span class="st">&quot;centroid&quot;</span>)<span class="sc">$</span>distances</span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#interconnection motif</span></span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>PPH_motif <span class="ot">&lt;-</span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>   <span class="fu">t</span>(<span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(PPH_Network, <span class="cf">function</span>(x) {</span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>      <span class="fu">icmotif_count</span>(x)</span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>   })))</span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="fu">rownames</span>(PPH_motif) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;net&quot;</span>, <span class="at">seq =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)</span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>PPH_motif_dist <span class="ot">&lt;-</span> <span class="fu">rdist</span>(PPH_motif, <span class="at">metric =</span> <span class="st">&quot;correlation&quot;</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>PPH_motif_dist <span class="ot">&lt;-</span> PPH_motif_dist <span class="sc">/</span> <span class="fu">max</span>(PPH_motif_dist)</span>
-<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>PPH_motif_dist_beta <span class="ot">&lt;-</span><span class="fu">betadisper</span>(PPH_motif_dist, <span class="at">group =</span> <span class="fu">rep</span>(<span class="st">&quot;net&quot;</span>, <span class="dv">18</span>), <span class="at">type =</span> <span class="st">&quot;centroid&quot;</span>)<span class="sc">$</span>distances</span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a></span>
-<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>PPH_macro.vs.meso <span class="ot">&lt;-</span></span>
-<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>   <span class="fu">data.frame</span>(</span>
-<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>      <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;macro&quot;</span>, <span class="st">&quot;meso&quot;</span>), <span class="at">each =</span> <span class="dv">18</span>)),</span>
-<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>      <span class="at">dist_cen =</span> <span class="fu">c</span>(PPH_IP_dist_beta, PPH_motif_dist_beta)</span>
-<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>   )</span>
-<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a>PPH_macro.vs.meso<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">factor</span>(PPH_macro.vs.meso<span class="sc">$</span>type)</span>
-<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#Wilcoxon test </span></span>
-<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>pph_wilcox <span class="ot">&lt;-</span><span class="fu">wilcox.test</span>(PPH_macro.vs.meso[<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>, <span class="dv">2</span>], PPH_macro.vs.meso[<span class="dv">19</span><span class="sc">:</span><span class="dv">36</span>, <span class="dv">2</span>], <span class="at">paired =</span> T)</span>
-<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>pph_wilcox<span class="sc">$</span>statistic</span>
-<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a>pph_wilcox<span class="sc">$</span>p.value</span>
-<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="co">#plot</span></span>
-<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a><span class="fu">ggplot</span>(PPH_macro.vs.meso,<span class="fu">aes</span>(type,dist_cen))<span class="sc">+</span></span>
-<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a>   <span class="fu">geom_half_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>type),</span>
-<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>                <span class="at">outlier.shape =</span> <span class="cn">NA</span>,<span class="at">nudge =</span><span class="dv">0</span>, <span class="at">width =</span> .<span class="dv">6</span>,<span class="at">errorbar.draw =</span> F)<span class="sc">+</span></span>
-<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a>   <span class="fu">theme_test</span>()<span class="sc">+</span></span>
-<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>   <span class="fu">geom_half_point</span>(<span class="at">side =</span> <span class="st">&quot;r&quot;</span>,<span class="at">shape=</span><span class="dv">18</span>,</span>
-<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>,<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;#ff8099&quot;</span>,<span class="st">&quot;#20b2aa&quot;</span>))<span class="sc">+</span></span>
-<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a>   <span class="co"># annotate(&quot;text&quot;, label = &quot;paste(bold(italic(p)), \&quot; = 0.014 \&quot;)&quot; ,</span></span>
-<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a>   <span class="co">#          x = 1.5, y = 0.744, size = 3.2, colour = &quot;black&quot;,parse=T)+</span></span>
-<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>,<span class="at">y=</span><span class="st">&quot;Distance to centroid (PPH)&quot;</span>)<span class="sc">+</span></span>
-<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a>   <span class="fu">stat_compare_means</span>(<span class="at">method=</span><span class="st">&quot;wilcox.test&quot;</span>,<span class="at">paired =</span> T,<span class="at">size=</span><span class="dv">5</span>,<span class="at">vjust =</span> <span class="fl">0.5</span>,<span class="at">hjust=</span><span class="sc">-</span><span class="fl">0.3</span>)<span class="sc">+</span></span>
-<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
-<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a>                                         <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>,<span class="at">color =</span> <span class="st">&quot;black&quot;</span>),</span>
-<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a>                                         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
-<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a>                                         <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span></code></pre></div>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>PPH_IP <span class="ot">&lt;-</span><span class="fu">t</span>(<span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(PPH_Network, <span class="cf">function</span>(x) {</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fu">poc</span>(x),<span class="fu">coid</span>(x), <span class="fu">cois</span>(x), <span class="fu">pc</span>(x),  <span class="fu">hc</span>(x))</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>   })))</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="fu">rownames</span>(PPH_IP) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;net&quot;</span>, <span class="at">seq =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>PPH_IP[<span class="fu">is.na</span>(PPH_IP)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>PPH_IP_dist <span class="ot">&lt;-</span> <span class="fu">rdist</span>(PPH_IP, <span class="at">metric =</span> <span class="st">&quot;correlation&quot;</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>PPH_IP_dist <span class="ot">&lt;-</span> PPH_IP_dist <span class="sc">/</span> <span class="fu">max</span>(PPH_IP_dist)</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>PPH_IP_dist_beta <span class="ot">&lt;-</span><span class="fu">betadisper</span>(PPH_IP_dist, <span class="at">group =</span> <span class="fu">rep</span>(<span class="st">&quot;net&quot;</span>, <span class="dv">18</span>), <span class="at">type =</span> <span class="st">&quot;centroid&quot;</span>)<span class="sc">$</span>distances</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#interconnection motif</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>PPH_motif <span class="ot">&lt;-</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>   <span class="fu">t</span>(<span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(PPH_Network, <span class="cf">function</span>(x) {</span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>      <span class="fu">icmotif_count</span>(x)</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>   })))</span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="fu">rownames</span>(PPH_motif) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;net&quot;</span>, <span class="at">seq =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>PPH_motif_dist <span class="ot">&lt;-</span> <span class="fu">rdist</span>(PPH_motif, <span class="at">metric =</span> <span class="st">&quot;correlation&quot;</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>PPH_motif_dist <span class="ot">&lt;-</span> PPH_motif_dist <span class="sc">/</span> <span class="fu">max</span>(PPH_motif_dist)</span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>PPH_motif_dist_beta <span class="ot">&lt;-</span><span class="fu">betadisper</span>(PPH_motif_dist, <span class="at">group =</span> <span class="fu">rep</span>(<span class="st">&quot;net&quot;</span>, <span class="dv">18</span>), <span class="at">type =</span> <span class="st">&quot;centroid&quot;</span>)<span class="sc">$</span>distances</span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>PPH_macro.vs.meso <span class="ot">&lt;-</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>   <span class="fu">data.frame</span>(</span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>      <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;macro&quot;</span>, <span class="st">&quot;meso&quot;</span>), <span class="at">each =</span> <span class="dv">18</span>)),</span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>      <span class="at">dist_cen =</span> <span class="fu">c</span>(PPH_IP_dist_beta, PPH_motif_dist_beta)</span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>   )</span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>PPH_macro.vs.meso<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">factor</span>(PPH_macro.vs.meso<span class="sc">$</span>type)</span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="co">#Wilcoxon test </span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>pph_wilcox <span class="ot">&lt;-</span><span class="fu">wilcox.test</span>(PPH_macro.vs.meso[<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>, <span class="dv">2</span>], PPH_macro.vs.meso[<span class="dv">19</span><span class="sc">:</span><span class="dv">36</span>, <span class="dv">2</span>], <span class="at">paired =</span> T)</span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>pph_wilcox<span class="sc">$</span>statistic</span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>pph_wilcox<span class="sc">$</span>p.value</span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="co">#plot</span></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="fu">ggplot</span>(PPH_macro.vs.meso,<span class="fu">aes</span>(type,dist_cen))<span class="sc">+</span></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a>   <span class="fu">geom_half_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>type),</span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a>                <span class="at">outlier.shape =</span> <span class="cn">NA</span>,<span class="at">nudge =</span><span class="dv">0</span>, <span class="at">width =</span> .<span class="dv">6</span>,<span class="at">errorbar.draw =</span> F)<span class="sc">+</span></span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>   <span class="fu">theme_test</span>()<span class="sc">+</span></span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a>   <span class="fu">geom_half_point</span>(<span class="at">side =</span> <span class="st">&quot;r&quot;</span>,<span class="at">shape=</span><span class="dv">18</span>,</span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>,<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;#ff8099&quot;</span>,<span class="st">&quot;#20b2aa&quot;</span>))<span class="sc">+</span></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a>   <span class="co"># annotate(&quot;text&quot;, label = &quot;paste(bold(italic(p)), \&quot; = 0.014 \&quot;)&quot; ,</span></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a>   <span class="co">#          x = 1.5, y = 0.744, size = 3.2, colour = &quot;black&quot;,parse=T)+</span></span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>,<span class="at">y=</span><span class="st">&quot;Distance to centroid (PPH)&quot;</span>)<span class="sc">+</span></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a>   <span class="fu">stat_compare_means</span>(<span class="at">method=</span><span class="st">&quot;wilcox.test&quot;</span>,<span class="at">paired =</span> T,<span class="at">size=</span><span class="dv">5</span>,<span class="at">vjust =</span> <span class="fl">0.5</span>,<span class="at">hjust=</span><span class="sc">-</span><span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a>                                         <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>,<span class="at">color =</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a>                                         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a>                                         <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span></code></pre></div>
 <p>Micro-scale interconnection centrality vs interconnection motif
 role</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a></span>
@@ -871,7 +877,7 @@ role</p>
 <span id="cb12-56"><a href="#cb12-56" tabindex="-1"></a>                                         <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span></code></pre></div>
 <p><strong>PHP network data</strong> <br>Macro-scale interconnection
 patterns vs interconnection motifs</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">data</span>(PHP_Network)</span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;./data/PHP_Network.rda&quot;</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#interconnection pattern</span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>PHP_IP <span class="ot">&lt;-</span></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>   <span class="fu">t</span>(<span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(PHP_Network, <span class="cf">function</span>(x) {</span>

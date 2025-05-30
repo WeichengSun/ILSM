@@ -12,7 +12,7 @@ poc(network.or.subnet_mat1, subnet_mat2 = NULL)
 \item{subnet_mat2}{A matrix representing one subnetwork.}
 }
 \value{
-Return a value representing the proportion of connector species in shared set of species.
+Return a vector of POC (proportion of connector nodes), number of connector nodes and number of shared species set.
 }
 \description{
 Calculating the proportion of connector nodes in the shared set of nodes.
