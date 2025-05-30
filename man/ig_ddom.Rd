@@ -72,6 +72,7 @@ par(mar=c(5,5,5,5));plot(mat,col = pal,
     abline(v = c(4.5,9.5), h = c(3.5,8.5), lwd = 3, col = "black")
 
 ig_ddom(mat)
+
 }
 \references{
 García-Callejas, D., Godoy, O., Buche, L., Hurtado, M., Lanuza, J.B., Allen-Perkins, A. et al. (2023) Non-random interactions within and across guilds shape the potential to coexist in multi-trophic ecological communities. Ecology Letters, 26, 831–842.
