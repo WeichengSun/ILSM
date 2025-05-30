@@ -43,8 +43,6 @@
 #' tri_null_list<-tri_null(Net,null_type="both_sub",sub_method="quasiswap")
 #' set.seed(123)
 #' tri_null_list<-tri_null(Net,null_type="sauve")
-
-
 tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both_sub"), sub_method){
    if(!null_type%in%c("sauve","sub_P","sub_Q","both_sub")|length(null_type)!=1){stop("Wrong input for null_type")}
    if(null_type%in%c("sub_P","sub_Q","both_sub")&missing(sub_method)){stop("sub_method should be provided for subnetwork null models")}

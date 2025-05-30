@@ -21,7 +21,7 @@
 #'
 #'
 #' @return
-#' Return a value representing the proportion of connector species in shared set of species.
+#' Return a vector of POC (proportion of connector nodes), number of connector nodes and number of shared species set.
 #'
 #' @import igraph
 #' @export
@@ -64,9 +64,11 @@ poc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
       mat1<-t(mat[V(network)$level==0,V(network)$level==1])
       mat2<-mat[V(network)$level==1,V(network)$level==2]
       logi<-rowSums(mat1)*rowSums(mat2)!=0
-      C<-sum(logi)/nrow(mat1)
+      con=sum(logi)
+      Sha=nrow(mat1)
+      POC<-con/Sha
       #message(paste(c("POC"),"=",seq=c(C)),"\n")
-      return(C)
+      return(c(POC=POC,connectors=con,shared_nodes=Sha))
    }
    else if(inherits(network.or.subnet_mat1,c("matrix"))){
       if(inherits(subnet_mat2,c("matrix"))){
@@ -88,9 +90,10 @@ poc<-function(network.or.subnet_mat1, subnet_mat2=NULL){
          mat2[rownames(subnet_mat2),]<-subnet_mat2
          mat2[mat2>0]<-1
          logi<-rowSums(mat1)*rowSums(mat2)!=0
-         C<-sum(logi)/nrow(mat1)
-         #message(paste(c("POC"),"=",seq=c(C)),"\n")
-         return(C)
+         con=sum(logi)
+         Sha=nrow(mat1)
+         POC<-con/Sha
+         return(c(POC=POC,connectors=con,shared_nodes=Sha))
       }
       else
          stop("please check the type of 'subnet_mat2' or the row number of this matrix")
