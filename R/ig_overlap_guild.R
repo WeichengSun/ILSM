@@ -5,6 +5,7 @@
 #' @param mat A square block interaction matrix representing a tripartite network including intra-guild and inter-guild interactions. See details.
 #' @param guilds A character vector matching rows of \code{mat} to indicate the guilds using ('a','b' and 'c'). See details.
 #' @param method The distance method. Same with \emph{vegan::vegdist}. Default to "horn"
+#' @export
 #' @details
 #' The input is a block matrix (\eqn{M}) to represent interactions among three groups of species (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
 #' two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}} with symmetric links), and two inter-guild matrices of b- and c-nodes(\eqn{m_{bc},m_{cb}} with symmetric links). Connector species belong to b-nodes.

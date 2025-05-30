@@ -3,6 +3,7 @@
 #' Calculating the degree of diagonal dominance for a tripartite network with intra-guild interactions.
 #'
 #' @param mat A square block interaction matrix representing a tripartite network including intra-guild and inter-guild interactions. See details.
+#' @export
 #' @details
 #' To calculate degree of diagonal dominance, the input should be a block matrix (\eqn{M}) to represent three groups of nodes (a-nodes, b-nodes and c-nodes): three intra-guild interaction matrices (\eqn{m_{aa},m_{bb},m_{cc}}),
 #' two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}}), and two inter-guild matrices of b- and c-nodes(\eqn{m_{bc},m_{cb}}).
