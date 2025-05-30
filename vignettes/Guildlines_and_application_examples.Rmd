@@ -258,6 +258,7 @@ coid_obs<-coid(PPH_Coltparkmeadow)
 cois_obs<-cois(PPH_Coltparkmeadow)
 null_net<-vector("list",length=1000)
 #The simulated networks sometimes have too less connector nodes to calculate some metrics such as coid, cois. It is recommended to set a threshold (here is 4 at least)
+i<-1
 while (i<1000) {
   tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "sauve")[[1]]# try "sub_both", "sub_
   if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes
