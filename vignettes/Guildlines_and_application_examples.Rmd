@@ -349,7 +349,7 @@ library(ggpubr)
 load("./data/PPH_Network.rda")
 #interconnection pattern
 PPH_IP <-t(as.data.frame(lapply(PPH_Network, function(x) {
-      c(poc(x),coid(x), cois(x), pc(x),  hc(x))
+      c(poc(x)[1],coid(x), cois(x), pc(x),  hc(x))
    })))
 rownames(PPH_IP) <- paste0("net", seq = 1:18)
 PPH_IP[is.na(PPH_IP)] <- 0
@@ -460,7 +460,7 @@ load("./data/PHP_Network.rda")
 #interconnection pattern
 PHP_IP <-
    t(as.data.frame(lapply(PHP_Network, function(x) {
-      c(coid(x), cois(x), pc(x), pc(x), hc(x))
+      c(poc(x)[1],coid(x), cois(x), pc(x),  hc(x))
    })))
 rownames(PHP_IP) <- paste0("net", seq = 1:31)
 PHP_IP[is.na(PHP_IP)] <- 0
@@ -468,11 +468,11 @@ PHP_IP_dist <- rdist(PHP_IP, metric = "correlation")
 PHP_IP_dist <- PHP_IP_dist / max(PHP_IP_dist)
 PHP_IP_dist_beta <-betadisper(PHP_IP_dist, group = rep("net", 31), type = "centroid")$distances
 
-adjust_net(PHP_Network[[1]])
+
 #interconnection motif
 PHP_MOTIF <-
    t(as.data.frame(lapply(PHP_Network, function(x) {
-      icmotif_count(x)
+      icmotif_count(x)[,2]
    })))
 rownames(PHP_MOTIF) <- paste0("net", seq = 1:31)
 PHP_MOTIF_dist <- rdist(PHP_MOTIF, metric = "correlation")
