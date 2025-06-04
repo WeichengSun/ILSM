@@ -71,7 +71,7 @@
 #' ##set the node names
 #' rownames(mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3));colnames(mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3))
 #'
-#' mat[mat!=0] <- 1
+#' #mat[mat!=0] <- 1
 #' myguilds=c(rep("a",4),rep("b",5),rep("c",3))
 #' ig_icmotif_count(mat,guilds=myguilds,T)
 #'
