@@ -4,21 +4,14 @@
 \alias{ig_icmotif_count}
 \title{Count interconnection motifs for tripartite networks with intra-guild interactions}
 \usage{
-ig_icmotif_count(
-  subnet_mat1,
-  subnet_mat2,
-  AA = NULL,
-  BB = NULL,
-  CC = NULL,
-  weighted = FALSE
-)
+ig_icmotif_count(mat, guilds, weighted = FALSE)
 }
 \arguments{
-\item{subnet_mat2}{A matrix representing one subnetwork.}
+\item{mat}{A square block interaction matrix representing a tripartite network including intra-guild and inter-guild interactions. See details.}
+
+\item{guilds}{A character vector matching rows of \code{mat} to indicate the guilds using ('a','b' and 'c'). See details.}
 
 \item{weighted}{Logical. Default to FALSE. If TRUE, the arithmetic mean of the subgraph weights is provided for each motif. See details}
-
-\item{network.or.subnet_mat1}{An igraph object or matrix. An "igraph" object with node attribute 'level' or a matrix representing one subnetwork. See details.}
 }
 \value{
 Return a data.fame of the frequencies (and mean weight) of 107 interconnection motifs.
@@ -39,6 +32,8 @@ two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}}), and two inter-g
   \right)
 }
 
+\code{guilds} should be a vector of the same length as the row of \code{mat} like c("a","a"..."b","b"..."c","c"..)
+
 \strong{Interconnection motifs in tripartite networks with intra-guild interactions}
 \if{html}{\out{<br>}}An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each guild has two nodes at most, resulting in a total of 107 distinct motif forms.
 The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019). For interconnection motifs in tripartite networks without intra-guild interactions, please see \strong{icmotif_count} and \strong{icmotif_role}.
@@ -48,35 +43,39 @@ The algorithm for counting interconnection motifs is designed by extending the f
 }
 \examples{
 
-## generate a random tripartite network
+## A toy tripartite network with intra-guild negative interactions, inter-guild mutualistic interactions and inter-guild antagonistic interactions.
 set.seed(12)
-Net <- build_net(11,15,16,0.2)
-icmotif_count(Net)
+##4 a-nodes,5 b-nodes, and 3 c-nodes
 
-## empirical network
-data(PPH_Coltparkmeadow)
-Net <- PPH_Coltparkmeadow
-icmotif_count(Net)
-set.seed(13)
-E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
-icmotif_count(Net, weighted=T)
+##intra-guild interaction matrices
+mat_aa<-matrix(runif(16,-0.8,-0.2),4,4)
+mat_aa <- mat_aa + t(mat_aa); diag(mat_aa) <- 0
+mat_bb<-matrix(runif(25,-0.8,-0.2),5,5)
+mat_bb <- mat_bb + t(mat_bb); diag(mat_bb) <- 0
+mat_cc<-matrix(runif(9,-0.8,-0.2),3,3)
+mat_cc <- mat_cc + t(mat_cc); diag(mat_cc) <- 0
 
+##inter-guild interaction matrices between a- and b-nodes.
+mat_ab<-mat_ba<-matrix(sample(c(rep(0,8),runif(12,0,0.5))),4,5,byrow=T)# interaction probability = 12/20
+mat_ba<-t(mat_ba)
 
-##input as binary matrices, with row names.
-set.seed(12)
-md1 <- matrix(sample(c(0,1),8*11,replace=TRUE),8,11,dimnames = list(paste0("b",1:8),paste0("c",1:11)))
-md2 <- matrix(sample(c(0,1),10*12,replace=TRUE),10,12,dimnames = list(paste0("b",1:10),paste0("a",1:12)))
-icmotif_count(md1,md2)
+##inter-guild interaction matrices between b- and c-nodes.
+mat_cb<-mat_bc<-matrix(sample(c(rep(0,8),runif(7,0,0.5))),3,5,byrow=T)# interaction probability = 7/15
+mat_bc<--t(mat_bc)
+mat<-rbind(cbind(mat_aa,mat_ab,matrix(0,4,3)),cbind(mat_ba,mat_bb,mat_bc),cbind(matrix(0,3,4),mat_cb,mat_cc))
 
+##set the node names
+rownames(mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3));colnames(mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3))
 
-##input as weighted matrices,with row numbers as row names.
-set.seed(12)
-mdw1 <- matrix(sample(c(rep(0,40),runif(48,0,1))),8,11)
-mdw2 <- matrix(sample(c(rep(0,40),runif(80,0,1))),10,12)
-icmotif_count(mdw1,mdw2,weighted=T)
+mat[mat!=0] <- 1
+myguilds=c(rep("a",4),rep("b",5),rep("c",3))
+ig_icmotif_count(mat,guilds=myguilds,T)
+
 
 }
 \references{
+García-Callejas, D., Godoy, O., Buche, L., Hurtado, M., Lanuza, J.B., Allen-Perkins, A. et al. (2023) Non-random interactions within and across guilds shape the potential to coexist in multi-trophic ecological communities. Ecology Letters, 26, 831–842.
+
 Pilosof, S., Porter, M. A., Pascual, M., & KC)fi, S. (2017). The multilayer nature of ecological networks. Nature Ecology & Evolution, 1(4), 0101.
 
 Mora, B.B., Cirtwill, A.R. and Stouffer, D.B. (2018). pymfinder: a tool for the motif analysis of binary and quantitative complex networks. bioRxiv, 364703.
