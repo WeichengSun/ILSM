@@ -194,27 +194,30 @@ knitr::include_graphics("../man/figure/worked_example.png")
 # set.seed(12)
 # coid_obs<-coid(PPH_Coltparkmeadow)
 # cois_obs<-cois(PPH_Coltparkmeadow)
-# null_net<-vector("list",length=1000)
-# #The simulated networks sometimes have too less connector nodes to calculate some metrics such as coid, cois. It is recommended to set a threshold (here is 4 at least)
-# while (i<1000) {
-#   tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "sauve")[[1]]# try "sub_both", "sub_
-#   if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes
-#      null_net[[i]]<-tmp;
-#      i<-i+1
-#   }}
-# coid_null<-sapply(null_net,coid)
-# cois_null<-sapply(null_net,cois)
-# # calculate the Z value and P value.
-# null_zp<-function(original_value,nullvalues){
-#    z=(original_value-mean(nullvalues,na.rm=T))/sd(nullvalues,na.rm=T)
-#    pless <- sum(original_value >= nullvalues, na.rm = TRUE)
-#    pmore <- sum(original_value <= nullvalues, na.rm = TRUE)
-#    p<-2 * pmin(pless, pmore)
-#    p=pmin(1, (p + 1)/(length(nullvalues) + 1))
-#    c(z=z,p=p)
-# }
-# null_zp(coid_obs,coid_null)
-# null_zp(cois_obs,cois_null)
+#  i<-1
+#    while (i<=1000) {
+#       tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "both_sub",sub_method="r00")[[1]]# try "sauve"
+#       if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., two few connector nodes led to NA for CoID.
+#          null_net[[i]]<-tmp;
+#          i<-i+1
+#       }}
+#    coid_null<-sapply(null_net,coid)
+#    cois_null<-sapply(null_net,cois)
+#    icmotif_null<-pbsapply(null_net,function(x){icmotif_count(x)[,2]})# Counts of motifs for null models
+#    # function to calculate the Z value and P value.
+#    null_zp<-function(original_value,nullvalues){
+#       z=(original_value-mean(nullvalues,na.rm=T))/sd(nullvalues,na.rm=T)
+#       pless <- sum(original_value >= nullvalues, na.rm = TRUE)
+#       pmore <- sum(original_value <= nullvalues, na.rm = TRUE)
+#       p<-2 * pmin(pless, pmore)
+#       p=pmin(1, (p + 1)/(length(nullvalues) + 1))
+#       c(z=z,p=p)
+#    }
+#    # Z and P values
+#    null_zp(coid_obs,coid_null)# for coid
+#    null_zp(cois_obs,cois_null)# for cois
+#    icmotif_null_and_obs<-cbind(icmotif_count(PPH_Coltparkmeadow)[,2],icmotif_null)
+#    apply( icmotif_null_and_obs,1,function(x){null_zp(x[1],x[-1])})# for motifs
 
 ## ----echo=F,eval = T,out.width = "80%",fig.align = 'center'-------------------
 knitr::include_graphics("../man/figure/intra_guild_icmotif.png")
@@ -264,7 +267,7 @@ knitr::include_graphics("../man/figure/intra_guild_icmotif.png")
 # load("./data/PPH_Network.rda")
 # #interconnection pattern
 # PPH_IP <-t(as.data.frame(lapply(PPH_Network, function(x) {
-#       c(poc(x),coid(x), cois(x), pc(x),  hc(x))
+#       c(poc(x)[1],coid(x), cois(x), pc(x),  hc(x))
 #    })))
 # rownames(PPH_IP) <- paste0("net", seq = 1:18)
 # PPH_IP[is.na(PPH_IP)] <- 0
@@ -371,7 +374,7 @@ knitr::include_graphics("../man/figure/intra_guild_icmotif.png")
 # #interconnection pattern
 # PHP_IP <-
 #    t(as.data.frame(lapply(PHP_Network, function(x) {
-#       c(coid(x), cois(x), pc(x), pc(x), hc(x))
+#       c(poc(x)[1],coid(x), cois(x), pc(x),  hc(x))
 #    })))
 # rownames(PHP_IP) <- paste0("net", seq = 1:31)
 # PHP_IP[is.na(PHP_IP)] <- 0
@@ -379,11 +382,11 @@ knitr::include_graphics("../man/figure/intra_guild_icmotif.png")
 # PHP_IP_dist <- PHP_IP_dist / max(PHP_IP_dist)
 # PHP_IP_dist_beta <-betadisper(PHP_IP_dist, group = rep("net", 31), type = "centroid")$distances
 # 
-# adjust_net(PHP_Network[[1]])
+# 
 # #interconnection motif
 # PHP_MOTIF <-
 #    t(as.data.frame(lapply(PHP_Network, function(x) {
-#       icmotif_count(x)
+#       icmotif_count(x)[,2]
 #    })))
 # rownames(PHP_MOTIF) <- paste0("net", seq = 1:31)
 # PHP_MOTIF_dist <- rdist(PHP_MOTIF, metric = "correlation")

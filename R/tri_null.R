@@ -40,7 +40,7 @@
 #' Net <- PPH_Coltparkmeadow
 #'
 #' set.seed(123)
-#' tri_null_list<-tri_null(Net,null_type="both_sub",sub_method="quasiswap")
+#' tri_null_list<-tri_null(Net,null_type="both_sub",sub_method="r00")
 #' set.seed(123)
 #' tri_null_list<-tri_null(Net,null_type="sauve")
 tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both_sub"), sub_method){
@@ -55,7 +55,7 @@ tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both
       MAT<-mat
       null_network<-apply(null_list,3, function(x){
          MAT[V(trinet)$level==0,V(trinet)$level==1]<-x
-         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")#max to create an undirected graph
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="upper")#max to create an undirected graph
          V(Nnetwork)$name<-V(trinet)$name
          V(Nnetwork)$level<-V(trinet)$level
          dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
@@ -72,7 +72,7 @@ tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both
       MAT<-mat
       null_network<-lapply(null_list,3, function(x){
          MAT[V(network)$level==1,V(network)$level==2]<-x
-         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="upper")
          V(Nnetwork)$name<-V(network)$name
          V(Nnetwork)$level<-V(network)$level
          dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
@@ -92,7 +92,7 @@ tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both
       null_network<-lapply(1:null_N,function(x){
          MAT[V(trinet)$level==0,V(trinet)$level==1]<-null_P_list[,,x]
          MAT[V(trinet)$level==1,V(trinet)$level==2]<-null_Q_list[,,x]
-         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="upper")
          V(Nnetwork)$name<-V(trinet)$name
          V(Nnetwork)$level<-V(trinet)$level
          dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
@@ -104,13 +104,13 @@ tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both
       })
    }
    else if(null_type=="sauve"){
-      null_list1<-SauveR(null_N,matP,type="col")
-      null_list2<-SauveR(null_N,matQ,type="row")
+      null_list1<-lapply(1:null_N,function(x) {matP[,sample(1:ncol(matP))]})#SauveR(null_N,matP,type="col")
+      null_list2<-lapply(1:null_N,function(x) {matQ[sample(1:nrow(matQ)),]})
       MAT<-mat
       null_network<-lapply(1:null_N,function(x){
          MAT[V(trinet)$level==0,V(trinet)$level==1]<-null_list1[[x]]
          MAT[V(trinet)$level==1,V(trinet)$level==2]<-null_list2[[x]]
-         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="max")
+         Nnetwork<-graph_from_adjacency_matrix(MAT,mode="upper")
          V(Nnetwork)$name<-V(trinet)$name
          V(Nnetwork)$level<-V(trinet)$level
          dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout

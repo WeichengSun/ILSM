@@ -175,6 +175,11 @@ node_icc(PPH_Coltparkmeadow,weighted=T)
 ```
 
 <img src="./man/figure/worked_example.png" width="70%" style="display: block; margin: auto;" />
+Fig. 3. The interconnection structures of the example PPH network. (a)
+Five interconnection patterns. (b) Three interconnection centrality
+indices for eight connector species. (c) The frequencies of 48
+interconnection motifs. (d) The frequencies (ln-transformed) of 70 roles
+for eight connector species in the interconnection motifs.
 
 ## Extensional analysis
 
@@ -225,7 +230,7 @@ guild to contain only two nodes, resulting in 107 interconnection
 motifs.
 
 <img src="./man/figure/intra_guild_icmotif.png" width="80%" style="display: block; margin: auto;" />
-Fig. 3. The 107 forms of interconnection motifs with intra-guild
+Fig. 4. The 107 forms of interconnection motifs with intra-guild
 interactions. Each guild contains only two nodes at most. Blue and grey
 nodes from one subnetwork, and grey and orange nodes from the other
 subnetwork. Grey nodes are connector nodes.
