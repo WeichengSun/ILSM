@@ -14,8 +14,7 @@ ig_icmotif_role(mat, guilds, weighted = FALSE)
 \item{weighted}{Logical. Default to FALSE. If TRUE, a weighted measure is provided. See details.}
 }
 \value{
-return a matrix of 43 columns representing the roles of interconnecting
-species in the top 35 motifs.
+For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exist.
 }
 \description{
 Count the roles of connector nodes defined by interconnection motifs in a tripartite network with intra-guild interactions.
@@ -37,7 +36,7 @@ two inter-guild matrices of a and b-nodes (\eqn{m_{ab},m_{ba}}), and two inter-g
 
 \strong{Interconnection motifs in tripartite networks with intra-guild interactions}
 \if{html}{\out{<br>}}An interconnection motif is defined to comprise three sets of connected nodes: the connector nodes (belonging to b-nodes), the nodes in one subnetwork (belonging to a-nodes in the P subnetwork), and the nodes in the other subnetwork (belonging to c-nodes in the Q subnetwork). Each guild has two nodes at most, resulting in a total of 107 distinct motif forms.
-The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019). For interconnection motifs in tripartite networks without intra-guild interactions, please see \strong{icmotif_count} and \strong{icmotif_role}.
+The algorithm for counting interconnection motifs is designed by extending the fast approach from Simmons et al.(2019). Currently, only the roles in first 35 motifs are provided (see ). For interconnection motifs in tripartite networks without intra-guild interactions, please see \strong{icmotif_count} and \strong{icmotif_role}.
 
 \strong{Weighted networks}
 \if{html}{\out{<br>}}For weighted tripartite networks, the mean weight of the motif occurrence (i.e., a motif occurrence isomorphic to a particular motif form) is provided for a given node with a given role, following Mora et al. (2018) and Simmons et al. (2019).
