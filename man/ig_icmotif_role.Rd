@@ -14,7 +14,7 @@ ig_icmotif_role(mat, guilds, weighted = FALSE)
 \item{weighted}{Logical. Default to FALSE. If TRUE, a weighted measure is provided. See details.}
 }
 \value{
-For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exist.
+For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exists.
 }
 \description{
 Count the roles of connector nodes defined by interconnection motifs in a tripartite network with intra-guild interactions.

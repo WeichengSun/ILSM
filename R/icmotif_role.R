@@ -33,7 +33,7 @@
 #' @export
 #'
 #' @return
-#' For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exist.
+#' For binary networks, return a matrix with elements representing the number of times each connector node plays for each unique role within interconnection motifs; for weighted networks, the matrix element represents the mean weight of the motif occurrences where the node exists.
 #'
 #'
 #' @srrstats {G1.1} The algorithm is the first implementation of a novel algorithm.

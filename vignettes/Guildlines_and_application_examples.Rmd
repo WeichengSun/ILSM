@@ -291,7 +291,7 @@ knitr::include_graphics("../man/figure/intra_guild_icmotif.png")
 ```
 Fig. 3. The 107 forms of interconnection motifs with intra-guild interactions. Each guild contains only two nodes at most. Blue and grey nodes from one subnetwork, and grey and orange nodes from the other subnetwork. Grey nodes are connector nodes. 
 
-For a tripartite network with intra-guild interactions, **ig_icmotif_count** returns the counts of each motif, while **ig_icmotif_role** returns the counts of motif roles. Currently, ig_icmotif_role supports role counts only for the first 11 motifs.
+For a tripartite network with intra-guild interactions, **ig_icmotif_count** returns the counts of each motif, while **ig_icmotif_role** returns the counts of motif roles. Currently, ig_icmotif_role supports role counts only for the first 43 roles in the first 35 motifs.
 ```{r echo = T,eval = F}
 ig_icmotif_count(PPH_Coltparkmeadow)
 ig_icmotif_role(PPH_Coltparkmeadow)
