@@ -49,6 +49,7 @@
 #' Net <- PPH_Coltparkmeadow
 #' pc(Net)
 #' set.seed(13)
+#' library(igraph)
 #' E(Net)$weight<-runif(length(E(Net)),0.1,1)#random weights assigned
 #' pc(Net,weighted=T)
 #'
