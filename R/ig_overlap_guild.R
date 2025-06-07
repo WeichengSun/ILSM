@@ -72,7 +72,7 @@
 #'     abline(v = c(4.5,9.5), h = c(3.5,8.5), lwd = 3, col = "black")
 #'
 #' myguilds=c(rep("a",4),rep("b",5),rep("c",3))
-#' overlap_guild(mat,guilds=myguilds)
+#' ig_overlap_guild(mat,guilds=myguilds)
 
 ig_overlap_guild<-function(mat,guilds,method="horn"){
 
