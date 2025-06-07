@@ -44,7 +44,7 @@ set.seed(12)
 Net <- build_toy_net(11,15,16,0.2)
 hc(Net)
 
-empirical network
+#empirical network
 data(PPH_Coltparkmeadow)
 Net <- PPH_Coltparkmeadow
 hc(Net)
