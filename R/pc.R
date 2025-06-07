@@ -41,7 +41,7 @@
 #'
 #' ## generate a random binary tripartite network
 #' set.seed(12)
-#' Net <- build_net(11,15,16,0.2)
+#' Net <- build_toy_net(11,15,16,0.2)
 #' pc(Net)
 #'
 #' ##empirical network

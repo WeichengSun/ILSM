@@ -49,7 +49,7 @@
 #'
 #' ## generate a random tripartite network
 #' set.seed(12)
-#' Net <- build_net(11,15,16,0.2)
+#' Net <- build_toy_net(11,15,16,0.2)
 #'
 #' data(PPH_Coltparkmeadow)
 #' Net <- PPH_Coltparkmeadow

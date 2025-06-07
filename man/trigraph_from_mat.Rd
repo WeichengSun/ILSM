@@ -26,12 +26,7 @@ Elements in matrices are non-zero values if two nodes are linked with or without
 \examples{
 
 set.seed(12)
-MAT <- build_net(11,22,21,0.2,output_matrices=T)
-MAT[[1]]
-
-tmat<-t(MAT[[3]])
-colnames(tmat)<-NULL
-igraph_from_matrices(MAT[[3]],MAT[[4]])
-M <- igraph_from_matrices(tmat,MAT[[4]])
+MAT <- build_toy_net(11,22,21,0.2,output_matrices=T)
+M <- trigraph_from_mat(t(MAT[[3]]),MAT[[4]])
 M
 }

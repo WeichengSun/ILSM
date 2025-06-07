@@ -38,7 +38,7 @@
 #' Net <- build_net(11,15,16,0.2,output_matrices=T)
 #' Net
 #'
-build_net<-function(N_a, N_b, N_c, Co,output_matrices=FALSE){
+build_toy_net<-function(N_a, N_b, N_c, Co,output_matrices=FALSE){
    if(N_a<3||N_b<3||N_c<3)
       stop("Error: please make sure N_a>=3, N_b>=3 and N_c>=3!!!")
    lay<-N_a+N_b+N_c
