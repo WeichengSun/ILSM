@@ -20,7 +20,7 @@ knitr::include_graphics("../man/figure/trinet_and_example.png")
 # PPH_Coltparkmeadow<-trigraph_from_mat(P_mat,Q_mat,weighted = F)
 # 
 # #Generating random weights to showcase weighted metrics
-# E(PPH_Coltparkmeadow)$weight<-runif(length(E(PPH_Coltparkmeadow)),0.1,1)
+# E(PPH_Coltparkmeadow)$weight<-runif(length(E(PPH_Coltparkmeadow)),0.1,1.5)
 # 
 # #proportion of connector nodes
 # poc(PPH_Coltparkmeadow)

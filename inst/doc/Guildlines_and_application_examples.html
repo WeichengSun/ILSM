@@ -12,7 +12,7 @@
 
 
 
-<title>Guildlines_and_application_examples</title>
+<title>Guildlines and application examples</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -336,7 +336,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Guildlines_and_application_examples</h1>
+<h1 class="title toc-ignore">Guildlines and application examples</h1>
 
 
 
@@ -417,7 +417,7 @@ hubs (<strong>hc</strong>).</p>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>PPH_Coltparkmeadow<span class="ot">&lt;-</span><span class="fu">trigraph_from_mat</span>(P_mat,Q_mat,<span class="at">weighted =</span> F)</span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#Generating random weights to showcase weighted metrics</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="fu">E</span>(PPH_Coltparkmeadow)<span class="sc">$</span>weight<span class="ot">&lt;-</span><span class="fu">runif</span>(<span class="fu">length</span>(<span class="fu">E</span>(PPH_Coltparkmeadow)),<span class="fl">0.1</span>,<span class="dv">1</span>) </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="fu">E</span>(PPH_Coltparkmeadow)<span class="sc">$</span>weight<span class="ot">&lt;-</span><span class="fu">runif</span>(<span class="fu">length</span>(<span class="fu">E</span>(PPH_Coltparkmeadow)),<span class="fl">0.1</span>,<span class="fl">1.5</span>) </span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#proportion of connector nodes</span></span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="fu">poc</span>(PPH_Coltparkmeadow)</span>
@@ -680,7 +680,7 @@ subnetwork. Grey nodes are connector nodes.</p>
 <strong>ig_icmotif_count</strong> returns the counts of each motif,
 while <strong>ig_icmotif_role</strong> returns the counts of motif
 roles. Currently, ig_icmotif_role supports role counts only for the
-first 11 motifs.</p>
+first 43 roles in the first 35 motifs.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">ig_icmotif_count</span>(PPH_Coltparkmeadow)</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">ig_icmotif_role</span>(PPH_Coltparkmeadow)</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">ig_icmotif_count</span>(PPH_Coltparkmeadow, <span class="at">weighted=</span>T)</span>
