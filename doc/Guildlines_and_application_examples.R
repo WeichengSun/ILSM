@@ -48,7 +48,7 @@ knitr::include_graphics("../man/figure/trinet_and_example.png")
 # mr <- par(mfrow=c(6,8),mar=c(1,1,3,1))
 # IM_res<-Multi_motif("all")
 #  for(i in 1:48){
-#      plot(a[[i]],
+#      plot(IM_res[[i]],
 #           vertex.size=30, vertex.label=NA,
 #           vertex.color="#D0E7ED",main=motif_names[i])
 # }

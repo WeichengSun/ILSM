@@ -455,7 +455,7 @@ through the <strong>Multi_motif</strong> function in this package.</p>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>mr <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">8</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
 <span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>IM_res<span class="ot">&lt;-</span><span class="fu">Multi_motif</span>(<span class="st">&quot;all&quot;</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a> <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">48</span>){</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>     <span class="fu">plot</span>(a[[i]],</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>     <span class="fu">plot</span>(IM_res[[i]],</span>
 <span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>          <span class="at">vertex.size=</span><span class="dv">30</span>, <span class="at">vertex.label=</span><span class="cn">NA</span>,</span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>          <span class="at">vertex.color=</span><span class="st">&quot;#D0E7ED&quot;</span>,<span class="at">main=</span>motif_names[i])</span>
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>}</span>
