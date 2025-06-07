@@ -33,7 +33,7 @@
 #'
 #'
 #' @return
-#'  Return a data.fame of the frequencies (and mean weight) of 107 interconnection motifs.
+#'  Return a matrix of counts (and mean weight) of 107 interconnection motifs.
 #'
 #'
 #' @references
