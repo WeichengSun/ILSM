@@ -80,7 +80,7 @@ knitr::include_graphics("../man/figure/motif_ILSM.png")
 # PPH_net_rader<-data.frame(row.names = c("Max","Min","PPH"),
 #                       CoID=c(1,0,coid(PPH_Coltparkmeadow)),
 #                       CoIS=c(1,0,cois(PPH_Coltparkmeadow)),
-#                       POC=c(1,0,poc(PPH_Coltparkmeadow)),
+#                       POC=c(1,0,poc(PPH_Coltparkmeadow)[1]),
 #                       PCc=c(1,0,pc(PPH_Coltparkmeadow)),
 #                       HC=c(1,0,hc(PPH_Coltparkmeadow)))
 # radarchart(PPH_net_rader,
