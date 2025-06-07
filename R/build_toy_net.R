@@ -31,11 +31,11 @@
 #' @examples
 #'
 #' set.seed(12)
-#' Net <- build_net(11,15,16,0.2)
+#' Net <- build_toy_net(11,15,16,0.2)
 #' plot(Net)
 #'
 #' set.seed(12)
-#' Net <- build_net(11,15,16,0.2,output_matrices=T)
+#' Net <- build_toy_net(11,15,16,0.2,output_matrices=T)
 #' Net
 #'
 build_toy_net<-function(N_a, N_b, N_c, Co,output_matrices=FALSE){
