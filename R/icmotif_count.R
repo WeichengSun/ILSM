@@ -369,7 +369,7 @@ icmotif_count <- function(network.or.subnet_mat1, subnet_mat2=NULL, weighted =FA
 
       PQW <- t(apply(PW, 1, function(x){apply(QW,2, function(y){sum(All_add(x,y))})}))
 
-      M131 <- sum(PQW*(PQ)*(PQ-2)/2)
+      M131 <- sum(PQW*(PQ-1)*(PQ-2)/2)
 
       M141 <- sum(PQW*(PQ-1)*(PQ-2)*(PQ-3)/6)
 

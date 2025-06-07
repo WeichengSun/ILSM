@@ -161,7 +161,7 @@ ig_icmotif_role<-function(mat, guilds,weighted =FALSE) {
       M212_2 <- B2A_YES * B2C_NO
       BB_role <- cbind(BB_role,M212_2)
 
-      M212_3 <- B2A_NO * B2C_YE
+      M212_3 <- B2A_NO * B2C_YES
       BB_role <- cbind(BB_role,M212_3)
 
       M212_4 <- B2A_YES * B2C_YES
