@@ -256,16 +256,16 @@ library(ggplot2)
 set.seed(12)
 coid_obs<-coid(PPH_Coltparkmeadow)
 cois_obs<-cois(PPH_Coltparkmeadow)
-null_net<-vector("list",1000)
+null_net<-vector("list",100)
  i<-1
-   while (i<=1000) {
+   while (i<=100) {
       tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "both_sub",sub_method="r00")[[1]]# try "sauve"
-      if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., two few connector nodes led to NA for CoID. 
+      if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., too few connector nodes led to NA for CoID. 
          null_net[[i]]<-tmp;
          i<-i+1
       }}
-   coid_null<-sapply(null_net,coid)
-   cois_null<-sapply(null_net,cois)
+   coid_null<-pbsapply(null_net,coid)
+   cois_null<-pbsapply(null_net,cois)
    icmotif_null<-pbsapply(null_net,function(x){icmotif_count(x)[,2]})# Counts of motifs for null models
    # function to calculate the Z value and P value.
    null_zp<-function(original_value,nullvalues){
@@ -294,15 +294,6 @@ Fig. 3. The 107 forms of interconnection motifs with intra-guild interactions. E
 
 For a tripartite network with intra-guild interactions, **ig_icmotif_count** returns the counts of each motif, while **ig_icmotif_role** returns the counts of motif roles. Currently, ig_icmotif_role supports role counts only for the first 43 roles in the first 35 motifs.
 ```{r echo = T,eval = F}
-ig_icmotif_count(PPH_Coltparkmeadow)
-ig_icmotif_role(PPH_Coltparkmeadow)
-ig_icmotif_count(PPH_Coltparkmeadow, weighted=T)
-ig_icmotif_role(PPH_Coltparkmeadow, weighted=T)
-```
-
-#### Degree of diagonal dominance
-The **ig_ddom** calculates the degree of diagonal dominance for a tripartite network with intra-guild interactions (Garcia-Callejas et al. 2023).
-```{r echo = T,eval = F}
 ## A toy tripartite network with intra-guild negative interactions, inter-guild mutualistic interactions and inter-guild antagonistic interactions.
 set.seed(12)
 ##4 a-nodes,5 b-nodes, and 3 c-nodes
@@ -325,6 +316,16 @@ toy_mat<-rbind(cbind(mat_aa,mat_ab,matrix(0,4,3)),cbind(mat_ba,mat_bb,mat_bc),cb
 rownames(toy_mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3));colnames(toy_mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3))
 diag(toy_mat)<--1 #assume -1 for diagonal elements
 
+myguilds=c(rep("a",4),rep("b",5),rep("c",3))
+ig_icmotif_count(toy_mat,guilds=myguilds)
+ig_icmotif_role(toy_mat,guilds=myguilds)
+ig_icmotif_count(toy_mat,guilds=myguilds,weighted=T)
+ig_icmotif_role(toy_mat,guilds=myguilds, weighted=T)
+```
+
+#### Degree of diagonal dominance
+The **ig_ddom** calculates the degree of diagonal dominance for a tripartite network with intra-guild interactions (Garcia-Callejas et al. 2023).
+```{r echo = T,eval = F}
 ig_ddom(toy_mat)
 ```
 #### Species-level intra-guild and inter-guild interaction overlap

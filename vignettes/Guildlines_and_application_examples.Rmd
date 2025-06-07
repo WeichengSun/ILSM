@@ -256,9 +256,9 @@ library(ggplot2)
 set.seed(12)
 coid_obs<-coid(PPH_Coltparkmeadow)
 cois_obs<-cois(PPH_Coltparkmeadow)
-null_net<-vector("list",1000)
+null_net<-vector("list",100)
  i<-1
-   while (i<=1000) {
+   while (i<=100) {
       tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "both_sub",sub_method="r00")[[1]]# try "sauve"
       if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., too few connector nodes led to NA for CoID. 
          null_net[[i]]<-tmp;
