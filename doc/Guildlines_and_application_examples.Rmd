@@ -189,7 +189,7 @@ ggplot(PPH_node_centrality_bar)+
 PPH_motif_bar<-data.frame(motif_id=1:48,frequency = icmotif_count(PPH_Coltparkmeadow))
 PPH_motif_bar$motif_id<-factor(PPH_motif_bar$motif_id)
 
-ggplot(PPH_motif_bar,aes(motif_id,frequency))+
+ggplot(PPH_motif_bar,aes(motif_id,frequency.count))+
    geom_bar(stat="identity",show.legend=F)+
    scale_y_break(breaks=c(300000,1200000),ticklabels=seq(1200000,1300000,50000),scales=0.2,expand =F)+
    scale_y_break(breaks=c(55000,130000),ticklabels=seq(130000,300000,60000),scales=0.4,expand =F)+
@@ -256,6 +256,7 @@ library(ggplot2)
 set.seed(12)
 coid_obs<-coid(PPH_Coltparkmeadow)
 cois_obs<-cois(PPH_Coltparkmeadow)
+null_net<-vector("list",1000)
  i<-1
    while (i<=1000) {
       tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "both_sub",sub_method="r00")[[1]]# try "sauve"

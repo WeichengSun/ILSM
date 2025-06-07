@@ -563,7 +563,7 @@ motifs.</p>
 <span id="cb6-62"><a href="#cb6-62" tabindex="-1"></a>PPH_motif_bar<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">motif_id=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">48</span>,<span class="at">frequency =</span> <span class="fu">icmotif_count</span>(PPH_Coltparkmeadow))</span>
 <span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a>PPH_motif_bar<span class="sc">$</span>motif_id<span class="ot">&lt;-</span><span class="fu">factor</span>(PPH_motif_bar<span class="sc">$</span>motif_id)</span>
 <span id="cb6-64"><a href="#cb6-64" tabindex="-1"></a></span>
-<span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a><span class="fu">ggplot</span>(PPH_motif_bar,<span class="fu">aes</span>(motif_id,frequency))<span class="sc">+</span></span>
+<span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a><span class="fu">ggplot</span>(PPH_motif_bar,<span class="fu">aes</span>(motif_id,frequency.count))<span class="sc">+</span></span>
 <span id="cb6-66"><a href="#cb6-66" tabindex="-1"></a>   <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend=</span>F)<span class="sc">+</span></span>
 <span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a>   <span class="fu">scale_y_break</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">300000</span>,<span class="dv">1200000</span>),<span class="at">ticklabels=</span><span class="fu">seq</span>(<span class="dv">1200000</span>,<span class="dv">1300000</span>,<span class="dv">50000</span>),<span class="at">scales=</span><span class="fl">0.2</span>,<span class="at">expand =</span>F)<span class="sc">+</span></span>
 <span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a>   <span class="fu">scale_y_break</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">55000</span>,<span class="dv">130000</span>),<span class="at">ticklabels=</span><span class="fu">seq</span>(<span class="dv">130000</span>,<span class="dv">300000</span>,<span class="dv">60000</span>),<span class="at">scales=</span><span class="fl">0.4</span>,<span class="at">expand =</span>F)<span class="sc">+</span></span>
@@ -633,30 +633,31 @@ both subnetworks.</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>coid_obs<span class="ot">&lt;-</span><span class="fu">coid</span>(PPH_Coltparkmeadow)</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>cois_obs<span class="ot">&lt;-</span><span class="fu">cois</span>(PPH_Coltparkmeadow)</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a> i<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>   <span class="cf">while</span> (i<span class="sc">&lt;=</span><span class="dv">1000</span>) {</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>      tmp<span class="ot">&lt;-</span><span class="fu">tri_null</span>(PPH_Coltparkmeadow,<span class="dv">1</span>, <span class="at">null_type =</span> <span class="st">&quot;both_sub&quot;</span>,<span class="at">sub_method=</span><span class="st">&quot;r00&quot;</span>)[[<span class="dv">1</span>]]<span class="co"># try &quot;sauve&quot;</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>      <span class="cf">if</span>(<span class="fu">poc</span>(tmp)[<span class="dv">2</span>]<span class="sc">&gt;=</span><span class="dv">4</span>){<span class="co"># ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., two few connector nodes led to NA for CoID. </span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>         null_net[[i]]<span class="ot">&lt;-</span>tmp;</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>         i<span class="ot">&lt;-</span>i<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>      }}</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>   coid_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,coid)</span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>   cois_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,cois)</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>   icmotif_null<span class="ot">&lt;-</span><span class="fu">pbsapply</span>(null_net,<span class="cf">function</span>(x){<span class="fu">icmotif_count</span>(x)[,<span class="dv">2</span>]})<span class="co"># Counts of motifs for null models</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>   <span class="co"># function to calculate the Z value and P value.</span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>   null_zp<span class="ot">&lt;-</span><span class="cf">function</span>(original_value,nullvalues){</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>      z<span class="ot">=</span>(original_value<span class="sc">-</span><span class="fu">mean</span>(nullvalues,<span class="at">na.rm=</span>T))<span class="sc">/</span><span class="fu">sd</span>(nullvalues,<span class="at">na.rm=</span>T)</span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>      pless <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&gt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>      pmore <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&lt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>      p<span class="ot">&lt;-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pmin</span>(pless, pmore)</span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>      p<span class="ot">=</span><span class="fu">pmin</span>(<span class="dv">1</span>, (p <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span>(<span class="fu">length</span>(nullvalues) <span class="sc">+</span> <span class="dv">1</span>))</span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>      <span class="fu">c</span>(<span class="at">z=</span>z,<span class="at">p=</span>p)</span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>   }</span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>   <span class="co"># Z and P values</span></span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>   <span class="fu">null_zp</span>(coid_obs,coid_null)<span class="co"># for coid</span></span>
-<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>   <span class="fu">null_zp</span>(cois_obs,cois_null)<span class="co"># for cois</span></span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>   icmotif_null_and_obs<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="fu">icmotif_count</span>(PPH_Coltparkmeadow)[,<span class="dv">2</span>],icmotif_null)</span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>   <span class="fu">apply</span>( icmotif_null_and_obs,<span class="dv">1</span>,<span class="cf">function</span>(x){<span class="fu">null_zp</span>(x[<span class="dv">1</span>],x[<span class="sc">-</span><span class="dv">1</span>])})<span class="co"># for motifs</span></span></code></pre></div>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>null_net<span class="ot">&lt;-</span><span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>,<span class="dv">1000</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> i<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>   <span class="cf">while</span> (i<span class="sc">&lt;=</span><span class="dv">1000</span>) {</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>      tmp<span class="ot">&lt;-</span><span class="fu">tri_null</span>(PPH_Coltparkmeadow,<span class="dv">1</span>, <span class="at">null_type =</span> <span class="st">&quot;both_sub&quot;</span>,<span class="at">sub_method=</span><span class="st">&quot;r00&quot;</span>)[[<span class="dv">1</span>]]<span class="co"># try &quot;sauve&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>      <span class="cf">if</span>(<span class="fu">poc</span>(tmp)[<span class="dv">2</span>]<span class="sc">&gt;=</span><span class="dv">4</span>){<span class="co"># ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., two few connector nodes led to NA for CoID. </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>         null_net[[i]]<span class="ot">&lt;-</span>tmp;</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>         i<span class="ot">&lt;-</span>i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>      }}</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>   coid_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,coid)</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>   cois_null<span class="ot">&lt;-</span><span class="fu">sapply</span>(null_net,cois)</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>   icmotif_null<span class="ot">&lt;-</span><span class="fu">pbsapply</span>(null_net,<span class="cf">function</span>(x){<span class="fu">icmotif_count</span>(x)[,<span class="dv">2</span>]})<span class="co"># Counts of motifs for null models</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>   <span class="co"># function to calculate the Z value and P value.</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>   null_zp<span class="ot">&lt;-</span><span class="cf">function</span>(original_value,nullvalues){</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>      z<span class="ot">=</span>(original_value<span class="sc">-</span><span class="fu">mean</span>(nullvalues,<span class="at">na.rm=</span>T))<span class="sc">/</span><span class="fu">sd</span>(nullvalues,<span class="at">na.rm=</span>T)</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>      pless <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&gt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>      pmore <span class="ot">&lt;-</span> <span class="fu">sum</span>(original_value <span class="sc">&lt;=</span> nullvalues, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>      p<span class="ot">&lt;-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pmin</span>(pless, pmore)</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>      p<span class="ot">=</span><span class="fu">pmin</span>(<span class="dv">1</span>, (p <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span>(<span class="fu">length</span>(nullvalues) <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>      <span class="fu">c</span>(<span class="at">z=</span>z,<span class="at">p=</span>p)</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>   }</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>   <span class="co"># Z and P values</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>   <span class="fu">null_zp</span>(coid_obs,coid_null)<span class="co"># for coid</span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>   <span class="fu">null_zp</span>(cois_obs,cois_null)<span class="co"># for cois</span></span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>   icmotif_null_and_obs<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="fu">icmotif_count</span>(PPH_Coltparkmeadow)[,<span class="dv">2</span>],icmotif_null)</span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>   <span class="fu">apply</span>( icmotif_null_and_obs,<span class="dv">1</span>,<span class="cf">function</span>(x){<span class="fu">null_zp</span>(x[<span class="dv">1</span>],x[<span class="sc">-</span><span class="dv">1</span>])})<span class="co"># for motifs</span></span></code></pre></div>
 </div>
 <div id="for-tripartite-networks-with-intra-guild-interactions" class="section level3">
 <h3>For tripartite networks with intra-guild interactions</h3>
