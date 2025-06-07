@@ -263,13 +263,13 @@ ig_icmotif_role<-function(mat, guilds,weighted =FALSE) {
       M221_2_1 <- (AA_no_P_3 * BB_no * Vbb)
       BB_role <- cbind(BB_role,rowSums(M221_2_1), colSums(M221_2_1))
 
-      M221_2_2 <- sum(AA_yes_P_3 * BB_no * Vbb)
+      M221_2_2 <- (AA_yes_P_3 * BB_no * Vbb)
       BB_role <- cbind(BB_role,rowSums(M221_2_2), colSums(M221_2_2))
 
-      M221_2_3 <- sum(AA_no_P_3 * BB * Vbb)
+      M221_2_3 <- (AA_no_P_3 * BB * Vbb)
       BB_role <- cbind(BB_role,rowSums(M221_2_3), colSums(M221_2_3))
 
-      M221_2_4 <- sum(AA_yes_P_3 * BB * Vbb)
+      M221_2_4 <- (AA_yes_P_3 * BB * Vbb)
       BB_role <- cbind(BB_role,rowSums(M221_2_4), colSums(M221_2_4))
 
       M221_3_1 <- rowSums(AA_no_P_4 * BB_no * Vbb)
