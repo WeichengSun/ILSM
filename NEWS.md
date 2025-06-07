@@ -1,3 +1,10 @@
+# ILSM 1.1.0 *2025-5-01*
+Version: ILSM 1.1.0
+
+Many modifications were accepted and we added some new functions:
+{ig_icmotif_count}, {ig_icmotif_role}, etc
+
+
 # ILSM 1.0.3.3 *2024-11-01*
 
 Version: ILSM 1.0.3.3
