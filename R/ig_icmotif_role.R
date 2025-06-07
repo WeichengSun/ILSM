@@ -284,7 +284,7 @@ ig_icmotif_role<-function(mat, guilds,weighted =FALSE) {
       M221_3_4 <- rowSums(AA_yes_P_4 * BB * Vbb)
       BB_role <- cbind(BB_role,M221_3_4)
 
-      rownames(BB_role) <- matrow
+      rownames(BB_role) <- rownames(BB)
       colnames(BB_role) <- paste0("role",1:ncol(BB_role))
 
       intra_guild_role <- BB_role
@@ -468,7 +468,7 @@ ig_icmotif_role<-function(mat, guilds,weighted =FALSE) {
          M221_3_4 <- rowSums((AA_yes_PW_4 * Vbb + C_2BW * AA_yes_P_4) * BB_two + AA_yes_P_4 * Vbb * BBW)/8
          BB_role <- cbind(BB_role,M221_3_4)
 
-         rownames(BB_role) <- matrow
+         rownames(BB_role) <- rownames(BB)
          colnames(BB_role) <- paste0("weighted role",1:ncol(BB_role))
          intra_guild_mean_role <- BB_role
 
