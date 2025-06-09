@@ -300,7 +300,6 @@ inter_guild interaction overlap for a tripartite network with
 intra-guild interactions (Garcia-Callejas et al. 2023).
 
 ``` r
-myguilds=c(rep("a",4),rep("b",5),rep("c",3))
 ig_overlap_guild(toy_mat,guilds=myguilds)
 ```
 
