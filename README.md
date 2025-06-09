@@ -80,7 +80,7 @@ Q_mat<-as.matrix(read.csv("./data/HP.csv",row.names = 1,check.names=FALSE))
 PPH_Coltparkmeadow<-trigraph_from_mat(P_mat,Q_mat,weighted = F)
 
 #Generating random weights to showcase weighted metrics
-E(PPH_Coltparkmeadow)$weight<-runif(length(E(PPH_Coltparkmeadow)),0.1,1) 
+E(PPH_Coltparkmeadow)$weight<-runif(length(E(PPH_Coltparkmeadow)),0.1,1.5) 
 
 #proportion of connector nodes
 poc(PPH_Coltparkmeadow)
@@ -122,7 +122,7 @@ motif_names<-c("M111","M112","M113","M114","M211","M212","M213","M311","M312","M
 mr <- par(mfrow=c(6,8),mar=c(1,1,3,1))
 IM_res<-Multi_motif("all")
  for(i in 1:48){
-     plot(a[[i]],
+     plot(IM_res[[i]],
           vertex.size=30, vertex.label=NA,
           vertex.color="#D0E7ED",main=motif_names[i])
 }
@@ -179,7 +179,8 @@ Fig. 3. The interconnection structures of the example PPH network. (a)
 Five interconnection patterns. (b) Three interconnection centrality
 indices for eight connector species. (c) The frequencies of 48
 interconnection motifs. (d) The frequencies (ln-transformed) of 70 roles
-for eight connector species in the interconnection motifs.
+for eight connector species in the interconnection motifs. See codes for
+plotting in the vignette.
 
 ## Extensional analysis
 
@@ -189,30 +190,41 @@ Null models are commonly used to test the non-randomness of topology in
 ecological networks. The **tri_null** provides two types of null models.
 The first type shuffles shared nodes following Sauve et al. (2016)
 without altering the subnetwork structures. The second type shuffles
-links in one or both subnetworks using algorithms from the R package
-*vegan* (version 2.6-4), applied independently to one or both
+links in one or both subnetworks or layers using algorithms from the R
+package *vegan* (version 2.6-4), applied independently to one or both
 subnetworks.
 
 ``` r
-#Testing the significance of correlation of interaction degree and similarity
-library(ggplot2)
+#Testing the significance of CoID, CoIS and interconnection motifs against null models 
+library(ggplot2);library(pbapply)
 set.seed(12)
 coid_obs<-coid(PPH_Coltparkmeadow)
 cois_obs<-cois(PPH_Coltparkmeadow)
-null_net<-tri_null(PPH_Coltparkmeadow,100, null_type = "sauve")# try "sub_both", "sub_
-coid_null<-sapply(null_net,coid)
-cois_null<-sapply(null_net,cois)
-# calculate the Z value and P value.
-null_zp<-function(original_value,nullvalues){
-   z=(original_value-mean(nullvalues,na.rm=T))/sd(nullvalues,na.rm=T)
-   pless <- sum(original_value >= nullvalues, na.rm = TRUE)
-   pmore <- sum(original_value <= nullvalues, na.rm = TRUE)
-   p<-2 * pmin(pless, pmore)
-   p=pmin(1, (p + 1)/(length(nullvalues) + 1))
-   c(z=z,p=p)
-}
-null_zp(coid_obs,coid_null)
-null_zp(cois_obs,cois_null)
+null_net<-vector("list",100)
+ i<-1
+   while (i<=100) {
+      tmp<-tri_null(PPH_Coltparkmeadow,1, null_type = "both_sub",sub_method="r00")[[1]]# try "sauve"
+      if(poc(tmp)[2]>=4){# ensuring the simulated networks have at least four connector nodes. This is up to the structure to test. E.g., two few connector nodes led to NA for CoID. 
+         null_net[[i]]<-tmp;
+         i<-i+1
+      }}
+   coid_null<-pbsapply(null_net,coid)
+   cois_null<-pbsapply(null_net,cois)
+   icmotif_null<-pbsapply(null_net,function(x){icmotif_count(x)[,2]})# Counts of motifs for null models
+   # function to calculate the Z value and P value.
+   null_zp<-function(original_value,nullvalues){
+      z=(original_value-mean(nullvalues,na.rm=T))/sd(nullvalues,na.rm=T)
+      pless <- sum(original_value >= nullvalues, na.rm = TRUE)
+      pmore <- sum(original_value <= nullvalues, na.rm = TRUE)
+      p<-2 * pmin(pless, pmore)
+      p=pmin(1, (p + 1)/(length(nullvalues) + 1))
+      c(z=z,p=p)
+   }
+   # Z and P values
+   null_zp(coid_obs,coid_null)# for coid
+   null_zp(cois_obs,cois_null)# for cois
+   icmotif_null_and_obs<-cbind(icmotif_count(PPH_Coltparkmeadow)[,2],icmotif_null)
+   apply( icmotif_null_and_obs,1,function(x){null_zp(x[1],x[-1])})# for motifs
 ```
 
 ### For tripartite networks with intra-guild interactions
@@ -238,20 +250,8 @@ subnetwork. Grey nodes are connector nodes.
 For a tripartite network with intra-guild interactions,
 **ig_icmotif_count** returns the counts of each motif, while
 **ig_icmotif_role** returns the counts of motif roles. Currently,
-ig_icmotif_role supports role counts only for the first 11 motifs.
-
-``` r
-ig_icmotif_count(PPH_Coltparkmeadow)
-ig_icmotif_role(PPH_Coltparkmeadow)
-ig_icmotif_count(PPH_Coltparkmeadow, weighted=T)
-ig_icmotif_role(PPH_Coltparkmeadow, weighted=T)
-```
-
-#### Degree of diagonal dominance
-
-The **ig_ddom** calculates the degree of diagonal dominance for a
-tripartite network with intra-guild interactions (Garcia-Callejas et
-al. 2023).
+ig_icmotif_role supports role counts only for the 43 roles in the first
+35 motifs.
 
 ``` r
 ## A toy tripartite network with intra-guild negative interactions, inter-guild mutualistic interactions and inter-guild antagonistic interactions.
@@ -276,6 +276,20 @@ toy_mat<-rbind(cbind(mat_aa,mat_ab,matrix(0,4,3)),cbind(mat_ba,mat_bb,mat_bc),cb
 rownames(toy_mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3));colnames(toy_mat)<-c(paste0("a",1:4),paste0("b",1:5),paste0("c",1:3))
 diag(toy_mat)<--1 #assume -1 for diagonal elements
 
+myguilds=c(rep("a",4),rep("b",5),rep("c",3))
+ig_icmotif_count(toy_mat,guilds=myguilds)
+ig_icmotif_role(toy_mat,guilds=myguilds)
+ig_icmotif_count(toy_mat,guilds=myguilds,weighted=T)
+ig_icmotif_role(toy_mat,guilds=myguilds, weighted=T)
+```
+
+#### Degree of diagonal dominance
+
+The **ig_ddom** calculates the degree of diagonal dominance for a
+tripartite network with intra-guild interactions (Garcia-Callejas et
+al. 2023).
+
+``` r
 ig_ddom(toy_mat)
 ```
 
