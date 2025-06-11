@@ -344,6 +344,4 @@ communities. Ecology Letters, 26, 831-842.
 
 ## Citation
 
-Manuscript is being prepared for submission and citations are currently
-available at CRAN
-[10.32614/CRAN.package.ILSM](https://cran.r-project.org/web/packages/ILSM/index.html)
+Manuscript is being prepared for submission.
