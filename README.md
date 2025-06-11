@@ -239,7 +239,9 @@ include intra-guild interactions to support potential meso-scale
 analyses in tripartite networks. Because incorporating intra-guild links
 greatly increases the number of possible motif forms, we restricted each
 guild to contain only two nodes, resulting in 107 interconnection
-motifs.
+motifs. Detailed algorithms:
+[Motif](https://github.com/WeichengSun/ILSM/blob/main/doc/ig_icmotif_count_algorithm.pdf),
+[Role](https://github.com/WeichengSun/ILSM/blob/main/doc/ig_icmotif_role_algorithm.pdf).
 
 <img src="./man/figure/intra_guild_icmotif.png" width="80%" style="display: block; margin: auto;" />
 Fig. 4. The 107 forms of interconnection motifs with intra-guild
