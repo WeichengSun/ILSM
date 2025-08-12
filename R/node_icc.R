@@ -11,9 +11,9 @@
 #' This function calculates interconnection degree, betweenness and closeness centrality for connector nodes.
 #' \itemize{
 #' \item For binary networks, **interconnection degree** of each connector species is defined as the product of its degree values from two subnetworks.
-#' \item **Interconnection betweenness** is defined by the number of shortest paths from a-nodes to c-nodes going through connector species, \eqn{\sum_{i≠j,i \in a,j \in c)}\frac{g_{ivj}}{g_{ij}}},
-#' where \eqn{g_{ij}} is the total number of shortest paths between node 𝑖 from a-nodes and 𝑗 from c-nodes while \eqn{g_{ivj}} is the number of those shortest paths which pass through connector species 𝑣.
-#' \item **Interconnection closeness** is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes, \eqn{1/(\sum_{v \neq i, i \in a \cup c} d_{vi})},
+#' \item **Interconnection betweenness** is defined by the number of shortest paths from a-nodes to c-nodes going through connector species, \eqn{\sum_{\substack{i \in a,\, j \in c }} \frac{g_{ivj}}{g_{ij}}},
+#' where \eqn{g_{ij}} is the total number of shortest paths between node \eqn{i} from a-nodes and \eqn{j} from c-nodes while \eqn{g_{ivj}} is the number of those shortest paths which pass through connector species \eqn{v}.
+#' \item **Interconnection closeness** is defined by the inverse of the sum of distances from connector species to both a-nodes and c-nodes, \eqn{1/(\sum_{ i \in a \cup c} d_{vi})},
 #' where \eqn{d_{vi}} is the distance between connector species v and species i from a-nodes and c-nodes.
 #' For weighted networks, interaction strengths are used in the calculation of weighted degree, shorest path, and distance.
 #' }
