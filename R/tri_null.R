@@ -41,6 +41,7 @@
 #'
 #' set.seed(123)
 #' tri_null_list<-tri_null(Net,null_type="both_sub",sub_method="r00")
+#'
 #' set.seed(123)
 #' tri_null_list<-tri_null(Net,null_type="sauve")
 tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both_sub"), sub_method){
@@ -70,11 +71,11 @@ tri_null<-function(trinet, null_N=100, null_type=c("sauve","sub_P","sub_Q","both
       nm<-vegan::nullmodel(matQ,sub_method)
       null_list<-simulate(nm, nsim=null_N)
       MAT<-mat
-      null_network<-lapply(null_list,3, function(x){
-         MAT[V(network)$level==1,V(network)$level==2]<-x
+      null_network<-apply(null_list,3, function(x){
+         MAT[V(trinet)$level==1,V(trinet)$level==2]<-x
          Nnetwork<-graph_from_adjacency_matrix(MAT,mode="upper")
-         V(Nnetwork)$name<-V(network)$name
-         V(Nnetwork)$level<-V(network)$level
+         V(Nnetwork)$name<-V(trinet)$name
+         V(Nnetwork)$level<-V(trinet)$level
          dd<-igraph::layout_with_sugiyama(Nnetwork,layers=igraph::V(Nnetwork)$level)$layout
          dd[order(dd[dd[,2]==3,1]),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==3))
          dd[order(dd[dd[,2]==2,1])+sum(dd[,2]==3),1]<-seq(min(dd[,1]),max(dd[,1]),length.out=sum(dd[,2]==2))
