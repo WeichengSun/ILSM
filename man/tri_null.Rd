@@ -46,6 +46,7 @@ Net <- PPH_Coltparkmeadow
 
 set.seed(123)
 tri_null_list<-tri_null(Net,null_type="both_sub",sub_method="r00")
+
 set.seed(123)
 tri_null_list<-tri_null(Net,null_type="sauve")
 }
